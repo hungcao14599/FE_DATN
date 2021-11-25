@@ -1,13 +1,32 @@
+@font-face {
+  font-family: "Poppins-Bold";
+  src: local("Poppins-Bold"), url(./assets/fonts/Poppins-Bold.ttf) format("ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Medium";
+  src: local("Poppins-Medium"),
+    url(./assets/fonts/Poppins-Medium.ttf) format("ttf");
+}
+@font-face {
+  font-family: "Poppins-Semibold";
+  src: local("Poppins-Semibold"),
+    url(./assets/fonts/Poppins-SemiBold.ttf) format("ttf");
+}
+@font-face {
+  font-family: "Poppins-Regular";
+  src: local("Poppins-Regular"),
+    url(./assets/fonts/Poppins-Regular.ttf) format("ttf");
+}
 body {
+  font-family: "Poppins", sans-serif !important;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #e8e8e8 !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
