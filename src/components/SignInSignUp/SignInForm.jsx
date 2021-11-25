@@ -8,8 +8,10 @@ import {
 import { Button, Form, Input } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { animated } from "react-spring";
 import styled from "styled-components";
+import { loginUser } from "../../actions/auth";
 
 const Wrapper = styled(animated.div)`
   position: absolute;
@@ -113,8 +115,13 @@ export const SignInForm = ({ style = {} }) => {
     defaultValues: { username: "", password: "" },
   });
 
+  const dispatch = useDispatch();
   const handleSignIn = handleSubmit((data) => {
-    console.log(data);
+    dispatch(loginUser(data.username, data.password)).then((res) => {
+      const result = res ? res : [];
+      console.log(result);
+    });
+
     // TODO: call api to login
   });
   return (

@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Redirect exact from="/" to="/tlu" />
+        <Redirect exact from="/" to="/tlu/login" />
         <Route path="/tlu/login" component={SignInSignup}></Route>
         <Route path="/tlu/register" component={SignInSignup}></Route>
       </Switch>
