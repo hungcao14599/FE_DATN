@@ -1,12 +1,13 @@
+import "antd/dist/antd.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
+import App from "./App";
+import "./index.css";
 import appReducers from "./reducers";
+import reportWebVitals from "./reportWebVitals";
 
 const store = createStore(
   appReducers,
