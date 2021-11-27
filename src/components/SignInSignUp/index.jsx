@@ -14,6 +14,12 @@ const Wrapper = styled.div`
   z-index: 0;
   display: flex;
   margin: 200px auto;
+  box-shadow: 1px 5px 15px 1px #70525242;
+
+  @media screen and (max-width: 1440px) {
+    height: 90vh;
+    width: 75vw;
+  }
 `;
 
 const LabelCol = styled(animated.div)`

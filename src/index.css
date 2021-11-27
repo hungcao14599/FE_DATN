@@ -1,32 +1,62 @@
 @font-face {
-  font-family: "Poppins-Bold";
-  src: local("Poppins-Bold"), url(./assets/fonts/Poppins-Bold.ttf) format("ttf");
+    font-family: "Poppins-Bold";
+    src: local("Poppins-Bold"), url(./assets/fonts/Poppins-Bold.ttf) format("ttf");
 }
 
 @font-face {
-  font-family: "Poppins-Medium";
-  src: local("Poppins-Medium"),
-    url(./assets/fonts/Poppins-Medium.ttf) format("ttf");
+    font-family: "Poppins-Medium";
+    src: local("Poppins-Medium"), url(./assets/fonts/Poppins-Medium.ttf) format("ttf");
 }
+
 @font-face {
-  font-family: "Poppins-Semibold";
-  src: local("Poppins-Semibold"),
-    url(./assets/fonts/Poppins-SemiBold.ttf) format("ttf");
+    font-family: "Poppins-Semibold";
+    src: local("Poppins-Semibold"), url(./assets/fonts/Poppins-SemiBold.ttf) format("ttf");
 }
+
 @font-face {
-  font-family: "Poppins-Regular";
-  src: local("Poppins-Regular"),
-    url(./assets/fonts/Poppins-Regular.ttf) format("ttf");
+    font-family: "Poppins-Regular";
+    src: local("Poppins-Regular"), url(./assets/fonts/Poppins-Regular.ttf) format("ttf");
 }
+
 body {
-  font-family: "Poppins", sans-serif !important;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #e8e8e8 !important;
+    font-family: "Poppins", sans-serif !important;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #e8e8e8 !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+
+/* Input */
+
+.ant-form-item-explain-error {
+    font-size: 10px;
+}
+
+.ant-form-item-has-error :not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+.ant-form-item-has-error :not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
+    background-color: unset;
+}
+
+
+/*Modal*/
+
+.ant-modal-footer,
+.ant-modal-header,
+.ant-modal-close-x {
+    display: none;
+}
+
+.ant-modal-body {
+    padding: unset;
+}
+
+
+/* .ant-modal-content {
+    border-radius: 9px;
+    box-shadow: 1px 5px 15px 1px #70525242;
+} */
