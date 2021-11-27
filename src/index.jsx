@@ -2,18 +2,11 @@ import "antd/dist/antd.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
 import App from "./App";
 import "./index.css";
-import appReducers from "./reducers";
 import reportWebVitals from "./reportWebVitals";
-
-const store = createStore(
-  appReducers,
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk)
-);
+import configureStore from "./stores";
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>

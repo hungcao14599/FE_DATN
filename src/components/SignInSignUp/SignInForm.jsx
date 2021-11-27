@@ -5,13 +5,14 @@ import {
   LockOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
-import React from "react";
+import { Button, Form, Input, Modal } from "antd";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { loginUser } from "../../actions/auth";
+import { VerifyAccount } from "./VerifyAccount";
 
 const Wrapper = styled(animated.div)`
   position: absolute;
@@ -60,6 +61,7 @@ const WrapInput = styled.div`
 const SigninInput = styled(Input)`
   width: 300px;
   height: 45px;
+  margin-bottom: 5px;
   input {
     font-size: 13px;
     background-color: #f4f8f7;
@@ -79,11 +81,17 @@ const Title = styled.p`
 const Des = styled.p`
   color: grey;
   margin-top: 20px;
+  text-align: center;
 `;
 
 const Activate = styled.p`
   color: grey;
   margin-top: 20px;
+`;
+
+const ButtonActivate = styled.span`
+  color: #ca0533;
+  cursor: pointer;
 `;
 
 const ButtonSignIn = styled(Button)`
@@ -106,29 +114,47 @@ const Logo = styled.div`
     height: 14px;
   }
 `;
+
+const Error = styled.span`
+  color: #ca0533;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 export const SignInForm = ({ style = {} }) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { username: "", password: "" },
+    defaultValues: { username: "", password: "", email: "", verifyCode: "" },
   });
 
+  const error = useSelector((state) => state.auth.loginUser.error);
   const dispatch = useDispatch();
   const handleSignIn = handleSubmit((data) => {
-    dispatch(loginUser(data.username, data.password)).then((res) => {
-      const result = res ? res : [];
-      console.log(result);
-    });
-
-    // TODO: call api to login
+    dispatch(loginUser(data.username, data.password));
   });
-  return (
-    <Wrapper style={style}>
-      <Title>Sign in to TLU Social Network</Title>
 
-      {/* <SocialNet>
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  return (
+    <>
+      <Wrapper style={style}>
+        <Title>Sign in to TLU Social Network</Title>
+
+        {/* <SocialNet>
         <Fb>
           <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
             <FbIcon style={{ color: "black" }} />
@@ -145,58 +171,88 @@ export const SignInForm = ({ style = {} }) => {
           </a>
         </In>
       </SocialNet> */}
-      <Des>or use your email account</Des>
+        <Des>or use your email account</Des>
 
-      <WrapInput>
-        <Form.Item>
-          <Controller
-            control={control}
-            name="username"
-            render={({ field: { value, onChange, onBlur } }) => (
-              <SigninInput
-                size="large"
-                {...{ value, onChange, onBlur }}
-                prefix={
-                  <Logo>
-                    <UserOutlined style={{ color: "grey" }} />
-                  </Logo>
-                }
-                placeholder="Username"
-                style={{ backgroundColor: "#f4f8f7", border: "none" }}
-              />
-            )}
-          />
-        </Form.Item>
-        <Form.Item>
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { value, onChange, onBlur } }) => (
-              <SigninInput
-                size="large"
-                {...{ value, onChange, onBlur }}
-                type="password"
-                prefix={
-                  <Logo>
-                    <LockOutlined style={{ color: "grey" }} />
-                  </Logo>
-                }
-                placeholder="Password"
-                style={{ backgroundColor: "#f4f8f7", border: "none" }}
-              />
-            )}
-          />
-        </Form.Item>
-      </WrapInput>
-      <ButtonSignIn
-        type="default"
-        size="large"
-        shape="round"
-        onClick={handleSignIn}
+        <WrapInput>
+          <Form.Item
+            help={errors.username && errors.username?.message}
+            validateStatus={
+              errors.username && errors.username?.message
+                ? "error"
+                : "validating"
+            }
+          >
+            <Controller
+              control={control}
+              name="username"
+              rules={{ required: "Required" }}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <SigninInput
+                  size="large"
+                  {...{ value, onChange, onBlur }}
+                  prefix={
+                    <Logo>
+                      <UserOutlined style={{ color: "grey" }} />
+                    </Logo>
+                  }
+                  placeholder="Username"
+                  style={{ backgroundColor: "#f4f8f7", border: "none" }}
+                />
+              )}
+            />
+          </Form.Item>
+          <Form.Item
+            help={errors.password && errors.password?.message}
+            validateStatus={
+              errors.password && errors.password?.message
+                ? "error"
+                : "validating"
+            }
+          >
+            <Controller
+              control={control}
+              name="password"
+              rules={{ required: "Required" }}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <SigninInput
+                  size="large"
+                  {...{ value, onChange, onBlur }}
+                  type="password"
+                  prefix={
+                    <Logo>
+                      <LockOutlined style={{ color: "grey" }} />
+                    </Logo>
+                  }
+                  placeholder="Password"
+                  style={{ backgroundColor: "#f4f8f7", border: "none" }}
+                />
+              )}
+            />
+          </Form.Item>
+        </WrapInput>
+        <ButtonSignIn
+          type="default"
+          size="large"
+          shape="round"
+          onClick={handleSignIn}
+        >
+          Sign In
+        </ButtonSignIn>
+        <Error>{error ? error.data.message : ""}</Error>
+        <Activate>
+          Tài khoản chưa kích hoạt ?
+          <ButtonActivate onClick={handleModal}> Kích hoạt</ButtonActivate>
+        </Activate>
+      </Wrapper>
+
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
       >
-        Sign In
-      </ButtonSignIn>
-      <Activate>Tài khoản chưa kích hoạt ?</Activate>
-    </Wrapper>
+        <VerifyAccount />
+      </Modal>
+    </>
   );
 };

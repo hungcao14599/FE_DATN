@@ -8,8 +8,10 @@ import {
 import { Button, Form, Input } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { animated } from "react-spring";
 import styled from "styled-components";
+import { registerUser } from "../../actions/auth";
 
 const Wrapper = styled(animated.div)`
   position: absolute;
@@ -81,7 +83,9 @@ const ButtonSignUp = styled(Button)`
   height: 50px !important;
   margin-top: 10px;
   font-weight: 600;
-  :hover {
+  :hover,
+  :active,
+  :focus {
     background: #f7341b;
     color: white;
   }
@@ -89,8 +93,8 @@ const ButtonSignUp = styled(Button)`
 
 const SignUpInput = styled(Input)`
   width: 300px;
-  height: 40px;
-  background-color: #f4f8f7;
+  height: 45px;
+  background-color: #f4f8f7 !important;
   border: none;
   input {
     font-size: 13px;
@@ -108,13 +112,31 @@ const Logo = styled.div`
   }
 `;
 
+const Error = styled.span`
+  font-size: 13px;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 export const SignUpForm = ({ style = {} }) => {
-  const form = useForm({
-    defaultValues: { username: "", password: "", confirmPassword: "" },
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
-  const { control, handleSubmit } = form;
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.registerUser.error);
+  const success = useSelector((state) => state.auth.registerUser.result);
 
   const handleSignUp = handleSubmit((data) => {
+    dispatch(registerUser(data.username, data.password, data.email));
     console.log(data);
     // TODO: call api to sign up
   });
@@ -141,8 +163,15 @@ export const SignUpForm = ({ style = {} }) => {
       </SocialNet> */}
       <Des>Join the social network to experience</Des>
       <WrapInput>
-        <Form.Item>
+        <Form.Item
+          help={errors.email && errors.email?.message}
+          validateStatus={
+            errors.email && errors.email?.message ? "error" : "validating"
+          }
+        >
           <Controller
+            type={"email"}
+            rules={{ required: "Required" }}
             control={control}
             name="email"
             render={({ field: { value, onChange, onBlur } }) => (
@@ -159,10 +188,16 @@ export const SignUpForm = ({ style = {} }) => {
             )}
           />
         </Form.Item>
-        <Form.Item>
+        <Form.Item
+          help={errors.username && errors.username?.message}
+          validateStatus={
+            errors.username && errors.username?.message ? "error" : "validating"
+          }
+        >
           <Controller
             control={control}
             name="username"
+            rules={{ required: "Required" }}
             render={({ field: { value, onChange, onBlur } }) => (
               <SignUpInput
                 size="large"
@@ -177,10 +212,16 @@ export const SignUpForm = ({ style = {} }) => {
             )}
           />
         </Form.Item>
-        <Form.Item>
+        <Form.Item
+          help={errors.password && errors.password?.message}
+          validateStatus={
+            errors.password && errors.password?.message ? "error" : "validating"
+          }
+        >
           <Controller
             control={control}
             name="password"
+            rules={{ required: "Required" }}
             render={({ field: { value, onChange, onBlur } }) => (
               <SignUpInput
                 size="large"
@@ -196,25 +237,6 @@ export const SignUpForm = ({ style = {} }) => {
             )}
           />
         </Form.Item>
-        <Form.Item>
-          <Controller
-            control={control}
-            name="confirmPassword"
-            render={({ field: { value, onChange, onBlur } }) => (
-              <SignUpInput
-                size="large"
-                prefix={
-                  <Logo>
-                    <LockOutlined style={{ color: "grey" }} />
-                  </Logo>
-                }
-                placeholder="Re-password"
-                {...{ value, onChange, onBlur }}
-                type="password"
-              />
-            )}
-          />
-        </Form.Item>
       </WrapInput>
       <ButtonSignUp
         type="default"
@@ -224,6 +246,9 @@ export const SignUpForm = ({ style = {} }) => {
       >
         Sign Up
       </ButtonSignUp>
+      <Error style={{ color: success ? "#376e37" : "#ca0533" }}>
+        {success ? success.message : error ? error.data.message : ""}
+      </Error>
       <LoginNotification>Đăng nhập nếu có tài khoản !</LoginNotification>
     </Wrapper>
   );

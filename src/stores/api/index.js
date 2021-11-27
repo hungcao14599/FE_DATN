@@ -1,7 +1,8 @@
 import Auth from "./auth";
-
+import User from "./user";
 const API = {
-  Auth,
+    Auth,
+    User,
 };
 
 export default API;
