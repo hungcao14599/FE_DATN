@@ -128,13 +128,13 @@ export const SignInForm = ({ style = {} }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { username: "", password: "", email: "", verifyCode: "" },
+    defaultValues: { email: "", password: "" },
   });
 
   const error = useSelector((state) => state.auth.loginUser.error);
   const dispatch = useDispatch();
   const handleSignIn = handleSubmit((data) => {
-    dispatch(loginUser(data.username, data.password));
+    dispatch(loginUser(data.email, data.password));
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -175,16 +175,14 @@ export const SignInForm = ({ style = {} }) => {
 
         <WrapInput>
           <Form.Item
-            help={errors.username && errors.username?.message}
+            help={errors.email && errors.email?.message}
             validateStatus={
-              errors.username && errors.username?.message
-                ? "error"
-                : "validating"
+              errors.email && errors.email?.message ? "error" : "validating"
             }
           >
             <Controller
               control={control}
-              name="username"
+              name="email"
               rules={{ required: "Required" }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <SigninInput
@@ -195,7 +193,7 @@ export const SignInForm = ({ style = {} }) => {
                       <UserOutlined style={{ color: "grey" }} />
                     </Logo>
                   }
-                  placeholder="Username"
+                  placeholder="Email"
                   style={{ backgroundColor: "#f4f8f7", border: "none" }}
                 />
               )}

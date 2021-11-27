@@ -8,9 +8,9 @@ const { loginUserRequest, loginUserSuccess, loginUserFail } = createActions({
     LOGIN_USER_FAIL: (error) => ({ error }),
 });
 
-export const loginUser = (username, password) => (dispatch) => {
+export const loginUser = (email, password) => (dispatch) => {
     dispatch(loginUserRequest());
-    return Api.Auth.loginUser(username, password)
+    return Api.Auth.loginUser(email, password)
         .then(({ data }) => {
             dispatch(loginUserSuccess(data));
             return data;
