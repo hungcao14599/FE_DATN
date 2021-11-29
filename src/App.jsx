@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import SignInSignup from "./components/SignInSignUp";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Redirect exact from="/" to="/tlu/login" />
         <Route path="/tlu/login" component={SignInSignup}></Route>
         <Route path="/tlu/register" component={SignInSignup}></Route>
+        <Route path="/tlu/home" component={Home}></Route>
       </Switch>
     </Router>
   );

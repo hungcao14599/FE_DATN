@@ -9,6 +9,7 @@ import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { loginUser } from "../../actions/auth";
@@ -131,10 +132,15 @@ export const SignInForm = ({ style = {} }) => {
     defaultValues: { email: "", password: "" },
   });
 
+  const history = useHistory();
+
   const error = useSelector((state) => state.auth.loginUser.error);
   const dispatch = useDispatch();
   const handleSignIn = handleSubmit((data) => {
-    dispatch(loginUser(data.email, data.password));
+    dispatch(loginUser(data.email, data.password)).then((res) => {
+      history.push("../tlu/home");
+      localStorage.setItem("user", JSON.stringify(res));
+    });
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
