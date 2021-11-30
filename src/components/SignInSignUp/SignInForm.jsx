@@ -26,35 +26,7 @@ const Wrapper = styled(animated.div)`
   align-items: center;
   justify-content: center;
 `;
-const Fb = styled.div``;
-const Gg = styled.div`
-  padding-left: 10px;
-`;
-const In = styled.div`
-  padding-left: 10px;
-`;
-const SocialNet = styled.div`
-  display: flex;
-`;
 
-const FbIcon = styled(FacebookOutlined)`
-  svg {
-    width: 30px;
-    height: 30px;
-  }
-`;
-const GgIcon = styled(GooglePlusOutlined)`
-  svg {
-    width: 30px;
-    height: 30px;
-  }
-`;
-const InIcon = styled(LinkedinOutlined)`
-  svg {
-    width: 30px;
-    height: 30px;
-  }
-`;
 const WrapInput = styled.div`
   margin-top: 20px;
 `;
@@ -192,6 +164,7 @@ export const SignInForm = ({ style = {} }) => {
               rules={{ required: "Required" }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <SigninInput
+                  type="email"
                   size="large"
                   {...{ value, onChange, onBlur }}
                   prefix={

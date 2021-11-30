@@ -5,7 +5,7 @@ export default function Story({ items }) {
   return (
     <WrapStory>
       {items.map((item, i) => (
-        <Left3>
+        <Left3 key={i}>
           <ImgAds>
             {item.background}
             <AdsText>

@@ -7,6 +7,7 @@ import imgSearch from "../../assets/svg/search_icon.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import SearchWithImg from "../SearchWithImg";
 import Story from "../Story";
+import PostForm from "../Post/PostForm";
 export default function MainContent() {
   const items = [
     {
@@ -132,14 +133,15 @@ export default function MainContent() {
       <Story items={items} />
 
       <SearchBar>
-        <div>
+        {/* <div>
           <SearchWithImg
             imgSearch={imgSearch}
             value={search}
             onChange={setSearch}
             setSearch={setSearch}
           />
-        </div>
+        </div> */}
+        <PostForm />
       </SearchBar>
       {/* <Right3>
         <ContactInfo>
@@ -205,10 +207,7 @@ const ButtonAdd = styled.div`
 `;
 
 const SearchBar = styled.div`
-  display: flex;
-  justify-content: start;
   margin-top: 30px;
-  margin-left: 7px;
 `;
 
 const AvatarImg = styled.div`
