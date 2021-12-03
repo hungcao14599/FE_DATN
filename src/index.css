@@ -60,3 +60,38 @@ code {
     border-radius: 9px;
     box-shadow: 1px 5px 15px 1px #70525242;
 } */
+
+
+/* Menu */
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #f5e3e7;
+}
+
+.ant-menu-inline .ant-menu-item::after {
+    border-right: 3px solid #ca0533;
+}
+
+.ant-menu-light .ant-menu-item:hover {
+    color: #ca0533;
+}
+
+.ant-menu-item-selected {
+    color: #ca0533;
+}
+
+.ant-layout-sider {
+    background: unset;
+}
+
+.my-masonry-grid_column {
+    width: 100% !important;
+}
+
+.ant-btn-group>.ant-btn:last-child:not(:first-child) {
+    border-radius: 5px;
+}
+
+.ant-btn-icon-only {
+    height: 25px;
+}
