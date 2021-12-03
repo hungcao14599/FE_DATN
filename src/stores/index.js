@@ -12,6 +12,7 @@ const middlewares = [thunk, !isProd && logger].filter(Boolean);
 export default function configureStore() {
     const store = createStore(
         appReducers(),
+        undefined,
         compose(applyMiddleware(...middlewares))
     );
     return store;

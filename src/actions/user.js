@@ -22,3 +22,25 @@ export const verifyAccount = (verifyCode, email) => (dispatch) => {
             return Promise.reject(error);
         });
 };
+
+// FECTCH USER
+
+const { fetchUserByIdRequest, fetchUserByIdSuccess, fetchUserByIdFail } =
+createActions({
+    FETCH_USER_BY_ID_REQUEST: () => {},
+    FETCH_USER_BY_ID_SUCCESS: (data) => ({ data }),
+    FETCH_USER_BY_ID_FAIL: (error) => ({ error }),
+});
+
+export const fetchUserById = () => (dispatch) => {
+    dispatch(fetchUserByIdRequest());
+    return Api.User.fetchUserByID()
+        .then(({ data }) => {
+            dispatch(fetchUserByIdSuccess(data));
+            return data;
+        })
+        .catch((error) => {
+            dispatch(fetchUserByIdFail(error));
+            return Promise.reject(error);
+        });
+};

@@ -83,3 +83,15 @@ code {
 .ant-layout-sider {
     background: unset;
 }
+
+.my-masonry-grid_column {
+    width: 100% !important;
+}
+
+.ant-btn-group>.ant-btn:last-child:not(:first-child) {
+    border-radius: 5px;
+}
+
+.ant-btn-icon-only {
+    height: 25px;
+}

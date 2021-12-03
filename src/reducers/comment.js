@@ -1,69 +1,69 @@
 import { handleActions } from "redux-actions";
 
 const initialState = {
-    verifyAccount: {
+    addCommentToPost: {
         result: [],
         error: null,
         requesting: false,
     },
-    fetchUserByID: {
+    fetchCommentByPost: {
         result: [],
         error: null,
         requesting: false,
     },
 };
 
-export const userReducer = handleActions({
-        //VERIFY ACCOUNT
-        VERIFY_ACCOUNT_REQUEST: (state) => ({
+export const commentReducer = handleActions({
+        // ADD COMMENT TO POST
+        ADD_COMMENT_TO_POST_REQUEST: (state) => ({
             ...state,
-            verifyAccount: {
-                ...state.verifyAccount,
+            addCommentToPost: {
+                ...state.addCommentToPost,
                 requesting: true,
                 error: null,
             },
         }),
-        VERIFY_ACCOUNT_SUCCESS: (state, { payload }) => ({
+        ADD_COMMENT_TO_POST_SUCCESS: (state, { payload }) => ({
             ...state,
-            verifyAccount: {
-                ...state.verifyAccount,
+            addCommentToPost: {
+                ...state.addCommentToPost,
                 requesting: false,
                 error: null,
                 result: payload.data,
             },
         }),
-        VERIFY_ACCOUNT_FAIL: (state, { payload }) => ({
+        ADD_COMMENT_TO_POST_FAIL: (state, { payload }) => ({
             ...state,
-            verifyAccount: {
-                ...state.verifyAccount,
+            addCommentToPost: {
+                ...state.addCommentToPost,
                 requesting: false,
                 result: null,
                 error: payload.error,
             },
         }),
 
-        //FETCH USER BY ID
-        FETCH_USER_BY_ID_REQUEST: (state) => ({
+        // FETCH COMMENT BY POST
+        FETCH_COMMENT_BY_POST_REQUEST: (state) => ({
             ...state,
-            fetchUserByID: {
-                ...state.fetchUserByID,
+            fetchCommentByPost: {
+                ...state.fetchCommentByPost,
                 requesting: true,
                 error: null,
             },
         }),
-        FETCH_USER_BY_ID_SUCCESS: (state, { payload }) => ({
+        FETCH_COMMENT_BY_POST_SUCCESS: (state, { payload }) => ({
             ...state,
-            fetchUserByID: {
-                ...state.fetchUserByID,
+            fetchCommentByPost: {
+                ...state.fetchCommentByPost,
                 requesting: false,
                 error: null,
                 result: payload.data,
             },
         }),
-        FETCH_USER_BY_ID_FAIL: (state, { payload }) => ({
+        FETCH_COMMENT_BY_POST_FAIL: (state, { payload }) => ({
             ...state,
-            fetchUserByID: {
-                ...state.fetchUserByID,
+            fetchCommentByPost: {
+                ...state.fetchCommentByPost,
                 requesting: false,
                 result: null,
                 error: payload.error,
@@ -73,4 +73,4 @@ export const userReducer = handleActions({
     initialState
 );
 
-export default userReducer;
+export default commentReducer;
