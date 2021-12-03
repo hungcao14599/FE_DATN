@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button, Form, Input } from "antd";
-import { Controller, useForm } from "react-hook-form";
-import { PaperClipOutlined } from "@ant-design/icons";
+import { CloudUploadOutlined, PaperClipOutlined } from "@ant-design/icons";
 import AvatarImg from "./../../assets/img/avatar.jpeg";
 import { useDispatch } from "react-redux";
-import { addPost } from "../../actions/post";
+import { addPost, fetchAllPosts } from "../../actions/post";
 import Masonry from "react-masonry-css";
 const Columns = {
   default: 5,
@@ -26,8 +25,6 @@ const PostFormContent = styled.div`
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
 `;
 const Avatar = styled.div`
-  max-height: 50px;
-  max-width: 50px;
   overflow: hidden;
   border-radius: 10px;
   display: flex;
@@ -37,19 +34,20 @@ const Avatar = styled.div`
 `;
 
 const Img = styled.img`
-  height: 45px;
-  width: 45px;
+  height: 50px;
+  width: 66px;
+  object-fit: cover;
 `;
 const ButtonUpload = styled.div`
   cursor: pointer;
   border-radius: 6px;
   line-height: 16px;
   text-align: center;
-  color: #249aff;
   font-size: 12px;
   position: relative;
   display: inline-block;
   border: none;
+  margin-left: 10px;
   button {
     background: #ca0533;
     border-radius: 10px;
@@ -92,18 +90,24 @@ const ImagePreview = styled.div`
 `;
 const PostInput = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   border-bottom: 1px solid #ebedf3;
   padding-bottom: 10px;
 `;
 
 const TextAreaPost = styled(TextArea)`
-  ::placeholder {
-    font-size: 17px;
-    line-height: 1.2;
-    text-align: left;
-    color: #4e5551;
-    font-weight: 600;
+  & {
+    border-radius: 7.5px;
+    border-color: #ebebeb;
+    ::placeholder {
+      font-size: 17px;
+      line-height: 1.2;
+      text-align: left;
+      color: #adafae;
+    }
+    :focus {
+      border-color: #40a9ff;
+    }
   }
 `;
 
@@ -113,12 +117,11 @@ const Preview = styled.div`
   margin-top: 20px;
   button {
     background: #ca0533;
-    border-radius: 7px;
+    border-radius: 5px;
     width: 100%;
+    margin-top: 15px;
     span {
       color: #fff;
-      display: flex;
-      margin: 0 auto;
     }
     :hover,
     :active,
@@ -150,6 +153,8 @@ export default function PostForm() {
     setContent("");
     setFile(null);
     isFile = false;
+
+    dispatch(fetchAllPosts(20, 1));
   };
 
   return (
@@ -203,8 +208,8 @@ export default function PostForm() {
                   </PreviewImg>
                 </Masonry>
               </div>
-              <Button type="default" size="middle" onClick={handlePost}>
-                Post
+              <Button type="default" size="large" onClick={handlePost}>
+                <CloudUploadOutlined /> Post
               </Button>
             </Preview>
           </>

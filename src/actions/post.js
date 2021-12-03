@@ -41,3 +41,50 @@ export const addPost =
                 return Promise.reject(error);
             });
     };
+
+// FETCH ALL POSTS OF USER
+
+const { fetchAllPostsRequest, fetchAllPostsSuccess, fetchAllPostsFail } =
+createActions({
+    FETCH_ALL_POSTS_REQUEST: () => {},
+    FETCH_ALL_POSTS_SUCCESS: (data) => ({ data }),
+    FETCH_ALL_POSTS_FAIL: (error) => ({ error }),
+});
+
+export const fetchAllPosts = (size, page) => (dispatch) => {
+    dispatch(fetchAllPostsRequest());
+    return Api.Post.fetchAllPosts(size, page)
+        .then(({ data }) => {
+            dispatch(fetchAllPostsSuccess(data));
+            return data;
+        })
+        .catch((error) => {
+            dispatch(fetchAllPostsFail(error));
+            return Promise.reject(error);
+        });
+};
+
+// FETCH POST BY POST ID
+
+const {
+    fetchPostByPostIDRequest,
+    fetchPostByPostIDSuccess,
+    fetchPostByPostIDFail,
+} = createActions({
+    FETCH_POST_BY_POST_ID_REQUEST: () => {},
+    FETCH_POST_BY_POST_ID_SUCCESS: (data) => ({ data }),
+    FETCH_POST_BY_POST_ID_FAIL: (error) => ({ error }),
+});
+
+export const fetchPostByPostID = (id) => (dispatch) => {
+    dispatch(fetchPostByPostIDRequest());
+    return Api.Post.fetchPostByPostID(id)
+        .then(({ data }) => {
+            dispatch(fetchPostByPostIDSuccess(data));
+            return data;
+        })
+        .catch((error) => {
+            dispatch(fetchPostByPostIDFail(error));
+            return Promise.reject(error);
+        });
+};

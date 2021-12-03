@@ -17,6 +17,8 @@ function App() {
         <Route path="/tlu/login" component={SignInSignup}></Route>
         <Route path="/tlu/register" component={SignInSignup}></Route>
         <Route path="/tlu/home" component={Home}></Route>
+
+        <Route path="/tlu/profile/:username" component={SignInSignup}></Route>
       </Switch>
     </Router>
   );

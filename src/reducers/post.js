@@ -11,6 +11,16 @@ const initialState = {
         error: null,
         requesting: false,
     },
+    fetchAllPosts: {
+        result: [],
+        error: null,
+        requesting: false,
+    },
+    fetchPostByPostID: {
+        result: [],
+        error: null,
+        requesting: false,
+    },
 };
 
 export const postReducer = handleActions({
@@ -63,6 +73,62 @@ export const postReducer = handleActions({
             ...state,
             uploadImage: {
                 ...state.uploadImage,
+                requesting: false,
+                result: null,
+                error: payload.error,
+            },
+        }),
+
+        // FETCH ALL POST REQUEST
+        FETCH_ALL_POSTS_REQUEST: (state) => ({
+            ...state,
+            fetchAllPosts: {
+                ...state.fetchAllPosts,
+                requesting: true,
+                error: null,
+            },
+        }),
+        FETCH_ALL_POSTS_SUCCESS: (state, { payload }) => ({
+            ...state,
+            fetchAllPosts: {
+                ...state.fetchAllPosts,
+                requesting: false,
+                error: null,
+                result: payload.data,
+            },
+        }),
+        FETCH_ALL_POSTS_FAIL: (state, { payload }) => ({
+            ...state,
+            fetchAllPosts: {
+                ...state.fetchAllPosts,
+                requesting: false,
+                result: null,
+                error: payload.error,
+            },
+        }),
+
+        //FETCH POST BY POST ID
+        FETCH_POST_BY_POST_ID_REQUEST: (state) => ({
+            ...state,
+            fetchPostByPostID: {
+                ...state.fetchPostByPostID,
+                requesting: true,
+                error: null,
+            },
+        }),
+        FETCH_POST_BY_POST_ID_SUCCESS: (state, { payload }) => ({
+            ...state,
+            fetchPostByPostID: {
+                ...state.fetchPostByPostID,
+                requesting: false,
+                error: null,
+                result: payload.data,
+            },
+        }),
+        FETCH_POST_BY_POST_ID_FAIL: (state, { payload }) => ({
+            ...state,
+            fetchPostByPostID: {
+                ...state.fetchPostByPostID,
                 requesting: false,
                 result: null,
                 error: payload.error,

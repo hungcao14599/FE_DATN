@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Avatar from "./../../assets/img/avatar.jpeg";
 import Ads from "./../../assets/img/ads.jpg";
@@ -12,9 +12,20 @@ import {
   SettingOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserById } from "../../actions/user";
+
 const { Sider } = Layout;
 
 export default function SidebarLeft() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUserById());
+  }, []);
+
+  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+
+  console.log("rr", profile);
   return (
     <div>
       <WrapperCol1>
@@ -22,12 +33,14 @@ export default function SidebarLeft() {
           <Left1>
             <ProfileInfo>
               <ProfileImg>
-                <img src={Avatar} alt="" />
+                <img src={profile ? profile.avatar : ""} alt="" />
               </ProfileImg>
 
               <ProfileName>
-                <Name>Alexandra Borke</Name>
-                <Nickname>@alexsunshine</Nickname>
+                <Name>{profile ? profile.username : ""}</Name>
+                <Nickname>{`${profile ? profile.firstname : ""} ${
+                  profile ? profile.lastname : ""
+                }`}</Nickname>
               </ProfileName>
             </ProfileInfo>
           </Left1>
@@ -204,7 +217,7 @@ const Left2 = styled.div`
 `;
 const Left1 = styled.div`
   background: white;
-  width: fit-content;
+  width: auto;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);

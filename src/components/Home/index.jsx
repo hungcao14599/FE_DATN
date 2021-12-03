@@ -1,6 +1,9 @@
 import { Col, Row } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { fetchUserByID } from "../../actions/user";
 import Header from "../Header";
 import MainContent from "../MainContent";
 import SidebarLeft from "../SidebarLeft";
@@ -13,9 +16,7 @@ export default function Home() {
         <Header />
         <Contents>
           <SidebarLeft />
-
           <MainContent />
-
           <SidebarRight />
         </Contents>
       </Container>
