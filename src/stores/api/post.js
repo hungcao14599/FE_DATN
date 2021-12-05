@@ -23,4 +23,7 @@ export default class Post {
             headers: authHeader(),
         });
     }
+    static removePost(id) {
+        return http.put(`${PREFIX}/delete/${id}`, {}, { headers: authHeader() });
+    }
 }

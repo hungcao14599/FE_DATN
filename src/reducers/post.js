@@ -6,6 +6,11 @@ const initialState = {
         error: null,
         requesting: false,
     },
+    removePost: {
+        result: [],
+        error: null,
+        requesting: false,
+    },
     uploadImage: {
         result: [],
         error: null,
@@ -24,7 +29,7 @@ const initialState = {
 };
 
 export const postReducer = handleActions({
-        //VERIFY ACCOUNT
+        //ADD POST
         ADD_POST_REQUEST: (state) => ({
             ...state,
             addPost: {
@@ -129,6 +134,34 @@ export const postReducer = handleActions({
             ...state,
             fetchPostByPostID: {
                 ...state.fetchPostByPostID,
+                requesting: false,
+                result: null,
+                error: payload.error,
+            },
+        }),
+
+        //REMOVE POST
+        REMOVE_POST_REQUEST: (state) => ({
+            ...state,
+            addPost: {
+                ...state.addPost,
+                requesting: true,
+                error: null,
+            },
+        }),
+        REMOVE_POST_SUCCESS: (state, { payload }) => ({
+            ...state,
+            addPost: {
+                ...state.addPost,
+                requesting: false,
+                error: null,
+                result: payload.data,
+            },
+        }),
+        REMOVE_POST_FAIL: (state, { payload }) => ({
+            ...state,
+            addPost: {
+                ...state.addPost,
                 requesting: false,
                 result: null,
                 error: payload.error,

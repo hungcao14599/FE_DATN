@@ -2,50 +2,46 @@ import { Button } from "antd";
 import React, { useState } from "react";
 import styled from "styled-components";
 import imgSearch from "../../assets/svg/search_icon.svg";
+import Logo from "../../assets/svg/social-media.svg";
 
 import Search from "../Search";
 import Avatar from "../../assets/img/avatar.jpeg";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
-export default function Header() {
+export default function Header({ profile }) {
   const [search, setSearch] = useState();
 
   return (
-    <div>
-      <Container>
-        <HeaderImg>
-          <Image>
-            <img src={Avatar} alt="" />
-          </Image>
-          <div
-            style={{ color: "black", marginLeft: "10px", fontWeight: "700" }}
-          >
-            Spacepark
-          </div>
-        </HeaderImg>
-        <SearchBar>
-          <div>
-            <Search
-              imgSearch={imgSearch}
-              value={search}
-              onChange={setSearch}
-              setSearch={setSearch}
-            />
-          </div>
-          <ButtonAdd>
-            <Button icon={<PlusCircleOutlined />}>Create</Button>
-          </ButtonAdd>
-          <Image>
-            <img src={Avatar} alt="" />
-          </Image>
-        </SearchBar>
-      </Container>
-    </div>
+    <Container>
+      <HeaderImg>
+        <Image>
+          <img src={Logo} alt="" style={{ color: "#ca0533" }} />
+        </Image>
+        <TitleLogo>TLU Social Network</TitleLogo>
+      </HeaderImg>
+      <SearchBar>
+        <div>
+          <Search
+            imgSearch={imgSearch}
+            value={search}
+            onChange={setSearch}
+            setSearch={setSearch}
+          />
+        </div>
+        <ButtonAdd>
+          <Button icon={<PlusCircleOutlined />}>Create</Button>
+        </ButtonAdd>
+        <Image>
+          <img src={profile?.avatar} alt="" />
+        </Image>
+      </SearchBar>
+    </Container>
   );
 }
 
 const HeaderImg = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Image = styled.div`
@@ -75,7 +71,11 @@ const ButtonAdd = styled.div`
     }
   }
 `;
-
+const TitleLogo = styled.span`
+  margin-left: 10px;
+  font-weight: 700;
+  font-size: 15px;
+`;
 const SearchBar = styled.div`
   display: flex;
   justify-content: end;

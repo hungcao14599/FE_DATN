@@ -17,15 +17,7 @@ import { fetchUserById } from "../../actions/user";
 
 const { Sider } = Layout;
 
-export default function SidebarLeft() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchUserById());
-  }, []);
-
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
-
-  console.log("rr", profile);
+export default function SidebarLeft({ profile }) {
   return (
     <div>
       <WrapperCol1>

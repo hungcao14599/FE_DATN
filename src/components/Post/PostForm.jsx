@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { Button, Form, Input } from "antd";
 import { CloudUploadOutlined, PaperClipOutlined } from "@ant-design/icons";
 import AvatarImg from "./../../assets/img/avatar.jpeg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPost, fetchAllPosts } from "../../actions/post";
 import Masonry from "react-masonry-css";
+import { fetchUserById } from "../../actions/user";
 const Columns = {
   default: 5,
   1200: 3,
@@ -133,12 +134,18 @@ const Preview = styled.div`
 export default function PostForm() {
   const [file, setFile] = useState();
   const [content, setContent] = useState("");
+  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
 
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setContent(e.target.value);
   };
+
+  useEffect(() => {
+    dispatch(fetchUserById());
+  }, [dispatch]);
+
   const handlePost = () => {
     const formData = new FormData();
     let isFile = false;
@@ -162,11 +169,11 @@ export default function PostForm() {
       <PostFormContent>
         <PostInput>
           <Avatar style={{ padding: "0px" }}>
-            <Img src={AvatarImg} alt="" />
+            <Img src={profile ? profile.avatar : ""} alt="" />
           </Avatar>
 
           <TextAreaPost
-            placeholder="What's the news"
+            placeholder={`What is the news ${profile ? profile.username : ""}`}
             rows={2}
             autoSize
             value={content}

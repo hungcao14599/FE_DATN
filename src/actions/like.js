@@ -1,6 +1,5 @@
 import { createActions } from "redux-actions";
 import Api from "../stores/api";
-import { fetchPostByPostID } from "./post";
 
 // HANDLE POST MOOD (LIKE)
 
@@ -16,7 +15,7 @@ export const handlePostLike = (postID) => (dispatch) => {
     return Api.Like.handlePostLike(postID)
         .then(({ data }) => {
             dispatch(handlePostLikeSuccess(data));
-            dispatch(fetchPostByPostID(postID));
+            // dispatch(fetchPostByPostID(postID));
             return data;
         })
         .catch((error) => {
