@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostItem from "./PostItem";
-import PostForm from "./PostForm";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCommentByPost } from "../../actions/comment";
+import { useSelector } from "react-redux";
 
-export default function PostList({ items }) {
+export default function PostList() {
+  const items = useSelector((state) => state.post.fetchAllPosts.result.data);
   return (
     <div>
       <UL>

@@ -5,6 +5,7 @@ import { userReducer } from "./user";
 import { postReducer } from "./post";
 import { likeReducer } from "./like";
 import { commentReducer } from "./comment";
+import { friendReducer } from "./friend";
 const reducer = () =>
     combineReducers({
         auth: authReducer,
@@ -12,6 +13,7 @@ const reducer = () =>
         post: postReducer,
         like: likeReducer,
         comment: commentReducer,
+        friend: friendReducer,
     });
 
 export default reducer;

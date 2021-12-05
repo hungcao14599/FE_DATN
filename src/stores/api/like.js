@@ -5,6 +5,10 @@ const PREFIX = "/post-mood";
 
 export default class Like {
     static handlePostLike(postID) {
-        return http.post(`${PREFIX}/${postID}`, { headers: authHeader() });
+        return http.post(
+            `${PREFIX}/${postID}`, {}, {
+                headers: authHeader(),
+            }
+        );
     }
 }

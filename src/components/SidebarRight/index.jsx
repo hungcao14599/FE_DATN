@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Dropdown, Menu } from "antd";
-import Avatar from "./../../assets/img/avatar.jpeg";
 import FriendRequest from "./FriendRequest";
+import { useDispatch } from "react-redux";
+import {
+  fetchAllFriendOfUserById,
+  fetchAllUserApprovalById,
+} from "../../actions/friend";
+import { useSelector } from "react-redux";
 
 export default function SidebarRight() {
+  const dispatch = useDispatch();
+  const items = useSelector(
+    (state) => state.friend.fetchAllFriendOfUserById.result.data
+  );
+  const approval = useSelector(
+    (state) => state.friend.fetchAllUserApprovalById.result.data
+  );
+
+  useEffect(() => {
+    dispatch(fetchAllFriendOfUserById(20, 1));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAllUserApprovalById(20, 1));
+  }, [dispatch]);
+
   const handleMenuClick = (e) => {
     console.log("click", e);
   };
@@ -15,130 +36,31 @@ export default function SidebarRight() {
       <Menu.Item key="3">3rd item</Menu.Item>
     </Menu>
   );
-  const items = [
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-    {
-      img: (
-        <img
-          src={Avatar}
-          alt=""
-          width="40px"
-          height="40px"
-          style={{ borderRadius: "10px", objectFit: "cover" }}
-        />
-      ),
-      name: "Alexandra Borke",
-      dropbtn: <Dropdown.Button overlay={menu}></Dropdown.Button>,
-    },
-  ];
+
   return (
     <WrapperCol3>
       <WrapTitle>
         <WrapDes>REQUEST</WrapDes>
       </WrapTitle>
-      <FriendRequest />
+      {(approval ? approval.data : []).map((item, i) => {
+        return <FriendRequest data={item} key={i} />;
+      })}
+
       <WrapTitle>
         <WrapDes>CONTACT</WrapDes>
+        <FriendCount>{items ? items.data.length : ""}</FriendCount>
       </WrapTitle>
       <Right3>
         <ContactInfo>
-          {items.map((item, i) => (
+          {(items ? items.data : []).map((item, i) => (
             <>
               <WrapContact>
-                <ContactImg>{item.img}</ContactImg>
+                <ContactImg>
+                  <img src={item.user_friend.avatar} alt="" />
+                </ContactImg>
                 <ContactName>
-                  <Name>{item.name}</Name>
-                  <DropBtn>{item.dropbtn}</DropBtn>
+                  <Name>{item.user_friend.username}</Name>
+                  <Dropdown.Button overlay={menu}></Dropdown.Button>
                 </ContactName>
               </WrapContact>
             </>
@@ -149,6 +71,15 @@ export default function SidebarRight() {
   );
 }
 
+const FriendCount = styled.span`
+  color: #fff;
+  background: #767676;
+  padding: 3px 10px;
+  border-radius: 18px;
+  font-weight: 600;
+  font-size: 13px;
+`;
+
 const WrapContact = styled.div`
   display: flex;
   margin-bottom: 5px;
@@ -156,14 +87,14 @@ const WrapContact = styled.div`
 `;
 const WrapTitle = styled.div`
   margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 const WrapDes = styled.span`
-  margin-bottom: 20px;
   font-weight: 600;
   color: #767676;
 `;
-
-const DropBtn = styled.div``;
 
 const Name = styled.div`
   font-weight: 700;
@@ -178,6 +109,12 @@ const ContactName = styled.div`
 
 const ContactImg = styled.div`
   padding: 7px 0;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
 `;
 
 const ContactInfo = styled.div`

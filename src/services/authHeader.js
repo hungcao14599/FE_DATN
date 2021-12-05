@@ -3,7 +3,7 @@ export default function authHeader() {
 
     if (user && user.accessToken) {
         return {
-            Authorization: `${user.tokenType} ${user.accessToken}`,
+            Authorization: "Bearer " + user.accessToken,
         };
     } else {
         return {};
