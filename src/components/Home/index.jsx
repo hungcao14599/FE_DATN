@@ -1,22 +1,28 @@
-import { Col, Row } from "antd";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { fetchUserByID } from "../../actions/user";
+import { fetchUserById } from "../../actions/user";
 import Header from "../Header";
 import MainContent from "../MainContent";
 import SidebarLeft from "../SidebarLeft";
 import SidebarRight from "../SidebarRight";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUserById());
+  }, [dispatch]);
+
+  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+
   return (
     <Wrapper>
       <Container>
-        <Header />
+        <Header profile={profile} />
         <Contents>
-          <SidebarLeft />
-          <MainContent />
+          <SidebarLeft profile={profile} />
+          <MainContent profile={profile} />
           <SidebarRight />
         </Contents>
       </Container>

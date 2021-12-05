@@ -12,22 +12,18 @@ export default function PostComment({ id }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(fetchCommentByPost(id, 10, 1)).then((res) => {
-      const data = res ? res : [];
-      setLoading(false);
-      setItems(data);
-    });
+    dispatch(fetchCommentByPost(id, 10, 1));
   }, [dispatch, id]);
 
-  console.log("ii", items.data, typeof items.data);
+  const comments = useSelector(
+    (state) => state.comment.fetchCommentByPost.result.data
+  );
 
   return (
     <>
-      {loading &&
-        (items ? items : []).map((item, i) => {
-          return <FeedBack data={item} key={i} />;
-        })}
+      {(comments ? comments.data : []).map((item, i) => {
+        return <FeedBack data={item} key={i} />;
+      })}
     </>
   );
 }

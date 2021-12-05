@@ -88,3 +88,24 @@ export const fetchPostByPostID = (id) => (dispatch) => {
             return Promise.reject(error);
         });
 };
+
+// REMOVE POST
+
+const { removePostRequest, removePostSuccess, removePostFail } = createActions({
+    REMOVE_POST_REQUEST: () => {},
+    REMOVE_POST_SUCCESS: (data) => ({ data }),
+    REMOVE_POST_FAIL: (error) => ({ error }),
+});
+
+export const removePost = (id) => (dispatch) => {
+    dispatch(removePostRequest());
+    return Api.Post.removePost(id)
+        .then(({ data }) => {
+            dispatch(removePostSuccess(data));
+            return data;
+        })
+        .catch((error) => {
+            dispatch(removePostFail(error));
+            return Promise.reject(error);
+        });
+};

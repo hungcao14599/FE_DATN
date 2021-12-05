@@ -1,18 +1,19 @@
 import { Button } from "antd";
 import React from "react";
 import styled from "styled-components";
+import friendReducer from "../../reducers/friend";
 import Avatar from "./../../assets/img/avatar.jpeg";
 
-export default function FriendRequest() {
+export default function FriendRequest({ data }) {
   return (
     <WrapFriendRequest>
       <WrapProfileInfo>
         <ProfileImg>
-          <img src={Avatar} alt="" />
+          <img src={data.user_friend.avatar} alt="" />
         </ProfileImg>
         <ProfileName>
-          <Name>Alexandra Borke</Name>
-          <Des>wants to add you to friends</Des>
+          <Name>{data.user_friend.username}</Name>
+          <Des>{data.user_friend.description}</Des>
         </ProfileName>
       </WrapProfileInfo>
       <WrapBtn>
@@ -26,8 +27,7 @@ export default function FriendRequest() {
 }
 
 const WrapFriendRequest = styled.div`
-  float: right;
-  background: white;
+  background: #fff;
   width: fit-content;
   height: auto;
   border-radius: 10px;
@@ -41,6 +41,7 @@ const WrapBtn = styled.div`
   justify-content: space-between;
   button {
     border-radius: 5px;
+    margin: 5px;
     span {
       padding: 0 10px;
     }

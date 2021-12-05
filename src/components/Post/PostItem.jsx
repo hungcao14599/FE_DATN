@@ -2,22 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "./../../assets/img/avatar.jpeg";
-import { Button, Dropdown, Menu, Form, Input } from "antd";
+import { Button, Dropdown, Menu, Form, Input, Modal } from "antd";
 import Masonry from "react-masonry-css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   CommentOutlined,
   EditOutlined,
+  ExclamationCircleOutlined,
   EyeOutlined,
-  HeartOutlined,
   SendOutlined,
 } from "@ant-design/icons";
 import { Controller, useForm } from "react-hook-form";
 import { formatDate } from "../../utils/formatDate";
 import { handlePostLike } from "../../actions/like";
 import { addCommentToPost, fetchCommentByPost } from "../../actions/comment";
-import FeedBack from "./FeedBack";
 import PostComment from "./PostComment";
+import { fetchAllPosts, removePost } from "../../actions/post";
+import LikeActionIcon from "../../assets/img/likeAction.png";
+import LikeIcon from "../../assets/img/like.png";
 
 const Wrapper = styled.div`
   width: auto;
@@ -176,14 +178,6 @@ const Logo = styled.div`
 `;
 
 export default function PostItem({ data, id }) {
-  // useEffect(() => {
-  //   dispatch(fetchCommentByPost(id, 10, 1));
-  // }, [id, dispatch]);
-
-  // const commentData = useSelector(
-  //   (state) => state.comment.fetchCommentByPost.result.data
-  // );
-
   const {
     control,
     handleSubmit,
@@ -192,10 +186,21 @@ export default function PostItem({ data, id }) {
   } = useForm({
     defaultValues: { comment: "" },
   });
+  const { confirm } = Modal;
+  const statusLike = data.like.length > 0 ? true : false;
+  const [step, setStep] = useState(0);
   const dispatch = useDispatch();
 
   const [isComment, setIsComment] = useState(false);
+  const [isRemove, setIsRemove] = useState(false);
+  const handleOk = (id) => {
+    dispatch(removePost(id));
+    dispatch(fetchAllPosts(20, 1));
+  };
 
+  const handleCancel = () => {
+    setIsRemove(false);
+  };
   const Columns = {
     default: 2,
     1100: 3,
@@ -211,8 +216,28 @@ export default function PostItem({ data, id }) {
     console.log("here");
   };
 
+  // const handleRemovePost = () => {
+  //   setIsRemove(true);
+  // };
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: "Are you sure delete this post?",
+      icon: <ExclamationCircleOutlined />,
+      content: `Post: ${data ? data.content : ""}`,
+      okText: "Yes",
+      okType: "danger",
+      // cancelText: "No",
+      onOk: () => handleOk(data.id),
+      onCancel: handleCancel,
+      visible: isRemove,
+    });
+  };
+
   const handlePostMood = (id) => {
     dispatch(handlePostLike(id));
+    setStep(step + 1);
+    dispatch(fetchAllPosts(20, 1));
   };
 
   const menu = (
@@ -220,18 +245,25 @@ export default function PostItem({ data, id }) {
       <Menu.Item key="1" onClick={hand}>
         Update Post
       </Menu.Item>
-      <Menu.Item key="2">Remove Post</Menu.Item>
+      <Menu.Item key="2" onClick={showDeleteConfirm}>
+        Remove Post
+      </Menu.Item>
     </Menu>
   );
 
-  const handleSendComment = handleSubmit((items) => {
-    dispatch(addCommentToPost(items.commment, data.id));
-    setValue("");
+  const handleSendComment = handleSubmit((items, e) => {
+    dispatch(addCommentToPost(items.comment, e));
+    dispatch(fetchAllPosts(20, 1));
+    dispatch(fetchCommentByPost(data.id, 10, 1));
+    setIsComment(true);
+    setStep(step + 1);
   });
 
   const handleComment = () => {
     setIsComment(!isComment);
   };
+
+  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
 
   return (
     <Wrapper>
@@ -239,7 +271,7 @@ export default function PostItem({ data, id }) {
         <Info>
           <ProfileInfo>
             <ProfileImg>
-              <img src={Avatar} alt="" />
+              <img src={data ? data.user.avatar : ""} alt="" />
             </ProfileImg>
 
             <ProfileName>
@@ -253,7 +285,12 @@ export default function PostItem({ data, id }) {
           </ProfileInfo>
         </Info>
         <Control>
-          <Dropdown.Button overlay={menu}></Dropdown.Button>
+          {(profile ? profile.username : "") ===
+          (data ? data.user.username : "") ? (
+            <Dropdown.Button overlay={menu}></Dropdown.Button>
+          ) : (
+            ""
+          )}
         </Control>
       </HeaderPost>
       <Content>
@@ -284,28 +321,33 @@ export default function PostItem({ data, id }) {
       <Interact>
         <InteractItem>
           <LikeMood>
-            <ButtonLike onClick={() => handlePostMood(data.id)}>
-              <HeartOutlined />
-            </ButtonLike>
-            <Like>{data.likes}</Like>
+            {statusLike ? (
+              <ButtonLike onClick={() => handlePostMood(data.id)}>
+                <img src={LikeActionIcon} alt="" width="23px" height="23px" />
+              </ButtonLike>
+            ) : (
+              <ButtonLike onClick={() => handlePostMood(data.id)}>
+                <img src={LikeIcon} alt="" width="23px" height="23px" />
+              </ButtonLike>
+            )}
+
+            <Like>{data.like.length}</Like>
           </LikeMood>
           <LikeMood>
             <ButtonLike onClick={handleComment}>
               <CommentOutlined />
             </ButtonLike>
-            <Like>{data.comments}</Like>
+            <Like>{data.comment.length}</Like>
           </LikeMood>
         </InteractItem>
         <View>
           <EyeOutlined />
-          <ViewItem>
-            {data.comments > data.likes ? data.comments : data.likes}
-          </ViewItem>
+          <ViewItem>{step}</ViewItem>
         </View>
       </Interact>
       <Comment>
         <ProfileImgComment>
-          <img src={Avatar} alt="" />
+          <img src={data ? data.user.avatar : ""} alt="" />
         </ProfileImgComment>
         <Form.Item
           help={errors.email && errors.email?.message}
@@ -336,7 +378,7 @@ export default function PostItem({ data, id }) {
             )}
           />
         </Form.Item>
-        <ButtonLike onClick={handleSendComment}>
+        <ButtonLike onClick={() => handleSendComment(data.id)}>
           <SendOutlined />
         </ButtonLike>
       </Comment>

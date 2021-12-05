@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { formatDate } from "../../utils/formatDate";
 import Avatar from "./../../assets/img/avatar.jpeg";
 
 export default function FeedBack({ data }) {
@@ -14,7 +15,7 @@ export default function FeedBack({ data }) {
           <Content>{data ? data.content : ""}</Content>
         </Comment>
       </CommentFeedBack>
-      <Time>3 hours ago</Time>
+      <Time>{formatDate(data?.createdAt)}</Time>
     </Wrapper>
   );
 }
