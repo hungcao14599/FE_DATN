@@ -22,11 +22,13 @@ export const addPost =
         return Api.Post.addPost(content, type, groupID)
             .then(({ data }) => {
                 dispatch(addPostSuccess(data));
+                dispatch(fetchAllPosts(20, 1));
                 if (isFile) {
                     dispatch(uploadImageRequest());
                     return Api.Post.uploadImage(data.data.id, formData)
                         .then((res) => {
                             dispatch(uploadImageSuccess(res));
+                            dispatch(fetchAllPosts(20, 1));
                         })
                         .catch((error) => {
                             dispatch(uploadImageFail(error));

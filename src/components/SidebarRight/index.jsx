@@ -125,7 +125,7 @@ const ContactInfo = styled.div`
 const Right3 = styled.div`
   float: right;
   background: white;
-  width: fit-content;
+  width: 100%;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
