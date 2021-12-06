@@ -1,10 +1,18 @@
 import { Button } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import friendReducer from "../../reducers/friend";
-import Avatar from "./../../assets/img/avatar.jpeg";
+import { approvalFriend, fetchAllFriendOfUserById } from "../../actions/friend";
 
 export default function FriendRequest({ data }) {
+  const dispatch = useDispatch();
+
+  const handleApprovalFriend = () => {
+    dispatch(approvalFriend(data.user_friend.id, true));
+  };
+  const handleUnApprovalFriend = () => {
+    dispatch(approvalFriend(data.user_friend.id, false));
+  };
   return (
     <WrapFriendRequest>
       <WrapProfileInfo>
@@ -17,10 +25,16 @@ export default function FriendRequest({ data }) {
         </ProfileName>
       </WrapProfileInfo>
       <WrapBtn>
-        <Button type="primary" style={{ background: "#ca0533" }}>
+        <Button
+          type="primary"
+          style={{ background: "#ca0533" }}
+          onClick={handleApprovalFriend}
+        >
           Accept
         </Button>
-        <Button type="outlined">Decline</Button>
+        <Button type="outlined" onClick={handleUnApprovalFriend}>
+          Decline
+        </Button>
       </WrapBtn>
     </WrapFriendRequest>
   );

@@ -11,6 +11,11 @@ const initialState = {
         error: null,
         requesting: false,
     },
+    approvalFriend: {
+        result: [],
+        error: null,
+        requesting: false,
+    },
 };
 
 export const friendReducer = handleActions({
@@ -61,6 +66,34 @@ export const friendReducer = handleActions({
             },
         }),
         FETCH_ALL_USER_APPROVAL_BY_ID_FAIL: (state, { payload }) => ({
+            ...state,
+            fetchAllUserApprovalById: {
+                ...state.fetchAllUserApprovalById,
+                requesting: false,
+                result: null,
+                error: payload.error,
+            },
+        }),
+
+        // APPROVAL FRIEND
+        APPROVAL_FRIEND_REQUEST: (state) => ({
+            ...state,
+            fetchAllUserApprovalById: {
+                ...state.fetchAllUserApprovalById,
+                requesting: true,
+                error: null,
+            },
+        }),
+        APPROVAL_FRIEND_SUCCESS: (state, { payload }) => ({
+            ...state,
+            fetchAllUserApprovalById: {
+                ...state.fetchAllUserApprovalById,
+                requesting: false,
+                error: null,
+                result: payload.data,
+            },
+        }),
+        APPROVAL_FRIEND_FAIL: (state, { payload }) => ({
             ...state,
             fetchAllUserApprovalById: {
                 ...state.fetchAllUserApprovalById,

@@ -160,8 +160,6 @@ export default function PostForm() {
     setContent("");
     setFile(null);
     isFile = false;
-
-    dispatch(fetchAllPosts(20, 1));
   };
 
   return (
