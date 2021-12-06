@@ -14,4 +14,11 @@ export default class Friend {
             headers: authHeader(),
         });
     }
+    static approvalFriend(friend, isApproval) {
+        return http.post(
+            `${PREFIX}/approval/`, { friend, isApproval }, {
+                headers: authHeader(),
+            }
+        );
+    }
 }

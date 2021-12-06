@@ -49,6 +49,7 @@ const Title = styled.p`
   font-size: 30px;
   font-weight: 700;
   text-align: center;
+  margin-bottom: unset;
 `;
 
 const Des = styled.p`

@@ -50,3 +50,26 @@ export const fetchAllUserApprovalById = (size, page) => (dispatch) => {
             return Promise.reject(error);
         });
 };
+
+// Approval Friend
+
+const { approvalFriendRequest, approvalFriendSuccess, approvalFriendFail } =
+createActions({
+    APPROVAL_FRIEND_REQUEST: () => {},
+    APPROVAL_FRIEND_SUCCESS: (data) => ({ data }),
+    APPROVAL_FRIEND_FAIL: (error) => ({ error }),
+});
+
+export const approvalFriend = (friend, isApproval) => (dispatch) => {
+    dispatch(approvalFriendRequest());
+    return Api.Friend.approvalFriend(friend, isApproval)
+        .then(({ data }) => {
+            dispatch(approvalFriendSuccess(data));
+            dispatch(fetchAllFriendOfUserById(20, 1));
+            return data;
+        })
+        .catch((error) => {
+            dispatch(approvalFriendFail(error));
+            return Promise.reject(error);
+        });
+};
