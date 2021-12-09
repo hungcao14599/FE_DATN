@@ -111,8 +111,8 @@ export const SignInForm = ({ style = {} }) => {
   const dispatch = useDispatch();
   const handleSignIn = handleSubmit((data) => {
     dispatch(loginUser(data.email, data.password)).then((res) => {
-      history.push("../tlu/home");
       localStorage.setItem("user", JSON.stringify(res));
+      history.push("../tlu/home");
     });
   });
 
