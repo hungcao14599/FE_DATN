@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import SignInSignup from "./components/SignInSignUp";
+import Profile from "./components/Profile";
+
 import Home from "./components/Home";
 
 function App() {
@@ -17,8 +19,9 @@ function App() {
         <Route path="/tlu/login" component={SignInSignup}></Route>
         <Route path="/tlu/register" component={SignInSignup}></Route>
         <Route path="/tlu/home" component={Home}></Route>
+        
 
-        <Route path="/tlu/profile/:username" component={SignInSignup}></Route>
+        <Route path="/tlu/profile/:username" component={Profile}></Route>
       </Switch>
     </Router>
   );

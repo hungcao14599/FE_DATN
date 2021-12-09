@@ -6,7 +6,7 @@ import Story from "../Story";
 import PostForm from "../Post/PostForm";
 import PostList from "../Post/PostList";
 import { fetchAllPosts } from "../../actions/post";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 export default function MainContent() {
   const items = [
     {
@@ -116,6 +116,8 @@ export default function MainContent() {
     },
   ];
 
+  const allPosts = useSelector((state) => state.post.fetchAllPosts.result.data);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllPosts(20, 1));
@@ -126,7 +128,7 @@ export default function MainContent() {
       <SearchBar>
         <PostForm />
       </SearchBar>
-      <PostList />
+      <PostList items={allPosts} />
     </WrappStory>
   );
 }

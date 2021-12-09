@@ -237,7 +237,6 @@ export default function PostItem({ data, id }) {
   const handlePostMood = (id) => {
     dispatch(handlePostLike(id));
     setStep(step + 1);
-    dispatch(fetchAllPosts(20, 1));
   };
 
   const menu = (
