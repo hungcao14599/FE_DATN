@@ -1,10 +1,8 @@
 import React from "react";
 import PostItem from "./PostItem";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 
-export default function PostList() {
-  const items = useSelector((state) => state.post.fetchAllPosts.result.data);
+export default function PostList({ items }) {
   return (
     <div>
       <UL>

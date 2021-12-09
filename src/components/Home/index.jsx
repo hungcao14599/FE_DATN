@@ -15,7 +15,6 @@ export default function Home() {
   }, [dispatch]);
 
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
-
   return (
     <Wrapper>
       <Container>
@@ -39,6 +38,7 @@ const Container = styled.div`
   padding: 20px;
   background: #f9fafb;
   border-radius: 15px;
+  box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
 `;
 
 const Contents = styled.div`

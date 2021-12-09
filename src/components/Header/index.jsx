@@ -7,6 +7,7 @@ import Logo from "../../assets/svg/social-media.svg";
 import Search from "../Search";
 import Avatar from "../../assets/img/avatar.jpeg";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 export default function Header({ profile }) {
   const [search, setSearch] = useState();
@@ -14,10 +15,12 @@ export default function Header({ profile }) {
   return (
     <Container>
       <HeaderImg>
-        <Image>
-          <img src={Logo} alt="" style={{ color: "#ca0533" }} />
-        </Image>
-        <TitleLogo>TLU Social Network</TitleLogo>
+        <Link to="/tlu/home">
+          <Image>
+            <img src={Logo} alt="" style={{ color: "#ca0533" }} />
+          </Image>
+          <TitleLogo>TLU Social Network</TitleLogo>
+        </Link>
       </HeaderImg>
       <SearchBar>
         <div>
@@ -40,8 +43,10 @@ export default function Header({ profile }) {
 }
 
 const HeaderImg = styled.div`
-  display: flex;
-  align-items: center;
+  a {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const Image = styled.div`
@@ -75,6 +80,7 @@ const TitleLogo = styled.span`
   margin-left: 10px;
   font-weight: 700;
   font-size: 15px;
+  color: #082850;
 `;
 const SearchBar = styled.div`
   display: flex;

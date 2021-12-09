@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserById } from "../../actions/user";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -50,7 +51,7 @@ export default function SidebarLeft({ profile }) {
                 }}
               >
                 <Menu.Item key="1" icon={<HomeOutlined />}>
-                  Home
+                  <Link to={`/tlu/home`}>Home </Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<ContactsOutlined />}>
                   People
@@ -59,12 +60,12 @@ export default function SidebarLeft({ profile }) {
                   Photos
                 </Menu.Item>
                 <Menu.Item key="4" icon={<ProfileOutlined />}>
-                  News Feed
+                  <Link to={`/tlu/home`}>News Feed </Link>
                 </Menu.Item>
                 <Menu.Item key="5" icon={<UserOutlined />}>
-                  Profile
+                  <Link to={`/tlu/profile/${profile?.username}`}>Profile </Link>
                 </Menu.Item>
-                <Menu.Item key="6   " icon={<SettingOutlined />}>
+                <Menu.Item key="6" icon={<SettingOutlined />}>
                   Settings
                 </Menu.Item>
               </Menu>
