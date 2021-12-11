@@ -39,7 +39,7 @@ const ProfileImg = styled.div`
   img {
     width: 50px;
     height: 50px;
-    border-radius: 10px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;
@@ -181,11 +181,11 @@ export default function PostItem({ data, id }) {
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: { comment: "" },
   });
+
   const { confirm } = Modal;
   const statusLike = data.like.length > 0 ? true : false;
   const [step, setStep] = useState(0);
@@ -263,20 +263,18 @@ export default function PostItem({ data, id }) {
   };
 
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
-
+  const URL = "http://localhost:3000/api/users/image";
   return (
     <Wrapper>
       <HeaderPost>
         <Info>
           <ProfileInfo>
             <ProfileImg>
-              <img src={data ? data.user.avatar : ""} alt="" />
+              <img src={`${URL}/${data?.user.avatar}`} alt="" />
             </ProfileImg>
 
             <ProfileName>
-              <Link
-              //   to={`/tlu/profile/${username}`}
-              >
+              <Link to={`/tlu/profile/${data.user.username}`}>
                 <Name>{data ? data.user.username : ""}</Name>
               </Link>
               <DateTimeInfo>{formatDate(data.createdAt)}</DateTimeInfo>
@@ -346,7 +344,7 @@ export default function PostItem({ data, id }) {
       </Interact>
       <Comment>
         <ProfileImgComment>
-          <img src={data ? data.user.avatar : ""} alt="" />
+          <img src={`${URL}/${profile?.avatar}`} alt="" />
         </ProfileImgComment>
         <Form.Item
           help={errors.email && errors.email?.message}
@@ -390,6 +388,7 @@ export default function PostItem({ data, id }) {
 const PreviewImg = styled.div`
   display: flex;
   padding-bottom: 3px;
+  justify-content: center;
 `;
 
 const ImagePreview = styled.div`

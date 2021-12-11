@@ -44,9 +44,7 @@ const Info = styled.span`
   margin-left: 5px;
 `;
 const Content = styled.span``;
-export default function PersonalInfomation() {
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
-
+export default function PersonalInfomation({ profile }) {
   return (
     <Wrapper>
       <Header>
@@ -80,6 +78,15 @@ export default function PersonalInfomation() {
           <Content>
             Ngày sinh
             <Info>{formatDateOfBirth(`${profile?.birthday}`)}</Info>
+          </Content>
+        </BodyContent>
+        <BodyContent>
+          <Logo>
+            <CalendarOutlined />
+          </Logo>
+          <Content>
+            Giới tính
+            <Info>{profile?.gender === "1" ? "Nam" : "Nữ"}</Info>
           </Content>
         </BodyContent>
         <BodyContent>
