@@ -1,14 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { formatDate } from "../../utils/formatDate";
-import Avatar from "./../../assets/img/avatar.jpeg";
 
 export default function FeedBack({ data }) {
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchImage(data?.user.avatar));
+  // }, [data?.user.avatar, dispatch]);
+  // const image = useSelector((state) => state.user.fetchImage.result);
+  const URL = "http://localhost:3000/api/users/image";
   return (
     <Wrapper>
       <CommentFeedBack>
         <ProfileImgComment>
-          <img src={data ? data.user.avatar : ""} alt="" />
+          <img src={`${URL}/${data?.user.avatar}`} alt="" />
         </ProfileImgComment>
         <Comment>
           <Username>{data ? data.user.username : ""}</Username>

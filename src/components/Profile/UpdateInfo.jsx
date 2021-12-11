@@ -5,19 +5,13 @@ import styled from "styled-components";
 import {
   FileDoneOutlined,
   HomeOutlined,
-  LockOutlined,
   PhoneOutlined,
+  UploadOutlined,
   UserAddOutlined,
   UserDeleteOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchUserById,
-  updateUserInfo,
-  verifyAccount,
-} from "../../actions/user";
-import { useParams } from "react-router";
+import { updateUserInfo } from "../../actions/user";
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +30,8 @@ const ButtonConfirm = styled(Button)`
   display: flex;
   border-radius: 8px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
   :hover,
   :active,
   :focus {
@@ -119,7 +115,6 @@ export const UpdateInfomation = ({ items }) => {
         data.address
       )
     );
-    dispatch(fetchUserById());
   });
 
   useEffect(() => {
@@ -146,16 +141,6 @@ export const UpdateInfomation = ({ items }) => {
       trigger(["birthday"]);
     }
   }, [touchedFields.birthday, trigger]);
-
-  const date = new Date();
-
-  console.log(
-    "re",
-    birthday,
-    typeof birthday,
-    date.toLocaleString(),
-    typeof date.toLocaleString()
-  );
 
   return (
     <Container>
@@ -390,6 +375,7 @@ export const UpdateInfomation = ({ items }) => {
                 size="large"
                 onClick={handleUpdateInfomation}
                 style={{ float: "right", marginTop: 32 }}
+                icon={<UploadOutlined />}
               >
                 Update
               </ButtonConfirm>

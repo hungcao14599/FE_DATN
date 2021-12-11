@@ -5,7 +5,7 @@ import Header from "../Header";
 import PersonalInfomation from "./PersonalInformation";
 import PostForm from "../Post/PostForm";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserById } from "../../actions/user";
+import { fetchUserById, fetchUserByName } from "../../actions/user";
 import PostList from "../Post/PostList";
 import { fetchAllPostsByUserName, fetchPostByPostId } from "../../actions/post";
 import { useParams } from "react-router-dom";
@@ -41,18 +41,26 @@ export default function Profile() {
     dispatch(fetchAllPostsByUserName(params.username, 20, 1));
   }, [dispatch, params.username]);
 
+  useEffect(() => {
+    dispatch(fetchUserByName(params.username));
+  }, [dispatch, params.username]);
+
   const postsByUsername = useSelector(
     (state) => state.post.fetchAllPostsByUserName.result
+  );
+  const profile = useSelector((state) => state.user.fetchUserByID.result);
+  const personalInfo = useSelector(
+    (state) => state.user.fetchUserByName.result
   );
 
   return (
     <Wrapper>
       <Container>
-        <Header />
-        <ProfileHeader />
+        <Header profile={profile?.data} />
+        <ProfileHeader profile={personalInfo?.data} />
         <ProfileContent>
           <ContentInfo>
-            <PersonalInfomation />
+            <PersonalInfomation profile={personalInfo?.data} />
             <PersonalInfomation />
             <PersonalInfomation />
           </ContentInfo>

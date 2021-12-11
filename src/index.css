@@ -118,3 +118,12 @@ code {
   width: 100%;
   height: 38px;
 }
+
+.ant-menu-item-selected a,
+.ant-menu-item-selected a:hover {
+  color: #ca0533;
+}
+
+.ant-menu-item a:hover {
+  color: #ca0533;
+}

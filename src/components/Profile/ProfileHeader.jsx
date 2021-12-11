@@ -1,19 +1,39 @@
-import { CameraFilled, CameraOutlined, EditOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
-import React, { useState } from "react";
+import {
+  CameraOutlined,
+  EditOutlined,
+  UserAddOutlined,
+  UserSwitchOutlined,
+} from "@ant-design/icons";
+import { Button, Modal } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { fetchAllFriendOfUserById } from "../../actions/friend";
+import userIDHeader from "../../services/userIDHeader";
 import { UpdateInfomation } from "./UpdateInfo";
+import UploadAvatarImage from "./uploadAvatar";
+import UploadCoverImage from "./uploadCoverImage";
 const Wrapper = styled.div`
-  padding: 20px 50px;
+  padding: 20px 120px;
 `;
 const CoverImage = styled.div`
-  width: auto;
+  width: 100%;
   height: 400px;
   background: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero.jpg");
   background-size: cover;
   display: flex;
   margin: 0 auto;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border-radius: 10px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
 `;
 const ProfileHeaderInfo = styled.div`
   border-bottom: 1px solid #ebedf3;
@@ -60,7 +80,7 @@ const UploadAvatar = styled.div`
   padding: 5px;
   border: 2px solid #fff;
   margin: 0 auto;
-  margin-top: -40px;
+  margin-top: -45px;
   svg {
     width: 20px;
     height: 20px;
@@ -68,9 +88,51 @@ const UploadAvatar = styled.div`
   }
 `;
 
-export default function ProfileHeader() {
+const ButtonMakeFriend = styled(Button)`
+  background: #ca0533;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  border-radius: 8px;
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  :hover,
+  :active,
+  :focus {
+    background: #ca0533;
+    color: white;
+  }
+`;
+
+const ButtonUploadCoverImage = styled(Button)`
+  margin: 15px;
+  background: #fff;
+  color: #000;
+  font-weight: 500;
+  display: flex;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  :hover,
+  :active,
+  :focus {
+    background: #fff;
+    color: #000;
+  }
+`;
+export default function ProfileHeader({ profile }) {
   const [isModal, setIsModal] = useState(false);
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const [isModalUploadAvatar, setIsModalUploadAvatar] = useState(false);
+  const [isModalUploadCoverImage, setIsModalUploadCoverImage] = useState(false);
+  const userID = userIDHeader();
+  const params = useParams();
+  const dispatch = useDispatch();
+  const listFriend = useSelector(
+    (state) => state.friend.fetchAllFriendOfUserById.result.data
+  );
   const handleModalUpdateInfo = () => {
     setIsModal(!isModal);
   };
@@ -83,25 +145,106 @@ export default function ProfileHeader() {
     setIsModal(false);
   };
 
+  const handleUploadAvatar = () => {
+    setIsModalUploadAvatar(!isModalUploadAvatar);
+  };
+
+  const handleOkUploadAvatar = () => {
+    setIsModalUploadAvatar(false);
+  };
+
+  const handleCancelUploadAvatar = () => {
+    setIsModalUploadAvatar(false);
+  };
+
+  const handleUploadCoverImage = () => {
+    setIsModalUploadCoverImage(!isModalUploadCoverImage);
+  };
+
+  const handleOkUploadCoverImage = () => {
+    setIsModalUploadCoverImage(false);
+  };
+
+  const handleCancelUploadCoverImage = () => {
+    setIsModalUploadCoverImage(false);
+  };
+
+  useEffect(() => {
+    dispatch(fetchAllFriendOfUserById(20, 1));
+  }, [dispatch]);
+
+  const handleMakeFriend = () => {};
+
   return (
     <Wrapper>
       <CoverImage>
-        <img src={profile?.CoverImage} alt="" />
+        <img
+          src={`http://localhost:3000/api/users/image/${profile?.coverImage}`}
+          alt=""
+        />
+        {profile?.id === userID ? (
+          <ButtonUploadCoverImage
+            type="default"
+            size="large"
+            icon={<CameraOutlined />}
+            onClick={handleUploadCoverImage}
+          >
+            Update Cover Image
+          </ButtonUploadCoverImage>
+        ) : (
+          ""
+        )}
       </CoverImage>
       <ProfileHeaderInfo>
         <AvatarImage>
-          <img src={profile?.avatar} alt="" />
+          <img
+            src={`http://localhost:3000/api/users/image/${profile?.avatar}`}
+            alt=""
+          />
         </AvatarImage>
-        <UploadAvatar>
-          <CameraOutlined />
-        </UploadAvatar>
+        {profile?.id === userID ? (
+          <UploadAvatar>
+            <CameraOutlined onClick={handleUploadAvatar} />
+          </UploadAvatar>
+        ) : (
+          ""
+        )}
+
         <Info>
           <FullName>{`${profile?.firstname} ${profile?.lastname}`}</FullName>
           <Username>{` (${profile?.username})`}</Username>
-          <UpdateInfo onClick={handleModalUpdateInfo}>
-            <EditOutlined />
-            Update Infomation
-          </UpdateInfo>
+          {profile?.id === userID ? (
+            <UpdateInfo onClick={handleModalUpdateInfo}>
+              <EditOutlined />
+              Update Infomation
+            </UpdateInfo>
+          ) : (
+            listFriend?.data.map((item, i) => {
+              if (item.user_friend.username === params.username) {
+                return (
+                  <ButtonMakeFriend
+                    type="default"
+                    size="large"
+                    icon={<UserSwitchOutlined />}
+                    // onClick={handleMakeFriend}
+                  >
+                    Friend
+                  </ButtonMakeFriend>
+                );
+              } else if (item.user_friend.username !== params.username) {
+                return (
+                  <ButtonMakeFriend
+                    type="default"
+                    size="large"
+                    icon={<UserAddOutlined />}
+                    onClick={handleMakeFriend}
+                  >
+                    Make Friend
+                  </ButtonMakeFriend>
+                );
+              }
+            })
+          )}
         </Info>
       </ProfileHeaderInfo>
 
@@ -112,6 +255,24 @@ export default function ProfileHeader() {
         onCancel={handleCancel}
       >
         <UpdateInfomation items={profile} />
+      </Modal>
+
+      <Modal
+        title="Basic Modal"
+        visible={isModalUploadAvatar}
+        onOk={handleOkUploadAvatar}
+        onCancel={handleCancelUploadAvatar}
+      >
+        <UploadAvatarImage />
+      </Modal>
+
+      <Modal
+        title="Basic Modal"
+        visible={isModalUploadCoverImage}
+        onOk={handleOkUploadCoverImage}
+        onCancel={handleCancelUploadCoverImage}
+      >
+        <UploadCoverImage />
       </Modal>
     </Wrapper>
   );
