@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 const { Sider } = Layout;
 
 export default function SidebarLeft({ profile }) {
+  const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
+
   return (
     <div>
       <WrapperCol1>
@@ -26,7 +28,7 @@ export default function SidebarLeft({ profile }) {
           <Left1>
             <ProfileInfo>
               <ProfileImg>
-                <img src={profile ? profile.avatar : ""} alt="" />
+                <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
               </ProfileImg>
 
               <ProfileName>
@@ -187,7 +189,7 @@ const ProfileImg = styled.div`
   img {
     width: 40px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;

@@ -36,8 +36,9 @@ const Avatar = styled.div`
 
 const Img = styled.img`
   height: 50px;
-  width: 66px;
+  width: 68px;
   object-fit: cover;
+  border-radius: 50%;
 `;
 const ButtonUpload = styled.div`
   cursor: pointer;
@@ -132,6 +133,7 @@ const Preview = styled.div`
   }
 `;
 export default function PostForm() {
+  const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
   const [file, setFile] = useState();
   const [content, setContent] = useState("");
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
@@ -167,7 +169,7 @@ export default function PostForm() {
       <PostFormContent>
         <PostInput>
           <Avatar style={{ padding: "0px" }}>
-            <Img src={profile ? profile.avatar : ""} alt="" />
+            <Img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
           </Avatar>
 
           <TextAreaPost

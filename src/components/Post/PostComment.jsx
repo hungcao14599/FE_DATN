@@ -7,10 +7,7 @@ import { fetchCommentByPost } from "../../actions/comment";
 import FeedBack from "./FeedBack";
 
 export default function PostComment({ id }) {
-  const [items, setItems] = useState([]);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     dispatch(fetchCommentByPost(id, 10, 1));
   }, [dispatch, id]);

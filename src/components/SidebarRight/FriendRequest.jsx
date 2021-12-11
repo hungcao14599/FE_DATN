@@ -1,11 +1,12 @@
 import { Button } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { approvalFriend, fetchAllFriendOfUserById } from "../../actions/friend";
+import { approvalFriend } from "../../actions/friend";
 
 export default function FriendRequest({ data }) {
   const dispatch = useDispatch();
+  const URL = "http://localhost:3000/api/users/image";
 
   const handleApprovalFriend = () => {
     dispatch(approvalFriend(data.user_friend.id, true));
@@ -17,7 +18,7 @@ export default function FriendRequest({ data }) {
     <WrapFriendRequest>
       <WrapProfileInfo>
         <ProfileImg>
-          <img src={data.user_friend.avatar} alt="" />
+          <img src={`${URL}/${data.user_friend.avatar}`} alt="" />
         </ProfileImg>
         <ProfileName>
           <Name>{data.user_friend.username}</Name>
@@ -79,9 +80,9 @@ const ProfileName = styled.div`
 
 const ProfileImg = styled.div`
   img {
-    width: 35px;
+    width: 40px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;

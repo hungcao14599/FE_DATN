@@ -37,6 +37,8 @@ export default function SidebarRight() {
     </Menu>
   );
 
+  const URL = "http://localhost:3000/api/users/image";
+
   return (
     <WrapperCol3>
       <WrapTitle>
@@ -56,7 +58,7 @@ export default function SidebarRight() {
             <>
               <WrapContact>
                 <ContactImg>
-                  <img src={item.user_friend.avatar} alt="" />
+                  <img src={`${URL}/${item.user_friend.avatar}`} alt="" />
                 </ContactImg>
                 <ContactName>
                   <Name>{item.user_friend.username}</Name>
@@ -112,7 +114,7 @@ const ContactImg = styled.div`
   img {
     width: 40px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;
