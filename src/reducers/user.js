@@ -26,7 +26,7 @@ const initialState = {
     error: null,
     requesting: false,
   },
-  fetchImgByUsername: {
+  fetchImgByUserName: {
     result: [],
     error: null,
     requesting: false,
@@ -188,16 +188,16 @@ export const userReducer = handleActions(
     // FETCH IMAGE BY USERNAME
     FETCH_IMG_BY_USER_NAME_REQUEST: (state) => ({
       ...state,
-      fetchImgByUsername: {
-        ...state.fetchImgByUsername,
+      fetchImgByUserName: {
+        ...state.fetchImgByUserName,
         requesting: true,
         error: null,
       },
     }),
     FETCH_IMG_BY_USER_NAME_SUCCESS: (state, { payload }) => ({
       ...state,
-      fetchImgByUsername: {
-        ...state.fetchImgByUsername,
+      fetchImgByUserName: {
+        ...state.fetchImgByUserName,
         requesting: false,
         error: null,
         result: payload.data,
@@ -205,8 +205,8 @@ export const userReducer = handleActions(
     }),
     FETCH_IMG_BY_USER_NAME_FAIL: (state, { payload }) => ({
       ...state,
-      fetchImgByUsername: {
-        ...state.fetchImgByUsername,
+      fetchImgByUserName: {
+        ...state.fetchImgByUserName,
         requesting: false,
         result: null,
         error: payload.error,

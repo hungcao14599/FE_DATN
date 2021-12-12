@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Avatar from "./../../assets/img/avatar.jpeg";
-import { Button, Dropdown, Menu, Form, Input, Modal } from "antd";
+import { Button, Dropdown, Menu, Form, Input, Modal, Col, Row } from "antd";
 import Masonry from "react-masonry-css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -294,26 +294,30 @@ export default function PostItem({ data, id }) {
         <Caption>{data ? data.content : ""}</Caption>
       </Content>
       <PostImg>
-        <Masonry
+        {/* <Masonry
           breakpointCols={Columns}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
-        >
-          <PreviewImg>
-            {data.images.length !== 0
-              ? data.images.map((image, i) => {
-                  return (
+        > */}
+        <Row>
+          {/* <PreviewImg> */}
+          {data.images.length !== 0
+            ? data.images.map((image, i) => {
+                return (
+                  <Col>
                     <ImagePreview key={i}>
                       <img
                         src={`http://localhost:3000/api/posts/image/${image.name}`}
                         alt=""
                       />
                     </ImagePreview>
-                  );
-                })
-              : ""}
-          </PreviewImg>
-        </Masonry>
+                  </Col>
+                );
+              })
+            : ""}
+          {/* </PreviewImg> */}
+        </Row>
+        {/* </Masonry> */}
       </PostImg>
       <Interact>
         <InteractItem>
@@ -385,20 +389,21 @@ export default function PostItem({ data, id }) {
   );
 }
 
-const PreviewImg = styled.div`
-  display: flex;
-  padding-bottom: 3px;
-  justify-content: center;
-`;
+// const PreviewImg = styled.div`
+//   display: flex;
+//   padding-bottom: 3px;
+//   justify-content: center;
+// `;
 
 const ImagePreview = styled.div`
   width: auto;
   height: auto;
-  margin-right: 5px;
+
   img {
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 300px;
     object-fit: cover;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 10px;
   }
 `;

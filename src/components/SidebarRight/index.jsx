@@ -59,9 +59,9 @@ export default function SidebarRight() {
               <WrapContact>
                 <ContactImg>
                   <img src={`${URL}/${item.user_friend.avatar}`} alt="" />
+                  <Name>{item.user_friend.username}</Name>
                 </ContactImg>
                 <ContactName>
-                  <Name>{item.user_friend.username}</Name>
                   <Dropdown.Button overlay={menu}></Dropdown.Button>
                 </ContactName>
               </WrapContact>
@@ -86,6 +86,7 @@ const WrapContact = styled.div`
   display: flex;
   margin-bottom: 5px;
   align-items: center;
+  justify-content: space-between;
 `;
 const WrapTitle = styled.div`
   margin-bottom: 15px;
@@ -102,6 +103,7 @@ const Name = styled.div`
   font-weight: 700;
   display: flex;
   align-items: center;
+  margin-left: 10px;
 `;
 
 const ContactName = styled.div`
@@ -111,6 +113,7 @@ const ContactName = styled.div`
 
 const ContactImg = styled.div`
   padding: 7px 0;
+  display: flex;
   img {
     width: 40px;
     height: 40px;

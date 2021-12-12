@@ -130,25 +130,25 @@ export const uploadCoverImage = (image) => (dispatch) => {
 // FETCH IMAGE BY USENAWE
 
 const {
-  fetchImgByUsernameRequest,
-  fetchImgByUsernameSuccess,
-  fetchImgByUsernameFail,
+  fetchImgByUserNameRequest,
+  fetchImgByUserNameSuccess,
+  fetchImgByUserNameFail,
 } = createActions({
   FETCH_IMG_BY_USER_NAME_REQUEST: () => {},
   FETCH_IMG_BY_USER_NAME_SUCCESS: (data) => ({ data }),
   FETCH_IMG_BY_USER_NAME_FAIL: (error) => ({ error }),
 });
 
-export const fetchImgByUsername = (username) => (dispatch) => {
-  dispatch(fetchImgByUsernameRequest());
-  return Api.User.fetchImgByUsername(username)
+export const fetchImgByUserName = (username) => (dispatch) => {
+  dispatch(fetchImgByUserNameRequest());
+  return Api.User.fetchImgByUserName(username)
     .then(({ data }) => {
-      dispatch(fetchImgByUsernameSuccess(data));
-      dispatch(fetchUserById());
+      dispatch(fetchImgByUserNameSuccess(data));
+      // dispatch(fetchUserById());
       return data;
     })
     .catch((error) => {
-      dispatch(fetchImgByUsernameFail(error));
+      dispatch(fetchImgByUserNameFail(error));
       return Promise.reject(error);
     });
 };
