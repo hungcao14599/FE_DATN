@@ -3,12 +3,15 @@ import styled from "styled-components";
 import ProfileHeader from "./ProfileHeader";
 import Header from "../Header";
 import PersonalInfomation from "./PersonalInformation";
+import PersonalImage from "./PersonalImage";
 import PostForm from "../Post/PostForm";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserById, fetchUserByName } from "../../actions/user";
+import { fetchUserByName } from "../../actions/user";
 import PostList from "../Post/PostList";
-import { fetchAllPostsByUserName, fetchPostByPostId } from "../../actions/post";
+import { fetchAllPostsByUserName } from "../../actions/post";
 import { useParams } from "react-router-dom";
+import PersonalFriend from "./PersonalFriend";
+import { fetchAllFriendOfUserById } from "../../actions/friend";
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -25,7 +28,7 @@ const ProfileContent = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 0px 120px;
+  padding: 0px 280px;
 `;
 
 const ContentInfo = styled.div``;
@@ -45,12 +48,20 @@ export default function Profile() {
     dispatch(fetchUserByName(params.username));
   }, [dispatch, params.username]);
 
+  useEffect(() => {
+    dispatch(fetchAllFriendOfUserById(20, 1));
+  }, [dispatch]);
+
   const postsByUsername = useSelector(
     (state) => state.post.fetchAllPostsByUserName.result
   );
   const profile = useSelector((state) => state.user.fetchUserByID.result);
   const personalInfo = useSelector(
     (state) => state.user.fetchUserByName.result
+  );
+
+  const listFriend = useSelector(
+    (state) => state.friend.fetchAllFriendOfUserById.result.data
   );
 
   return (
@@ -61,8 +72,8 @@ export default function Profile() {
         <ProfileContent>
           <ContentInfo>
             <PersonalInfomation profile={personalInfo?.data} />
-            <PersonalInfomation />
-            <PersonalInfomation />
+            <PersonalImage />
+            <PersonalFriend personalInfo={personalInfo?.data} />
           </ContentInfo>
           <ContentPost>
             <PostForm />

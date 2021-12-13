@@ -32,6 +32,7 @@ const Wrapper = styled.div`
   padding: 20px;
   height: auto;
   background: #fff;
+  /* width: fit-content; */
 `;
 
 const Container = styled.div`
@@ -42,13 +43,8 @@ const Container = styled.div`
 `;
 
 const Contents = styled.div`
-  /* display: grid;
-  grid-template-columns: 0.5fr 1fr 0.6fr; */
-
   display: flex;
-
   justify-content: space-between;
-
-  grid-gap: 30px;
-  padding-top: 14px;
+  /* grid-gap: 30px; */
+  padding-top: 14px; ;
 `;

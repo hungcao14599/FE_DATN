@@ -175,7 +175,7 @@ export default function PostForm() {
           <TextAreaPost
             placeholder={`What is the news ${profile ? profile.username : ""}`}
             rows={2}
-            autoSize
+            // autoSize
             value={content}
             style={{ border: "unset" }}
             onChange={handleChange}
