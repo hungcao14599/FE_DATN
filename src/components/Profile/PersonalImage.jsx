@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   padding: 15px;
   min-width: 300px;
   margin-bottom: 30px;
-  max-width: 430px;
+  max-width: 460px;
 `;
 
 const Header = styled.div`
@@ -58,7 +58,6 @@ export default function PersonalImage() {
           return (
             <Col>
               <Images
-                className="image-item-profile"
                 src={
                   image.type === 1
                     ? `${URL_USER}/${image.name}`

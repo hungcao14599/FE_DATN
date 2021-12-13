@@ -137,4 +137,6 @@ const SearchBar = styled.div`
   margin-top: 30px;
 `;
 
-const WrappStory = styled.div``;
+const WrappStory = styled.div`
+  width: min-content;
+`;

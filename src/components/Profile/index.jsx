@@ -28,7 +28,7 @@ const ProfileContent = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 0px 120px;
+  padding: 0px 280px;
 `;
 
 const ContentInfo = styled.div``;
