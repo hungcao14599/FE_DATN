@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Button, Form, Input } from "antd";
+import { Button, Input } from "antd";
 import { CloudUploadOutlined, PaperClipOutlined } from "@ant-design/icons";
-import AvatarImg from "./../../assets/img/avatar.jpeg";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost, fetchAllPosts } from "../../actions/post";
+import { addPost } from "../../actions/post";
 import Masonry from "react-masonry-css";
 import { fetchUserById } from "../../actions/user";
 const Columns = {
@@ -24,6 +23,7 @@ const PostFormContent = styled.div`
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
+  /* border: 1px solid #d9d9d9; */
 `;
 const Avatar = styled.div`
   overflow: hidden;
@@ -114,8 +114,6 @@ const TextAreaPost = styled(TextArea)`
 `;
 
 const Preview = styled.div`
-  /* display: flex;
-  justify-content: space-between; */
   margin-top: 20px;
   button {
     background: #ca0533;

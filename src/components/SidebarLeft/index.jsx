@@ -1,123 +1,162 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Avatar from "./../../assets/img/avatar.jpeg";
-import Ads from "./../../assets/img/ads.jpg";
-import { Button, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import {
   HomeOutlined,
   ContactsOutlined,
-  FileImageOutlined,
   ProfileOutlined,
   UserOutlined,
-  SettingOutlined,
-  CloseOutlined,
+  GroupOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserById } from "../../actions/user";
 import { Link } from "react-router-dom";
+import { fetchGroupsOfUser } from "../../actions/group";
 
 const { Sider } = Layout;
 
 export default function SidebarLeft({ profile }) {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
+  const URL_IMAGE_POST = "http://localhost:3000/api/posts/image";
+
+  const dispatch = useDispatch();
+  const groups = useSelector(
+    (state) => state.group.fetchGroupsOfUser.result.data
+  );
+
+  useEffect(() => {
+    dispatch(fetchGroupsOfUser({ size: 20, page: 1, keyword: "" }));
+  }, [dispatch]);
 
   return (
-    <div>
-      <WrapperCol1>
-        <Col1>
-          <Left1>
-            <ProfileInfo>
-              <ProfileImg>
-                <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
-              </ProfileImg>
+    <WrapperCol1>
+      <Col1>
+        <Left1>
+          <ProfileInfo>
+            <ProfileImg>
+              <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
+            </ProfileImg>
 
-              <ProfileName>
-                <Name>{profile ? profile.username : ""}</Name>
-                <Nickname>{`${profile ? profile.firstname : ""} ${
-                  profile ? profile.lastname : ""
-                }`}</Nickname>
-              </ProfileName>
-            </ProfileInfo>
-          </Left1>
-          <Left2>
-            <Sider width={200} className="site-layout-background">
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={["1"]}
-                defaultOpenKeys={["sub1"]}
-                style={{
-                  height: "100%",
-                  borderRight: 0,
-                  borderRadius: 10,
-                  padding: "5px 0px",
-                }}
-              >
-                <Menu.Item key="1" icon={<HomeOutlined />}>
-                  <Link to={`/tlu/home`}>Home </Link>
-                </Menu.Item>
-                <Menu.Item key="2" icon={<ContactsOutlined />}>
-                  People
-                </Menu.Item>
-                <Menu.Item key="3" icon={<FileImageOutlined />}>
-                  Photos
-                </Menu.Item>
-                <Menu.Item key="4" icon={<ProfileOutlined />}>
-                  <Link to={`/tlu/home`}>News Feed </Link>
-                </Menu.Item>
-                <Menu.Item key="5" icon={<UserOutlined />}>
-                  <Link to={`/tlu/profile/${profile?.username}`}>Profile </Link>
-                </Menu.Item>
-                <Menu.Item key="6" icon={<SettingOutlined />}>
-                  Settings
-                </Menu.Item>
-              </Menu>
-            </Sider>
-          </Left2>
+            <ProfileName>
+              <Name>{profile ? profile.username : ""}</Name>
+              <Nickname>{`${profile ? profile.firstname : ""} ${
+                profile ? profile.lastname : ""
+              }`}</Nickname>
+            </ProfileName>
+          </ProfileInfo>
+        </Left1>
+        <Left2>
+          <Sider className="site-layout-background">
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={["1"]}
+              defaultOpenKeys={["sub1"]}
+              style={{
+                height: "100%",
+                borderRight: 0,
+                borderRadius: 10,
+                padding: "5px 0px",
+              }}
+            >
+              <Menu.Item key="1" icon={<HomeOutlined />}>
+                <Link to={`/tlu/home`}>Home </Link>
+              </Menu.Item>
+              <Menu.Item key="2" icon={<ContactsOutlined />}>
+                People
+              </Menu.Item>
+              <Menu.Item key="4" icon={<ProfileOutlined />}>
+                <Link to={`/tlu/home`}>News Feed </Link>
+              </Menu.Item>
+              <Menu.Item key="5" icon={<UserOutlined />}>
+                <Link to={`/tlu/profile/${profile?.username}`}>Profile </Link>
+              </Menu.Item>
+              <Menu.Item key="6" icon={<GroupOutlined />}>
+                <Link to={`/tlu/groups`}>Groups</Link>
+              </Menu.Item>
+            </Menu>
+          </Sider>
+        </Left2>
 
-          <WrapInvitation>
-            <Invitation>INVITATIONS</Invitation>
-          </WrapInvitation>
-          <Left3>
-            <ImgAds>
-              <img
-                src={Ads}
-                alt=""
-                width="170px"
-                height="300px"
-                style={{ objectFit: "cover" }}
-              />
+        <WrapInvitation>
+          <Invitation>INVITATIONS</Invitation>
+        </WrapInvitation>
+        <Left3>
+          <GroupJoined>
+            <Title>Group Joined</Title>
+            <Groups>
+              {groups?.data.map((item, i) => {
+                return (
+                  <ProfileGroup>
+                    <GroupImg>
+                      <img src={`${URL_IMAGE_POST}/${item.avatar}`} alt="" />
+                    </GroupImg>
 
-              <AvatarImg>
-                <img
-                  src={Avatar}
-                  alt=""
-                  width="30px"
-                  height="30px"
-                  style={{
-                    objectFit: "cover",
-                    borderRadius: "10px",
-                  }}
-                />
-              </AvatarImg>
-              <ButtonControl>
-                <ButtonAccept>
-                  <Button>Accept Invitation</Button>
-                </ButtonAccept>
-                <BtnAdsSearch>
-                  <Button icon={<CloseOutlined />} />
-                </BtnAdsSearch>
-              </ButtonControl>
-            </ImgAds>
-          </Left3>
-        </Col1>
-      </WrapperCol1>
-    </div>
+                    <GroupName>
+                      <NameG>
+                        <Link to={`/tlu/group/${item.id}`}>{item.name}</Link>
+                      </NameG>
+                      <Des>{item.description}</Des>
+                    </GroupName>
+                  </ProfileGroup>
+                );
+              })}
+            </Groups>
+          </GroupJoined>
+        </Left3>
+      </Col1>
+    </WrapperCol1>
   );
 }
+
+const Des = styled.div`
+  color: #767676;
+`;
+
+const NameG = styled.div`
+  font-weight: 700;
+  a {
+    color: #ca0533;
+  }
+`;
+
+const GroupName = styled.div`
+  padding: 0 10px;
+`;
+
+const ProfileGroup = styled.div`
+  display: flex;
+  padding: 20px 0px;
+`;
+
+const GroupImg = styled.div`
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 7px;
+    object-fit: cover;
+  }
+`;
+
+const GroupJoined = styled.div`
+  padding: 15px;
+`;
+
+const Title = styled.span`
+  font-size: 15px;
+  font-weight: 600;
+`;
+
+const Groups = styled.div`
+  height: 500px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const WrapInvitation = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 15px;
 `;
 
 const Nickname = styled.div`
@@ -127,48 +166,10 @@ const Nickname = styled.div`
 const Name = styled.div`
   font-weight: 700;
 `;
-const ButtonControl = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-`;
-const BtnAdsSearch = styled.div`
-  button {
-    border-radius: 5px;
-  }
-`;
-const ButtonAccept = styled.div`
-  /* position: absolute; */
-  bottom: 10px;
-  button {
-    background: #ca0533;
-    border-radius: 5px;
-    span {
-      font-size: 12px;
-      color: #fff;
-    }
-    :hover,
-    :active,
-    :focus {
-      background: #ca0533;
-    }
-  }
-`;
-
-const AvatarImg = styled.div`
-  position: absolute;
-  top: 30px;
-  left: 30px;
-`;
-
-const ImgAds = styled.div`
-  margin-top: 10px;
-  padding: 15px;
-  position: relative;
-`;
 
 const WrapperCol1 = styled.div`
   /* padding: 0 0 0 50px; */
+  flex-basis: 350px;
 `;
 
 const Invitation = styled.div`
@@ -179,7 +180,7 @@ const Invitation = styled.div`
 
 const Left3 = styled.div`
   background: white;
-  width: fit-content;
+  width: 100%;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
@@ -200,12 +201,12 @@ const ProfileName = styled.div`
 
 const ProfileInfo = styled.div`
   display: flex;
-  padding: 20px 13px;
+  padding: 20px 15px;
 `;
 const Left2 = styled.div`
   margin-top: 25px;
   background: white;
-  width: fit-content;
+  width: auto;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
@@ -217,4 +218,7 @@ const Left1 = styled.div`
   border-radius: 10px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
 `;
-const Col1 = styled.div``;
+const Col1 = styled.div`
+  position: sticky;
+  top: 0;
+`;

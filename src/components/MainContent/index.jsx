@@ -15,7 +15,7 @@ export default function MainContent() {
           src={Ads}
           alt=""
           width="140px"
-          height="220px"
+          height="210px"
           style={{ objectFit: "cover", borderRadius: "10px" }}
         />
       ),
@@ -36,7 +36,7 @@ export default function MainContent() {
           src={Ads}
           alt=""
           width="140px"
-          height="220px"
+          height="210px"
           style={{ objectFit: "cover", borderRadius: "10px" }}
         />
       ),
@@ -57,7 +57,7 @@ export default function MainContent() {
           src={Ads}
           alt=""
           width="140px"
-          height="220px"
+          height="210px"
           style={{ objectFit: "cover", borderRadius: "10px" }}
         />
       ),
@@ -78,7 +78,7 @@ export default function MainContent() {
           src={Ads}
           alt=""
           width="140px"
-          height="220px"
+          height="210px"
           style={{ objectFit: "cover", borderRadius: "10px" }}
         />
       ),
@@ -99,7 +99,7 @@ export default function MainContent() {
           src={Ads}
           alt=""
           width="140px"
-          height="220px"
+          height="210px"
           style={{ objectFit: "cover", borderRadius: "10px" }}
         />
       ),
@@ -139,4 +139,5 @@ const SearchBar = styled.div`
 
 const WrappStory = styled.div`
   width: min-content;
+  padding: 0 25px;
 `;

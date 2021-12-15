@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import styled from "styled-components";
 import imgSearch from "../../assets/svg/search_icon.svg";
@@ -6,6 +6,7 @@ import Logo from "../../assets/svg/social-media.svg";
 import Search from "../Search";
 import { LogoutOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";
+import { CreateGroup } from "../Group/CreateGroup";
 
 export default function Header({ profile }) {
   const [search, setSearch] = useState();
@@ -13,6 +14,19 @@ export default function Header({ profile }) {
   const handleLogout = () => {
     localStorage.removeItem("user");
     history.push("../tlu/login");
+  };
+  const [isShow, setIsShow] = useState(false);
+
+  const handleShowAddGroup = () => {
+    setIsShow(!isShow);
+  };
+
+  const handleOk = () => {
+    setIsShow(false);
+  };
+
+  const handleCancel = () => {
+    setIsShow(false);
   };
   return (
     <Container>
@@ -34,7 +48,9 @@ export default function Header({ profile }) {
           />
         </div>
         <ButtonAdd>
-          <Button icon={<PlusCircleOutlined />}>Create</Button>
+          <Button icon={<PlusCircleOutlined />} onClick={handleShowAddGroup}>
+            Create
+          </Button>
         </ButtonAdd>
         <ButtonLogout>
           <Button onClick={handleLogout} icon={<LogoutOutlined />}>
@@ -48,6 +64,15 @@ export default function Header({ profile }) {
           />
         </Image>
       </SearchBar>
+
+      <Modal
+        title="Basic Modal"
+        visible={isShow}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <CreateGroup />
+      </Modal>
     </Container>
   );
 }
@@ -73,7 +98,7 @@ const ButtonLogout = styled.div`
   z-index: 10;
   margin-left: 10px;
   button {
-    background: #376e37;
+    background: #f7341b;
     height: 100%;
     border-radius: 10px;
     span {

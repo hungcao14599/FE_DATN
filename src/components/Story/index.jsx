@@ -47,5 +47,5 @@ const Left3 = styled.div`
   width: fit-content;
   height: auto;
   border-radius: 10px;
-  padding: 0 10px;
+  padding: 0 5px;
 `;
