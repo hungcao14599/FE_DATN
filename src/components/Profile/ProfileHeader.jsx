@@ -113,6 +113,7 @@ const ButtonUploadCoverImage = styled(Button)`
   display: flex;
   border-radius: 8px;
   display: flex;
+  font-size: 14px;
   align-items: center;
   position: absolute;
   cursor: pointer;
@@ -140,6 +141,10 @@ export default function ProfileHeader({ profile }) {
   const isFriend = listFriend?.data.filter(
     (e) => e.user_friend.username === params.username
   );
+  const profileInfo = useSelector(
+    (state) => state.user.fetchUserByID.result.data
+  );
+
   const handleModalUpdateInfo = () => {
     setIsModal(!isModal);
   };
@@ -273,7 +278,7 @@ export default function ProfileHeader({ profile }) {
         onOk={handleOkUploadCoverImage}
         onCancel={handleCancelUploadCoverImage}
       >
-        <UploadCoverImage />
+        <UploadCoverImage data={profileInfo} />
       </Modal>
     </Wrapper>
   );

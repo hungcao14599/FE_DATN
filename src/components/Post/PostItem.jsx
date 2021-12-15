@@ -1,16 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {
-  Button,
-  Dropdown,
-  Menu,
-  Form,
-  Input,
-  Modal as Modal1,
-  Col,
-  Row,
-} from "antd";
+import { Button, Dropdown, Menu, Form, Input, Modal as Modal1 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   CommentOutlined,
@@ -30,7 +21,6 @@ import LikeIcon from "../../assets/img/like.png";
 import Carousel, { Modal, ModalGateway } from "react-images";
 
 import Gallery from "react-photo-gallery";
-import Photo from "./Photo";
 
 const Wrapper = styled.div`
   width: auto;
@@ -73,13 +63,13 @@ const ProfileInfo = styled.div`
 
 const DateTimeInfo = styled.p`
   color: #767676;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
 `;
 
 const Name = styled.span`
   font-weight: 700;
-  font-size: 17px;
+  font-size: 15px;
   color: #082850;
 `;
 

@@ -1,14 +1,10 @@
 import { UploadOutlined, PaperClipOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import {
-  fetchUserByName,
-  uploadAvatar,
-  uploadCoverImage,
-} from "../../actions/user";
+import { fetchUserByName, uploadCoverImage } from "../../actions/user";
 import User from "../../assets/img/user.png";
 const Wrapper = styled.div`
   padding: 30px;
@@ -50,31 +46,41 @@ const Image = styled.div`
   border-bottom: 1px solid #afb9d1;
   padding: 15px 0px;
 `;
-export default function UploadCoverImage() {
+export default function UploadCoverImage({ data }) {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
   const params = useParams();
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+
+  // const data = useSelector((state) => state.user.fetchUserByID.result.data);
   const [file, setFile] = useState();
   const dispatch = useDispatch();
   const handleChange = () => {
     const formData = new FormData();
     if (file) {
       formData.append("file", file[0]);
-      dispatch(uploadCoverImage(formData));
+      if (data?.id === +params.id) {
+        dispatch(uploadCoverImage(formData));
+      } else {
+        dispatch(uploadCoverImage(formData));
+      }
       dispatch(fetchUserByName(params.username));
     }
   };
+
+  console.log("iiii", typeof params.id, data?.id);
+
   return (
     <>
       <Wrapper>
-        <Title>Cập nhật ảnh bìa</Title>
+        <Title>
+          {data?.id === +params.id ? "Cập nhật ảnh nhóm" : "Cập nhật ảnh bìa"}
+        </Title>
         <Image>
           <PreviewAvatar>
             <img
               src={
                 file
                   ? URL.createObjectURL(file[0])
-                  : `${URL_IMAGE_USER}/${profile?.coverImage}`
+                  : `${URL_IMAGE_USER}/${data?.coverImage}`
               }
               alt=""
             />

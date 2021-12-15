@@ -1,0 +1,41 @@
+.wrapper {
+  .searchBar {
+    position: relative;
+    width: 373px;
+    border-radius: 10px;
+    background: #fff;
+    width: 100%;
+    .inputStaking {
+      width: 100%;
+      border-bottom: 1px solid #ebedf3;
+      height: 40px;
+      padding-left: 43px;
+      border-radius: 10px;
+      box-shadow: 4.5px 7.8px 45px 0 rgba(34, 34, 34, 0.05);
+      background-color: transparent;
+      z-index: 2;
+      :hover {
+        border-bottom: 1px solid #ebedf3;
+      }
+    }
+    .inputStakingBlur {
+      width: 100%;
+      border-bottom: 1px solid #ebedf3;
+      height: 40px;
+      padding-left: 43px;
+      border-radius: 10px;
+      box-shadow: 4.5px 7.8px 45px 0 rgba(34, 34, 34, 0.05);
+      background-color: transparent;
+      z-index: 2;
+      :hover {
+        border-bottom: 1px solid #ebedf3;
+      }
+    }
+    .search_icon {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      transform: rotateY(180deg);
+    }
+  }
+}
