@@ -4,21 +4,32 @@ import http from "../../services/http";
 const PREFIX = "/friend";
 
 export default class Friend {
-    static fetchAllFriendOfUserById(size, page) {
-        return http.get(`${PREFIX}/user-friend?size=${size}&page=${page}`, {
-            headers: authHeader(),
-        });
-    }
-    static fetchAllUserApprovalById(size, page) {
-        return http.get(`${PREFIX}/approval?size=${size}&page=${page}`, {
-            headers: authHeader(),
-        });
-    }
-    static approvalFriend(friend, isApproval) {
-        return http.post(
-            `${PREFIX}/approval/`, { friend, isApproval }, {
-                headers: authHeader(),
-            }
-        );
-    }
+  static fetchAllFriendOfUserById(size, page) {
+    return http.get(`${PREFIX}/user-friend?size=${size}&page=${page}`, {
+      headers: authHeader(),
+    });
+  }
+  static fetchAllUserApprovalById(size, page) {
+    return http.get(`${PREFIX}/approval?size=${size}&page=${page}`, {
+      headers: authHeader(),
+    });
+  }
+  static approvalFriend(friend, isApproval) {
+    return http.post(
+      `${PREFIX}/approval/`,
+      { friend, isApproval },
+      {
+        headers: authHeader(),
+      }
+    );
+  }
+  static addFriend(userID) {
+    return http.post(
+      `${PREFIX}/add/${userID}`,
+      {},
+      {
+        headers: authHeader(),
+      }
+    );
+  }
 }

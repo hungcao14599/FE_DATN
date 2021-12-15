@@ -41,37 +41,44 @@ export default function SidebarRight() {
 
   return (
     <WrapperCol3>
-      <WrapTitle>
-        <WrapDes>REQUEST</WrapDes>
-      </WrapTitle>
-      {(approval ? approval.data : []).map((item, i) => {
-        return <FriendRequest data={item} key={i} />;
-      })}
+      <Col3>
+        <WrapTitle>
+          <WrapDes>REQUEST</WrapDes>
+        </WrapTitle>
+        {(approval ? approval.data : []).map((item, i) => {
+          return <FriendRequest data={item} key={i} />;
+        })}
 
-      <WrapTitle>
-        <WrapDes>CONTACT</WrapDes>
-        <FriendCount>{items ? items.data.length : ""}</FriendCount>
-      </WrapTitle>
-      <Right3>
-        <ContactInfo>
-          {(items ? items.data : []).map((item, i) => (
-            <>
-              <WrapContact>
-                <ContactImg>
-                  <img src={`${URL}/${item.user_friend.avatar}`} alt="" />
-                </ContactImg>
-                <ContactName>
-                  <Name>{item.user_friend.username}</Name>
-                  <Dropdown.Button overlay={menu}></Dropdown.Button>
-                </ContactName>
-              </WrapContact>
-            </>
-          ))}
-        </ContactInfo>
-      </Right3>
+        <WrapTitle>
+          <WrapDes>CONTACT</WrapDes>
+          <FriendCount>{items ? items.data.length : ""}</FriendCount>
+        </WrapTitle>
+        <Right3>
+          <ContactInfo>
+            {(items ? items.data : []).map((item, i) => (
+              <>
+                <WrapContact>
+                  <ContactImg>
+                    <img src={`${URL}/${item.user_friend.avatar}`} alt="" />
+                    <Name>{item.user_friend.username}</Name>
+                  </ContactImg>
+                  <ContactName>
+                    <Dropdown.Button overlay={menu}></Dropdown.Button>
+                  </ContactName>
+                </WrapContact>
+              </>
+            ))}
+          </ContactInfo>
+        </Right3>
+      </Col3>
     </WrapperCol3>
   );
 }
+
+const Col3 = styled.div`
+  position: sticky;
+  top: 0;
+`;
 
 const FriendCount = styled.span`
   color: #fff;
@@ -86,6 +93,7 @@ const WrapContact = styled.div`
   display: flex;
   margin-bottom: 5px;
   align-items: center;
+  justify-content: space-between;
 `;
 const WrapTitle = styled.div`
   margin-bottom: 15px;
@@ -102,6 +110,7 @@ const Name = styled.div`
   font-weight: 700;
   display: flex;
   align-items: center;
+  margin-left: 10px;
 `;
 
 const ContactName = styled.div`
@@ -111,6 +120,7 @@ const ContactName = styled.div`
 
 const ContactImg = styled.div`
   padding: 7px 0;
+  display: flex;
   img {
     width: 40px;
     height: 40px;
@@ -133,4 +143,6 @@ const Right3 = styled.div`
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
 `;
 
-const WrapperCol3 = styled.div``;
+const WrapperCol3 = styled.div`
+  flex-basis: 350px;
+`;

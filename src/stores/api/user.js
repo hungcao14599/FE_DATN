@@ -21,10 +21,8 @@ export default class User {
       headers: authHeader(),
     });
   }
-  static fetchImgByUsername(username) {
-    return http.get(`${PREFIX}/images/${username}`, {
-      headers: authHeader(),
-    });
+  static fetchImgByUserName(username) {
+    return http.get(`${PREFIX}/images/${username}`);
   }
 
   static fetchImage(image) {

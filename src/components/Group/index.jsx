@@ -4,11 +4,10 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { fetchUserById } from "../../actions/user";
 import Header from "../Header";
-import MainContent from "../MainContent";
-import SidebarLeft from "../SidebarLeft";
-import SidebarRight from "../SidebarRight";
+import GroupLeft from "./GroupLeft";
+import GroupRight from "./GroupRight";
 
-export default function Home() {
+export default function Groups() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserById());
@@ -20,9 +19,8 @@ export default function Home() {
       <Container>
         <Header profile={profile} />
         <Contents>
-          <SidebarLeft profile={profile} />
-          <MainContent profile={profile} />
-          <SidebarRight />
+          <GroupLeft />
+          <GroupRight />
         </Contents>
       </Container>
     </Wrapper>
@@ -32,7 +30,6 @@ const Wrapper = styled.div`
   padding: 20px;
   height: auto;
   background: #fff;
-  /* width: fit-content; */
 `;
 
 const Container = styled.div`
@@ -40,11 +37,11 @@ const Container = styled.div`
   background: #f9fafb;
   border-radius: 15px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
+  height: 100vh;
 `;
 
 const Contents = styled.div`
   display: flex;
   justify-content: space-between;
-  /* grid-gap: 30px; */
   padding-top: 14px; ;
 `;

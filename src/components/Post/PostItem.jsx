@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Avatar from "./../../assets/img/avatar.jpeg";
-import { Button, Dropdown, Menu, Form, Input, Modal } from "antd";
-import Masonry from "react-masonry-css";
+import { Button, Dropdown, Menu, Form, Input, Modal as Modal1 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   CommentOutlined,
@@ -20,6 +18,9 @@ import PostComment from "./PostComment";
 import { fetchAllPosts, removePost } from "../../actions/post";
 import LikeActionIcon from "../../assets/img/likeAction.png";
 import LikeIcon from "../../assets/img/like.png";
+import Carousel, { Modal, ModalGateway } from "react-images";
+
+import Gallery from "react-photo-gallery";
 
 const Wrapper = styled.div`
   width: auto;
@@ -62,13 +63,13 @@ const ProfileInfo = styled.div`
 
 const DateTimeInfo = styled.p`
   color: #767676;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
 `;
 
 const Name = styled.span`
   font-weight: 700;
-  font-size: 17px;
+  font-size: 15px;
   color: #082850;
 `;
 
@@ -87,6 +88,7 @@ const Caption = styled.span`
 
 const PostImg = styled.div`
   margin: 10px 0px 20px 0px;
+  border-radius: 5px;
 `;
 
 const Interact = styled.div`
@@ -186,7 +188,7 @@ export default function PostItem({ data, id }) {
     defaultValues: { comment: "" },
   });
 
-  const { confirm } = Modal;
+  const { confirm } = Modal1;
   const statusLike = data.like.length > 0 ? true : false;
   const [step, setStep] = useState(0);
   const dispatch = useDispatch();
@@ -201,24 +203,6 @@ export default function PostItem({ data, id }) {
   const handleCancel = () => {
     setIsRemove(false);
   };
-  const Columns = {
-    default: 2,
-    1100: 3,
-    700: 2,
-    500: 1,
-  };
-
-  const handleMenuClick = (e) => {
-    console.log("click", e);
-  };
-
-  const hand = () => {
-    console.log("here");
-  };
-
-  // const handleRemovePost = () => {
-  //   setIsRemove(true);
-  // };
 
   const showDeleteConfirm = () => {
     confirm({
@@ -240,10 +224,8 @@ export default function PostItem({ data, id }) {
   };
 
   const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1" onClick={hand}>
-        Update Post
-      </Menu.Item>
+    <Menu>
+      <Menu.Item key="1">Update Post</Menu.Item>
       <Menu.Item key="2" onClick={showDeleteConfirm}>
         Remove Post
       </Menu.Item>
@@ -264,6 +246,32 @@ export default function PostItem({ data, id }) {
 
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
   const URL = "http://localhost:3000/api/users/image";
+
+  const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
+
+  const openLightbox = useCallback((event, { photo, index }) => {
+    setCurrentImage(index);
+    setViewerIsOpen(true);
+  }, []);
+
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
+  };
+
+  const images =
+    data.images.length === 0
+      ? []
+      : data.images.map((image) => {
+          const photo = {
+            src: `http://localhost:3000/api/posts/image/${image.name}`,
+            width: 3,
+            height: 4,
+          };
+          return photo;
+        });
+
   return (
     <Wrapper>
       <HeaderPost>
@@ -294,26 +302,21 @@ export default function PostItem({ data, id }) {
         <Caption>{data ? data.content : ""}</Caption>
       </Content>
       <PostImg>
-        <Masonry
-          breakpointCols={Columns}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          <PreviewImg>
-            {data.images.length !== 0
-              ? data.images.map((image, i) => {
-                  return (
-                    <ImagePreview key={i}>
-                      <img
-                        src={`http://localhost:3000/api/posts/image/${image.name}`}
-                        alt=""
-                      />
-                    </ImagePreview>
-                  );
-                })
-              : ""}
-          </PreviewImg>
-        </Masonry>
+        <Gallery photos={images} onClick={openLightbox} />
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel
+                currentIndex={currentImage}
+                views={images.map((x) => ({
+                  ...x,
+                  srcset: x.srcSet,
+                  caption: x.title,
+                }))}
+              />
+            </Modal>
+          ) : null}
+        </ModalGateway>
       </PostImg>
       <Interact>
         <InteractItem>
@@ -384,21 +387,3 @@ export default function PostItem({ data, id }) {
     </Wrapper>
   );
 }
-
-const PreviewImg = styled.div`
-  display: flex;
-  padding-bottom: 3px;
-  justify-content: center;
-`;
-
-const ImagePreview = styled.div`
-  width: auto;
-  height: auto;
-  margin-right: 5px;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-`;

@@ -91,6 +91,10 @@ code {
 
 .ant-layout-sider {
   background: unset;
+  flex: unset !important;
+  max-width: unset !important;
+  min-width: unset !important;
+  width: unset !important;
 }
 
 .my-masonry-grid_column {
@@ -126,4 +130,20 @@ code {
 
 .ant-menu-item a:hover {
   color: #ca0533;
+}
+
+.ant-tabs-tab:hover {
+  color: #ca0533;
+}
+
+.ant-tabs-tab {
+  padding: 17px 0px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #ca0533;
+}
+
+.ant-tabs-ink-bar {
+  background: #ca0533;
 }

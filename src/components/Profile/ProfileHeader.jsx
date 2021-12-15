@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { fetchAllFriendOfUserById } from "../../actions/friend";
+import { addFriend, fetchAllFriendOfUserById } from "../../actions/friend";
 import userIDHeader from "../../services/userIDHeader";
 import { UpdateInfomation } from "./UpdateInfo";
 import UploadAvatarImage from "./uploadAvatar";
@@ -113,6 +113,7 @@ const ButtonUploadCoverImage = styled(Button)`
   display: flex;
   border-radius: 8px;
   display: flex;
+  font-size: 14px;
   align-items: center;
   position: absolute;
   cursor: pointer;
@@ -127,12 +128,23 @@ export default function ProfileHeader({ profile }) {
   const [isModal, setIsModal] = useState(false);
   const [isModalUploadAvatar, setIsModalUploadAvatar] = useState(false);
   const [isModalUploadCoverImage, setIsModalUploadCoverImage] = useState(false);
+  const isAddFriend = useSelector((state) => state.friend.addFriend.result);
+  console.log("isAddFriend", isAddFriend?.isFriend);
+  const isFriendRequest = isAddFriend?.isFriend;
+
   const userID = userIDHeader();
   const params = useParams();
   const dispatch = useDispatch();
   const listFriend = useSelector(
     (state) => state.friend.fetchAllFriendOfUserById.result.data
   );
+  const isFriend = listFriend?.data.filter(
+    (e) => e.user_friend.username === params.username
+  );
+  const profileInfo = useSelector(
+    (state) => state.user.fetchUserByID.result.data
+  );
+
   const handleModalUpdateInfo = () => {
     setIsModal(!isModal);
   };
@@ -173,7 +185,9 @@ export default function ProfileHeader({ profile }) {
     dispatch(fetchAllFriendOfUserById(20, 1));
   }, [dispatch]);
 
-  const handleMakeFriend = () => {};
+  const handleMakeFriend = () => {
+    dispatch(addFriend(profile?.id));
+  };
 
   return (
     <Wrapper>
@@ -218,32 +232,24 @@ export default function ProfileHeader({ profile }) {
               <EditOutlined />
               Update Infomation
             </UpdateInfo>
+          ) : JSON.stringify(isFriend) === JSON.stringify([]) ? (
+            <ButtonMakeFriend
+              type="default"
+              size="large"
+              icon={<UserAddOutlined />}
+              onClick={handleMakeFriend}
+            >
+              {isFriendRequest ? "Sent A Friend Request" : "Make Friend"}
+              {/* Make Friend */}
+            </ButtonMakeFriend>
           ) : (
-            listFriend?.data.map((item, i) => {
-              if (item.user_friend.username === params.username) {
-                return (
-                  <ButtonMakeFriend
-                    type="default"
-                    size="large"
-                    icon={<UserSwitchOutlined />}
-                    // onClick={handleMakeFriend}
-                  >
-                    Friend
-                  </ButtonMakeFriend>
-                );
-              } else if (item.user_friend.username !== params.username) {
-                return (
-                  <ButtonMakeFriend
-                    type="default"
-                    size="large"
-                    icon={<UserAddOutlined />}
-                    onClick={handleMakeFriend}
-                  >
-                    Make Friend
-                  </ButtonMakeFriend>
-                );
-              }
-            })
+            <ButtonMakeFriend
+              type="default"
+              size="large"
+              icon={<UserSwitchOutlined />}
+            >
+              Friend
+            </ButtonMakeFriend>
           )}
         </Info>
       </ProfileHeaderInfo>
@@ -272,7 +278,7 @@ export default function ProfileHeader({ profile }) {
         onOk={handleOkUploadCoverImage}
         onCancel={handleCancelUploadCoverImage}
       >
-        <UploadCoverImage />
+        <UploadCoverImage data={profileInfo} />
       </Modal>
     </Wrapper>
   );

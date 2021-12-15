@@ -10,6 +10,8 @@ import SignInSignup from "./components/SignInSignUp";
 import Profile from "./components/Profile";
 
 import Home from "./components/Home";
+import Groups from "./components/Group";
+import Group from "./components/Group/Group";
 
 function App() {
   return (
@@ -19,9 +21,10 @@ function App() {
         <Route path="/tlu/login" component={SignInSignup}></Route>
         <Route path="/tlu/register" component={SignInSignup}></Route>
         <Route path="/tlu/home" component={Home}></Route>
-        
 
         <Route path="/tlu/profile/:username" component={Profile}></Route>
+        <Route path="/tlu/groups" component={Groups} exact></Route>
+        <Route path="/tlu/group/:id" component={Group}></Route>
       </Switch>
     </Router>
   );
