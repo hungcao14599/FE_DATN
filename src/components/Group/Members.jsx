@@ -6,6 +6,8 @@ import imgSearch from "../../assets/svg/search_icon.svg";
 import { fetchMemberInGroup } from "../../actions/group";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Button } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 const Wrapper = styled.div`
   background: white;
@@ -58,6 +60,12 @@ export default function Members() {
   const membersInGroup = useSelector(
     (state) => state.group.fetchMemberInGroup.result.data
   );
+  console.log("friends1", membersInGroup?.data);
+
+  const friends = useSelector(
+    (state) => state.friend.fetchAllFriendOfUserById.result.data
+  );
+  console.log("friends", friends?.data);
 
   useEffect(() => {
     dispatch(
@@ -70,10 +78,26 @@ export default function Members() {
     );
   }, [dispatch, keyword, params.id]);
 
+  const data = membersInGroup?.data.map((mem) =>
+    friends?.data.some((friend) => (friend.user_friend.id = mem.id))
+  );
+
+  const buttonFriend = data.map((item, i) => {
+    return item ? (
+      <ButtonConfirm type="default" size="large" icon={<UserOutlined />}>
+        Bạn bè
+      </ButtonConfirm>
+    ) : (
+      <ButtonConfirm type="default" size="large" icon={<UserOutlined />}>
+        Kết bạn
+      </ButtonConfirm>
+    );
+  });
+  console.log("data", data);
   return (
     <Wrapper>
       <Header>
-        <Title>Members.</Title>
+        <Title>Members</Title>
         <Body>
           <SearchInput
             imgSearch={imgSearch}
@@ -85,15 +109,20 @@ export default function Members() {
           />
           {membersInGroup?.data.map((item, i) => {
             return (
-              <ProfileInfo>
-                <ProfileImg>
-                  <img src={`${URL_IMAGE_USER}/${item.user.avatar}`} alt="" />
-                </ProfileImg>
-                <ProfileName>
-                  <Name>{`${item.user.firstname} ${item.user.lastname}`} </Name>
-                  <Nickname>{item.user.username}</Nickname>
-                </ProfileName>
-              </ProfileInfo>
+              <MembersGroup>
+                <ProfileInfo>
+                  <ProfileImg>
+                    <img src={`${URL_IMAGE_USER}/${item.user.avatar}`} alt="" />
+                  </ProfileImg>
+                  <ProfileName>
+                    <Name>
+                      {`${item.user.firstname} ${item.user.lastname}`}{" "}
+                    </Name>
+                    <Nickname>{item.user.username}</Nickname>
+                  </ProfileName>
+                </ProfileInfo>
+                {buttonFriend}
+              </MembersGroup>
             );
           })}
         </Body>
@@ -101,6 +130,30 @@ export default function Members() {
     </Wrapper>
   );
 }
+
+const ButtonConfirm = styled(Button)`
+  background: #ca0533;
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+
+  span {
+    margin: 0 auto;
+    font-size: 13px;
+  }
+  :hover,
+  :active,
+  :focus {
+    background: #ca0533;
+    color: white;
+  }
+`;
+
+const MembersGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 const Nickname = styled.div`
   color: #767676;

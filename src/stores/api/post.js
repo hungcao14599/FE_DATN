@@ -35,4 +35,10 @@ export default class Post {
   static removePost(id) {
     return http.put(`${PREFIX}/delete/${id}`, {}, { headers: authHeader() });
   }
+  static fetchAllPostByGroupId({ groupID, size, page }) {
+    return http.get(
+      `${PREFIX}/group-post/${groupID}?size=${size}&page=${page}`,
+      { headers: authHeader() }
+    );
+  }
 }

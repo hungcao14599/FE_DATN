@@ -1,10 +1,4 @@
-import {
-  FacebookOutlined,
-  GooglePlusOutlined,
-  LinkedinOutlined,
-  LockOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -64,10 +58,9 @@ const ButtonSignUp = styled(Button)`
 `;
 
 const SignUpInput = styled(Input)`
-  width: 300px;
+  width: 450px;
   height: 45px;
   background-color: #f4f8f7 !important;
-  border: none;
   input {
     font-size: 13px;
     background-color: #f4f8f7;
@@ -116,30 +109,17 @@ export const SignUpForm = ({ style = {} }) => {
   return (
     <Wrapper style={style}>
       <Title>Create Account TLU Social Network</Title>
-      {/* <SocialNet>
-        <Fb>
-          <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
-            <FbIcon style={{ color: "black" }} />
-          </a>
-        </Fb>
-        <Gg>
-          <a href="https://mail.google.com/" target="_blank" rel="noreferrer">
-            <GgIcon style={{ color: "black" }} />
-          </a>
-        </Gg>
-        <In>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-            <InIcon style={{ color: "black" }} />
-          </a>
-        </In>
-      </SocialNet> */}
+
       <Des>Join the social network to experience</Des>
       <WrapInput>
         <Form.Item
+          label="Email"
+          extra="Enter email to register"
           help={errors.email && errors.email?.message}
           validateStatus={
             errors.email && errors.email?.message ? "error" : "validating"
           }
+          style={{ display: "block" }}
         >
           <Controller
             type={"email"}
@@ -161,10 +141,13 @@ export const SignUpForm = ({ style = {} }) => {
           />
         </Form.Item>
         <Form.Item
+          label="Username"
+          extra="Enter username to register"
           help={errors.username && errors.username?.message}
           validateStatus={
             errors.username && errors.username?.message ? "error" : "validating"
           }
+          style={{ display: "block" }}
         >
           <Controller
             control={control}
@@ -185,10 +168,13 @@ export const SignUpForm = ({ style = {} }) => {
           />
         </Form.Item>
         <Form.Item
+          label="Password"
+          extra="Enter password"
           help={errors.password && errors.password?.message}
           validateStatus={
             errors.password && errors.password?.message ? "error" : "validating"
           }
+          style={{ display: "block" }}
         >
           <Controller
             control={control}

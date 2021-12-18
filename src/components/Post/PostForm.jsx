@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../../actions/post";
 import Masonry from "react-masonry-css";
 import { fetchUserById } from "../../actions/user";
+import { useParams } from "react-router-dom";
 const Columns = {
   default: 5,
   1200: 3,
@@ -134,7 +135,9 @@ export default function PostForm() {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
   const [file, setFile] = useState();
   const [content, setContent] = useState("");
+  const params = useParams();
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const groupInfo = useSelector((state) => state.group.fetchGroupById.result);
 
   const dispatch = useDispatch();
 
@@ -156,7 +159,18 @@ export default function PostForm() {
       isFile = true;
     }
 
-    dispatch(addPost(content, 1, null, isFile, formData));
+    groupInfo?.data
+      ? dispatch(
+          addPost(
+            content,
+            groupInfo?.data.id === +params.id ? 3 : 1,
+            groupInfo?.data.id === +params.id ? +params.id : null,
+            isFile,
+            formData
+          )
+        )
+      : dispatch(addPost(content, 1, null, isFile, formData));
+
     setContent("");
     setFile(null);
     isFile = false;

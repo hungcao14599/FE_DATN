@@ -36,12 +36,14 @@ export default function GroupRight() {
     setIsFocus(true);
     setIsBlur(false);
   };
-  const handleJoinGroup = (id) => {
-    dispatch(userJoinGroup(id));
-  };
+
   useEffect(() => {
     dispatch(fetchOtherGroupsOfUser({ size: 20, page: 1, keyword: keyword }));
   }, [dispatch, keyword]);
+
+  const handleJoinGroup = (id) => {
+    dispatch(userJoinGroup(id));
+  };
 
   return (
     <WrapperCol1>

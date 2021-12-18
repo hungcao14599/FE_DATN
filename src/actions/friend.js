@@ -1,3 +1,4 @@
+import { key } from "localforage";
 import { createActions } from "redux-actions";
 import Api from "../stores/api";
 
@@ -13,9 +14,9 @@ const {
   FETCH_ALL_FRIEND_OF_USER_BY_ID_FAIL: (error) => ({ error }),
 });
 
-export const fetchAllFriendOfUserById = (size, page) => (dispatch) => {
+export const fetchAllFriendOfUserById = (size, page, keyword) => (dispatch) => {
   dispatch(fetchAllFriendOfUserByIdRequest());
-  return Api.Friend.fetchAllFriendOfUserById(size, page)
+  return Api.Friend.fetchAllFriendOfUserById(size, page, keyword)
     .then(({ data }) => {
       dispatch(fetchAllFriendOfUserByIdSuccess(data));
       return data;
@@ -38,9 +39,9 @@ const {
   FETCH_ALL_USER_APPROVAL_BY_ID_FAIL: (error) => ({ error }),
 });
 
-export const fetchAllUserApprovalById = (size, page) => (dispatch) => {
+export const fetchAllUserApprovalById = (size, page, keyword) => (dispatch) => {
   dispatch(fetchAllUserApprovalByIdRequest());
-  return Api.Friend.fetchAllUserApprovalById(size, page)
+  return Api.Friend.fetchAllUserApprovalById(size, page, keyword)
     .then(({ data }) => {
       dispatch(fetchAllUserApprovalByIdSuccess(data));
       return data;
@@ -50,6 +51,32 @@ export const fetchAllUserApprovalById = (size, page) => (dispatch) => {
       return Promise.reject(error);
     });
 };
+
+// fetchAllUserApprovalById
+
+const {
+  fetchAllNotFriendOfUserByIdRequest,
+  fetchAllNotFriendOfUserByIdSuccess,
+  fetchAllNotFriendOfUserByIdFail,
+} = createActions({
+  FETCH_ALL_NOT_FRIEND_OF_USER_BY_ID_REQUEST: () => {},
+  FETCH_ALL_NOT_FRIEND_OF_USER_BY_ID_SUCCESS: (data) => ({ data }),
+  FETCH_ALL_NOT_FRIEND_OF_USER_BY_ID_FAIL: (error) => ({ error }),
+});
+
+export const fetchAllNotFriendOfUserById =
+  (size, page, keyword) => (dispatch) => {
+    dispatch(fetchAllNotFriendOfUserByIdRequest());
+    return Api.Friend.fetchAllNotFriendOfUserById(size, page, keyword)
+      .then(({ data }) => {
+        dispatch(fetchAllNotFriendOfUserByIdSuccess(data));
+        return data;
+      })
+      .catch((error) => {
+        dispatch(fetchAllNotFriendOfUserByIdFail(error));
+        return Promise.reject(error);
+      });
+  };
 
 // Approval Friend
 
@@ -88,6 +115,7 @@ export const addFriend = (userID) => (dispatch) => {
     .then(({ data }) => {
       dispatch(addFriendSuccess(data));
       //   dispatch(fetchAllFriendOfUserById(20, 1));
+      dispatch(fetchAllNotFriendOfUserById(20, 1, ""));
       return data;
     })
     .catch((error) => {

@@ -8,8 +8,8 @@ import { SignInForm } from "./SignInForm";
 import { SignUpForm } from "./SignUpForm";
 
 const Wrapper = styled.div`
-  width: 60vw;
-  height: 60vh;
+  width: 70vw;
+  height: 70vh;
   position: relative;
   z-index: 0;
   display: flex;
@@ -31,7 +31,6 @@ const LabelCol = styled(animated.div)`
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  /* background-color: #3ab299; */
 `;
 
 const Blur = styled.div`
@@ -41,8 +40,6 @@ const Blur = styled.div`
   z-index: 1;
   height: 100%;
   width: 100%;
-  /* background-color: rgba(0, 128, 128, 0.5);
-  backdrop-filter: blur(4px); */
 `;
 
 const InputCol = styled(animated.div)`
