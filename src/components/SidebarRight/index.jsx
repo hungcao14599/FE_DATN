@@ -8,6 +8,7 @@ import {
   fetchAllUserApprovalById,
 } from "../../actions/friend";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function SidebarRight() {
   const dispatch = useDispatch();
@@ -60,7 +61,11 @@ export default function SidebarRight() {
                 <WrapContact>
                   <ContactImg>
                     <img src={`${URL}/${item.user_friend.avatar}`} alt="" />
-                    <Name>{item.user_friend.username}</Name>
+                    <Name>
+                      <Link to={`/tlu/profile/${item.user_friend.username}`}>
+                        {item.user_friend.username}
+                      </Link>
+                    </Name>
                   </ContactImg>
                   <ContactName>
                     <Dropdown.Button overlay={menu}></Dropdown.Button>
@@ -111,6 +116,9 @@ const Name = styled.div`
   display: flex;
   align-items: center;
   margin-left: 10px;
+  a {
+    color: #082850;
+  }
 `;
 
 const ContactName = styled.div`

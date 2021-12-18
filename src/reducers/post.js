@@ -31,6 +31,11 @@ const initialState = {
     error: null,
     requesting: false,
   },
+  fetchAllPostByGroupId: {
+    result: [],
+    error: null,
+    requesting: false,
+  },
 };
 
 export const postReducer = handleActions(
@@ -196,6 +201,34 @@ export const postReducer = handleActions(
       ...state,
       fetchAllPostsByUserName: {
         ...state.fetchAllPostsByUserName,
+        requesting: false,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    // FETCH ALL POST REQUEST
+    FETCH_ALL_POST_BY_GROUP_ID_REQUEST: (state) => ({
+      ...state,
+      fetchAllPostByGroupId: {
+        ...state.fetchAllPostByGroupId,
+        requesting: true,
+        error: null,
+      },
+    }),
+    FETCH_ALL_POST_BY_GROUP_ID_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchAllPostByGroupId: {
+        ...state.fetchAllPostByGroupId,
+        requesting: false,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_ALL_POST_BY_GROUP_ID_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchAllPostByGroupId: {
+        ...state.fetchAllPostByGroupId,
         requesting: false,
         result: null,
         error: payload.error,

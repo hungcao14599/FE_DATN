@@ -1,10 +1,4 @@
-import {
-  FacebookOutlined,
-  GooglePlusOutlined,
-  LinkedinOutlined,
-  LockOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -32,7 +26,7 @@ const WrapInput = styled.div`
 `;
 
 const SigninInput = styled(Input)`
-  width: 300px;
+  width: 450px;
   height: 45px;
   margin-bottom: 5px;
   input {
@@ -132,32 +126,16 @@ export const SignInForm = ({ style = {} }) => {
     <>
       <Wrapper style={style}>
         <Title>Sign in to TLU Social Network</Title>
-
-        {/* <SocialNet>
-        <Fb>
-          <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
-            <FbIcon style={{ color: "black" }} />
-          </a>
-        </Fb>
-        <Gg>
-          <a href="https://mail.google.com/" target="_blank" rel="noreferrer">
-            <GgIcon style={{ color: "black" }} />
-          </a>
-        </Gg>
-        <In>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-            <InIcon style={{ color: "black" }} />
-          </a>
-        </In>
-      </SocialNet> */}
         <Des>or use your email account</Des>
-
         <WrapInput>
           <Form.Item
+            label="Email"
+            extra="Enter email to login"
             help={errors.email && errors.email?.message}
             validateStatus={
               errors.email && errors.email?.message ? "error" : "validating"
             }
+            style={{ display: "block" }}
           >
             <Controller
               control={control}
@@ -174,18 +152,21 @@ export const SignInForm = ({ style = {} }) => {
                     </Logo>
                   }
                   placeholder="Email"
-                  style={{ backgroundColor: "#f4f8f7", border: "none" }}
+                  style={{ backgroundColor: "#f4f8f7" }}
                 />
               )}
             />
           </Form.Item>
           <Form.Item
+            label="Password"
+            extra="Enter password to login"
             help={errors.password && errors.password?.message}
             validateStatus={
               errors.password && errors.password?.message
                 ? "error"
                 : "validating"
             }
+            style={{ display: "block" }}
           >
             <Controller
               control={control}
@@ -202,7 +183,7 @@ export const SignInForm = ({ style = {} }) => {
                     </Logo>
                   }
                   placeholder="Password"
-                  style={{ backgroundColor: "#f4f8f7", border: "none" }}
+                  style={{ backgroundColor: "#f4f8f7" }}
                 />
               )}
             />

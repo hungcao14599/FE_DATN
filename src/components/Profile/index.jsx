@@ -60,10 +60,6 @@ export default function Profile() {
     (state) => state.user.fetchUserByName.result
   );
 
-  const listFriend = useSelector(
-    (state) => state.friend.fetchAllFriendOfUserById.result.data
-  );
-
   return (
     <Wrapper>
       <Container>
