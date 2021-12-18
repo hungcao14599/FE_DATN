@@ -22,6 +22,11 @@ const initialState = {
     error: null,
     requesting: false,
   },
+  fetchAllNotFriendOfUserById: {
+    result: [],
+    error: null,
+    requesting: false,
+  },
 };
 
 export const friendReducer = handleActions(
@@ -76,6 +81,34 @@ export const friendReducer = handleActions(
       ...state,
       fetchAllUserApprovalById: {
         ...state.fetchAllUserApprovalById,
+        requesting: false,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    // FETCH_ALL_NOT_FRIEND_OF_USER_BY_ID
+    FETCH_ALL_NOT_FRIEND_OF_USER_BY_ID_REQUEST: (state) => ({
+      ...state,
+      fetchAllNotFriendOfUserById: {
+        ...state.fetchAllNotFriendOfUserById,
+        requesting: true,
+        error: null,
+      },
+    }),
+    FETCH_ALL_NOT_FRIEND_OF_USER_BY_ID_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchAllNotFriendOfUserById: {
+        ...state.fetchAllNotFriendOfUserById,
+        requesting: false,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_ALL_NOT_FRIEND_OF_USER_BY_ID_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchAllNotFriendOfUserById: {
+        ...state.fetchAllNotFriendOfUserById,
         requesting: false,
         result: null,
         error: payload.error,

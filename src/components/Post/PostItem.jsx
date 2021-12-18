@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Dropdown, Menu, Form, Input, Modal as Modal1 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  CaretRightOutlined,
   CommentOutlined,
   EditOutlined,
   ExclamationCircleOutlined,
@@ -70,7 +71,9 @@ const DateTimeInfo = styled.p`
 const Name = styled.span`
   font-weight: 700;
   font-size: 15px;
-  color: #082850;
+  a {
+    color: #082850;
+  }
 `;
 
 const Control = styled.div``;
@@ -266,8 +269,8 @@ export default function PostItem({ data, id }) {
       : data.images.map((image) => {
           const photo = {
             src: `http://localhost:3000/api/posts/image/${image.name}`,
-            width: 3,
-            height: 4,
+            width: 2,
+            height: 2,
           };
           return photo;
         });
@@ -282,9 +285,28 @@ export default function PostItem({ data, id }) {
             </ProfileImg>
 
             <ProfileName>
-              <Link to={`/tlu/profile/${data.user.username}`}>
-                <Name>{data ? data.user.username : ""}</Name>
-              </Link>
+              <Name>
+                <Link to={`/tlu/profile/${data.user.username}`}>
+                  {data ? data.user.username : ""}
+                </Link>
+              </Name>
+              {data?.groupID ? (
+                <>
+                  {data?.group_page ? <CaretRightOutlined /> : ""}
+                  <Name>
+                    <Link
+                      to={`/tlu/group/${
+                        data?.group_page ? data?.group_page.id : data?.groupID
+                      }`}
+                    >
+                      {data?.group_page ? data?.group_page.name : ""}
+                    </Link>
+                  </Name>
+                </>
+              ) : (
+                ""
+              )}
+
               <DateTimeInfo>{formatDate(data.createdAt)}</DateTimeInfo>
             </ProfileName>
           </ProfileInfo>
@@ -331,7 +353,7 @@ export default function PostItem({ data, id }) {
               </ButtonLike>
             )}
 
-            <Like>{data.like.length}</Like>
+            <Like>{data.likes}</Like>
           </LikeMood>
           <LikeMood>
             <ButtonLike onClick={handleComment}>

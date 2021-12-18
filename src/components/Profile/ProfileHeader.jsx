@@ -5,7 +5,7 @@ import {
   UserSwitchOutlined,
 } from "@ant-design/icons";
 import { Button, Modal } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -15,19 +15,29 @@ import userIDHeader from "../../services/userIDHeader";
 import { UpdateInfomation } from "./UpdateInfo";
 import UploadAvatarImage from "./uploadAvatar";
 import UploadCoverImage from "./uploadCoverImage";
+
+import Carousel, { Modal as Modal1, ModalGateway } from "react-images";
+import Gallery from "react-photo-gallery";
+
 const Wrapper = styled.div`
   padding: 20px 120px;
 `;
 const CoverImage = styled.div`
   width: 100%;
   height: 400px;
-  background: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero.jpg");
+  /* background: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero.jpg"); */
   background-size: cover;
   display: flex;
   margin: 0 auto;
   justify-content: flex-end;
   align-items: flex-end;
   border-radius: 10px;
+  div {
+    div {
+      width: 100%;
+      height: 100%;
+    }
+  }
   img {
     width: 100%;
     height: 100%;
@@ -40,9 +50,13 @@ const ProfileHeaderInfo = styled.div`
 `;
 const AvatarImage = styled.div`
   display: flex;
-  justify-content: center;
   margin-top: -150px;
   margin-bottom: 5px;
+  div {
+    div {
+      justify-content: center;
+    }
+  }
   img {
     width: 200px;
     height: 200px;
@@ -189,13 +203,62 @@ export default function ProfileHeader({ profile }) {
     dispatch(addFriend(profile?.id));
   };
 
+  const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
+
+  const [currentImageAvatar, setCurrentImageAvatar] = useState(0);
+  const [viewerIsOpenAvatar, setViewerIsOpenAvatar] = useState(false);
+
+  const openLightbox = useCallback((event, { photo, index }) => {
+    setCurrentImage(index);
+    setViewerIsOpen(true);
+  }, []);
+
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
+  };
+
+  const openLightboxAvatar = useCallback((event, { photo, index }) => {
+    setCurrentImageAvatar(index);
+    setViewerIsOpenAvatar(true);
+  }, []);
+
+  const closeLightboxAvatar = () => {
+    setCurrentImageAvatar(0);
+    setViewerIsOpenAvatar(false);
+  };
+
+  const images = [
+    {
+      src: `http://localhost:3000/api/users/image/${profile?.coverImage}`,
+    },
+  ];
+  const imageAvatar = [
+    {
+      src: `http://localhost:3000/api/users/image/${profile?.avatar}`,
+    },
+  ];
+
   return (
     <Wrapper>
       <CoverImage>
-        <img
-          src={`http://localhost:3000/api/users/image/${profile?.coverImage}`}
-          alt=""
-        />
+        <Gallery photos={images} onClick={openLightbox} />
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal1 onClose={closeLightbox}>
+              <Carousel
+                currentIndex={currentImage}
+                views={images.map((x) => ({
+                  ...x,
+                  srcset: x.srcSet,
+                  caption: x.title,
+                }))}
+              />
+            </Modal1>
+          ) : null}
+        </ModalGateway>
+
         {profile?.id === userID ? (
           <ButtonUploadCoverImage
             type="default"
@@ -211,10 +274,21 @@ export default function ProfileHeader({ profile }) {
       </CoverImage>
       <ProfileHeaderInfo>
         <AvatarImage>
-          <img
-            src={`http://localhost:3000/api/users/image/${profile?.avatar}`}
-            alt=""
-          />
+          <Gallery photos={imageAvatar} onClick={openLightboxAvatar} />
+          <ModalGateway>
+            {viewerIsOpenAvatar ? (
+              <Modal1 onClose={closeLightboxAvatar}>
+                <Carousel
+                  currentIndex={currentImageAvatar}
+                  views={imageAvatar.map((x) => ({
+                    ...x,
+                    srcset: x.srcSet,
+                    caption: x.title,
+                  }))}
+                />
+              </Modal1>
+            ) : null}
+          </ModalGateway>
         </AvatarImage>
         {profile?.id === userID ? (
           <UploadAvatar>
@@ -254,6 +328,7 @@ export default function ProfileHeader({ profile }) {
         </Info>
       </ProfileHeaderInfo>
 
+      {/* Handle Modal */}
       <Modal
         title="Basic Modal"
         visible={isModal}

@@ -133,6 +133,7 @@ export const userJoinGroup = (id) => (dispatch) => {
   return Api.Group.userJoinGroup(id)
     .then(({ data }) => {
       dispatch(userJoinGroupSuccess(data));
+      dispatch(fetchOtherGroupsOfUser({ size: 20, page: 1, keyword: "" }));
       return data;
     })
     .catch((error) => {

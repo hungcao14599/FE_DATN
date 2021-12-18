@@ -37,10 +37,12 @@ export default function SidebarLeft({ profile }) {
             </ProfileImg>
 
             <ProfileName>
-              <Name>{profile ? profile.username : ""}</Name>
-              <Nickname>{`${profile ? profile.firstname : ""} ${
-                profile ? profile.lastname : ""
-              }`}</Nickname>
+              <Name>
+                <Link to={`/tlu/profile/${profile?.username}`}>
+                  {profile?.username}
+                </Link>
+              </Name>
+              <Nickname>{`${profile?.firstname} ${profile?.lastname}`}</Nickname>
             </ProfileName>
           </ProfileInfo>
         </Left1>
@@ -61,7 +63,7 @@ export default function SidebarLeft({ profile }) {
                 <Link to={`/tlu/home`}>Home </Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<ContactsOutlined />}>
-                People
+                <Link to={`/tlu/friends`}>People </Link>
               </Menu.Item>
               <Menu.Item key="4" icon={<ProfileOutlined />}>
                 <Link to={`/tlu/home`}>News Feed </Link>
@@ -165,10 +167,13 @@ const Nickname = styled.div`
 
 const Name = styled.div`
   font-weight: 700;
+  font-size: 15px;
+  a {
+    color: #082850;
+  }
 `;
 
 const WrapperCol1 = styled.div`
-  /* padding: 0 0 0 50px; */
   flex-basis: 350px;
 `;
 

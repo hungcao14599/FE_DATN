@@ -23,12 +23,15 @@ export const addPost =
       .then(({ data }) => {
         dispatch(addPostSuccess(data));
         dispatch(fetchAllPosts(20, 1));
+        dispatch(fetchAllPostByGroupId({ groupID, size: 20, page: 1 }));
+
         if (isFile) {
           dispatch(uploadImageRequest());
           return Api.Post.uploadImage(data.data.id, formData)
             .then((res) => {
               dispatch(uploadImageSuccess(res));
               dispatch(fetchAllPosts(20, 1));
+              dispatch(fetchAllPostByGroupId({ groupID, size: 20, page: 1 }));
             })
             .catch((error) => {
               dispatch(uploadImageFail(error));
@@ -136,3 +139,30 @@ export const removePost = (id) => (dispatch) => {
       return Promise.reject(error);
     });
 };
+
+// FETCH_ALL_POST_BY_GROUP_ID
+
+const {
+  fetchAllPostByGroupIdRequest,
+  fetchAllPostByGroupIdSuccess,
+  fetchAllPostByGroupIdFail,
+} = createActions({
+  FETCH_ALL_POST_BY_GROUP_ID_REQUEST: () => {},
+  FETCH_ALL_POST_BY_GROUP_ID_SUCCESS: (data) => ({ data }),
+  FETCH_ALL_POST_BY_GROUP_ID_FAIL: (error) => ({ error }),
+});
+
+export const fetchAllPostByGroupId =
+  ({ groupID, size, page }) =>
+  (dispatch) => {
+    dispatch(fetchAllPostByGroupIdRequest());
+    return Api.Post.fetchAllPostByGroupId({ groupID, size, page })
+      .then(({ data }) => {
+        dispatch(fetchAllPostByGroupIdSuccess(data));
+        return data;
+      })
+      .catch((error) => {
+        dispatch(fetchAllPostByGroupIdFail(error));
+        return Promise.reject(error);
+      });
+  };

@@ -12,7 +12,6 @@ import styled from "styled-components";
 import { fetchAllFriendOfUserById } from "../../actions/friend";
 import PostForm from "../Post/PostForm";
 import PostList from "../Post/PostList";
-import PersonalInfomation from "../Profile/PersonalInformation";
 import UploadAvatarImage from "../Profile/uploadAvatar";
 import UploadCoverImage from "../Profile/uploadCoverImage";
 import GroupIntroduce from "./GroupIntroduce";
@@ -20,6 +19,7 @@ import Members from "./Members";
 import { fetchMemberInGroup, userJoinGroup } from "../../actions/group";
 import { useParams } from "react-router-dom";
 import userIDHeader from "../../services/userIDHeader";
+import { fetchAllPostByGroupId } from "../../actions/post";
 const Wrapper = styled.div`
   padding: 20px 180px;
 `;
@@ -107,6 +107,13 @@ export default function GroupHeader({ groupData }) {
     setIsModalUploadCoverImage(false);
   };
 
+  const membersInGroup = useSelector(
+    (state) => state.group.fetchMemberInGroup.result.data
+  );
+  const postsByGroupID = useSelector(
+    (state) => state.post.fetchAllPostByGroupId.result
+  );
+
   useEffect(() => {
     dispatch(fetchAllFriendOfUserById(20, 1));
   }, [dispatch]);
@@ -122,19 +129,22 @@ export default function GroupHeader({ groupData }) {
     );
   }, [dispatch, params.id]);
 
-  const membersInGroup = useSelector(
-    (state) => state.group.fetchMemberInGroup.result.data
-  );
+  useEffect(() => {
+    dispatch(
+      fetchAllPostByGroupId({
+        groupID: params.id,
+        size: 20,
+        page: 1,
+      })
+    );
+  }, [dispatch, params.id]);
+
   const userID = userIDHeader();
-
   const member = membersInGroup?.data.filter((e) => e.user.id === userID);
-
   const { TabPane } = Tabs;
-
   const callback = (key) => {
     console.log(key);
   };
-
   const handleJoinGroup = (id) => {
     dispatch(userJoinGroup(id));
   };
@@ -198,10 +208,10 @@ export default function GroupHeader({ groupData }) {
               <ProfileContent>
                 <ContentPost>
                   <PostForm />
-                  <PostList />
+                  <PostList items={postsByGroupID?.data} />
                 </ContentPost>
                 <ContentInfo>
-                  <PersonalInfomation />
+                  {/* <GroupIntroduce membersInGroup={membersInGroup?.data} /> */}
                 </ContentInfo>
               </ProfileContent>
             </TabPane>
@@ -280,7 +290,7 @@ const ProfileContent = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0px auto;
-  padding: 15px;
+  padding: 15px 100px;
 `;
 
 const ContentInfo = styled.div``;
