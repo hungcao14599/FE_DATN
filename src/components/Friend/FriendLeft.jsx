@@ -6,7 +6,6 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   SettingOutlined,
-  UserAddOutlined,
 } from "@ant-design/icons";
 import SearchInput from "../SearchInput";
 import imgSearch from "../../assets/svg/search_icon.svg";
@@ -14,12 +13,12 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  addFriend,
   approvalFriend,
   fetchAllFriendOfUserById,
   fetchAllNotFriendOfUserById,
   fetchAllUserApprovalById,
 } from "../../actions/friend";
+import MakeFriends from "./MakeFriends";
 
 export default function FriendLeft() {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
@@ -40,7 +39,6 @@ export default function FriendLeft() {
   const [keyword, setSearch] = useState("");
   const [keyword1, setSearch1] = useState("");
   const [keyword2, setSearch2] = useState("");
-
   const [isFocus, setIsFocus] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
   const onBlur = () => {
@@ -55,7 +53,14 @@ export default function FriendLeft() {
   const { TabPane } = Tabs;
 
   const callback = (key) => {
-    console.log(key);
+    if (+key === 1) {
+      dispatch(fetchAllFriendOfUserById(20, 1, keyword));
+    } else if (+key === 2) {
+      dispatch(fetchAllUserApprovalById(20, 1, keyword1));
+    } else if (+key === 3) {
+      dispatch(fetchAllNotFriendOfUserById(20, 1, keyword2));
+    } else {
+    }
   };
 
   useEffect(() => {
@@ -69,10 +74,6 @@ export default function FriendLeft() {
   useEffect(() => {
     dispatch(fetchAllNotFriendOfUserById(20, 1, keyword2));
   }, [dispatch, keyword2]);
-
-  const handleMakeFriend = (id) => {
-    dispatch(addFriend(id));
-  };
 
   const handleApprovalFriend = (id) => {
     dispatch(approvalFriend(id, true));
@@ -215,38 +216,7 @@ export default function FriendLeft() {
               <GroupJoined>
                 <Groups>
                   {notFriends?.data.map((item, i) => {
-                    return (
-                      <OtherUser>
-                        <ProfileGroup>
-                          <GroupImg>
-                            <img
-                              src={`${URL_IMAGE_USER}/${item.avatar}`}
-                              alt=""
-                            />
-                          </GroupImg>
-
-                          <GroupName>
-                            <Name>
-                              <Link to={`/tlu/profile/${item.username}`}>
-                                {item.username}
-                              </Link>
-                            </Name>
-                            <Des>{item.description}</Des>
-                          </GroupName>
-                        </ProfileGroup>
-                        <ButtonMakeFriend
-                          type="default"
-                          size="large"
-                          icon={<UserAddOutlined />}
-                          onClick={() => handleMakeFriend(item.id)}
-                        >
-                          {/* {isFriendRequest
-                            ? "Sent A Friend Request"
-                            : "Make Friend"} */}
-                          Make Friend
-                        </ButtonMakeFriend>
-                      </OtherUser>
-                    );
+                    return <MakeFriends item={item} />;
                   })}
                 </Groups>
               </GroupJoined>
@@ -280,31 +250,6 @@ const ButtonConfirm = styled(Button)`
   span {
     margin: 0 auto;
     font-size: 13px;
-  }
-  :hover,
-  :active,
-  :focus {
-    background: #ca0533;
-    color: white;
-  }
-`;
-
-const OtherUser = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-const ButtonMakeFriend = styled(Button)`
-  background: #ca0533;
-  color: white;
-  font-weight: 500;
-  display: flex;
-  border-radius: 8px;
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-  span {
-    font-size: 14px;
   }
   :hover,
   :active,

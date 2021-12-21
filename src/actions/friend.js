@@ -115,7 +115,7 @@ export const addFriend = (userID) => (dispatch) => {
     .then(({ data }) => {
       dispatch(addFriendSuccess(data));
       //   dispatch(fetchAllFriendOfUserById(20, 1));
-      dispatch(fetchAllNotFriendOfUserById(20, 1, ""));
+      // dispatch(fetchAllNotFriendOfUserById(20, 1, ""));
       return data;
     })
     .catch((error) => {
