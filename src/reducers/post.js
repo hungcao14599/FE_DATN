@@ -6,6 +6,11 @@ const initialState = {
     error: null,
     requesting: false,
   },
+  updatePost: {
+    result: [],
+    error: null,
+    requesting: false,
+  },
   removePost: {
     result: [],
     error: null,
@@ -32,6 +37,11 @@ const initialState = {
     requesting: false,
   },
   fetchAllPostByGroupId: {
+    result: [],
+    error: null,
+    requesting: false,
+  },
+  fetchAllPostsInGroup: {
     result: [],
     error: null,
     requesting: false,
@@ -67,6 +77,35 @@ export const postReducer = handleActions(
         error: payload.error,
       },
     }),
+
+    //UPDATE_POST
+    UPDATE_POST_REQUEST: (state) => ({
+      ...state,
+      updatePost: {
+        ...state.updatePost,
+        requesting: true,
+        error: null,
+      },
+    }),
+    UPDATE_POST_SUCCESS: (state, { payload }) => ({
+      ...state,
+      updatePost: {
+        ...state.updatePost,
+        requesting: false,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    UPDATE_POST_FAIL: (state, { payload }) => ({
+      ...state,
+      updatePost: {
+        ...state.updatePost,
+        requesting: false,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
     //UPLOAD IMAGE
     UPLOAD_IMAGE_REQUEST: (state) => ({
       ...state,
@@ -117,6 +156,34 @@ export const postReducer = handleActions(
       ...state,
       fetchAllPosts: {
         ...state.fetchAllPosts,
+        requesting: false,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    // FETCH ALL POST IN GROUP
+    FETCH_ALL_POSTS_IN_GROUP_REQUEST: (state) => ({
+      ...state,
+      fetchAllPostsInGroup: {
+        ...state.fetchAllPostsInGroup,
+        requesting: true,
+        error: null,
+      },
+    }),
+    FETCH_ALL_POSTS_IN_GROUP_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchAllPostsInGroup: {
+        ...state.fetchAllPostsInGroup,
+        requesting: false,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_ALL_POSTS_IN_GROUP_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchAllPostsInGroup: {
+        ...state.fetchAllPostsInGroup,
         requesting: false,
         result: null,
         error: payload.error,

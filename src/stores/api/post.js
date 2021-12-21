@@ -9,6 +9,12 @@ export default class Post {
     });
   }
 
+  static fetchAllPostsInGroup(size, page) {
+    return http.get(`${PREFIX}/group-post?size=${size}&page=${page}`, {
+      headers: authHeader(),
+    });
+  }
+
   static fetchAllPostsByUserName(username, size, page) {
     return http.get(`${PREFIX}/user/${username}?size=${size}&page=${page}`, {
       headers: authHeader(),
@@ -40,5 +46,9 @@ export default class Post {
       `${PREFIX}/group-post/${groupID}?size=${size}&page=${page}`,
       { headers: authHeader() }
     );
+  }
+
+  static updatePost(id, content, images) {
+    return http.put(PREFIX, { id, content, images }, { headers: authHeader() });
   }
 }

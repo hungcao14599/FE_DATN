@@ -196,7 +196,7 @@ export default function ProfileHeader({ profile }) {
   };
 
   useEffect(() => {
-    dispatch(fetchAllFriendOfUserById(20, 1));
+    dispatch(fetchAllFriendOfUserById(20, 1, ""));
   }, [dispatch]);
 
   const handleMakeFriend = () => {

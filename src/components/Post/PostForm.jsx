@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Button, Input } from "antd";
 import { CloudUploadOutlined, PaperClipOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost } from "../../actions/post";
+import { addPost, fetchAllPostsByUserName } from "../../actions/post";
 import Masonry from "react-masonry-css";
-import { fetchUserById } from "../../actions/user";
+import { fetchImgByUserName, fetchUserById } from "../../actions/user";
 import { useParams } from "react-router-dom";
 const Columns = {
   default: 5,
@@ -24,7 +24,6 @@ const PostFormContent = styled.div`
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
-  /* border: 1px solid #d9d9d9; */
 `;
 const Avatar = styled.div`
   overflow: hidden;
@@ -139,6 +138,8 @@ export default function PostForm() {
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
   const groupInfo = useSelector((state) => state.group.fetchGroupById.result);
 
+  const userName = profile?.username;
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -169,7 +170,10 @@ export default function PostForm() {
             formData
           )
         )
-      : dispatch(addPost(content, 1, null, isFile, formData));
+      : dispatch(addPost(content, 1, null, isFile, formData)).then((res) => {
+          dispatch(fetchAllPostsByUserName(userName, 20, 1));
+          dispatch(fetchImgByUserName(userName));
+        });
 
     setContent("");
     setFile(null);
@@ -227,12 +231,14 @@ export default function PostForm() {
                   </PreviewImg>
                 </Masonry>
               </div>
-              <Button type="default" size="large" onClick={handlePost}>
-                <CloudUploadOutlined /> Post
-              </Button>
             </Preview>
           </>
         )}
+        <Preview>
+          <Button type="default" size="large" onClick={handlePost}>
+            <CloudUploadOutlined /> Post
+          </Button>
+        </Preview>
       </PostFormContent>
     </WrapPostForm>
   );
