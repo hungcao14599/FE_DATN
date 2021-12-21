@@ -4,22 +4,12 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { fetchUserById } from "../../actions/user";
 import Header from "../Header";
-import GroupLeft from "./GroupLeft";
-import GroupRight from "./GroupRight";
-import PostList from "../Post/PostList";
-import { fetchAllPostsInGroup } from "../../actions/post";
-export default function Groups() {
+import ChatLeft from "./ChatLeft";
+
+export default function Chats() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserById());
-  }, [dispatch]);
-
-  const allPosts = useSelector(
-    (state) => state.post.fetchAllPostsInGroup.result.data
-  );
-
-  useEffect(() => {
-    dispatch(fetchAllPostsInGroup(20, 1));
   }, [dispatch]);
 
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
@@ -28,19 +18,12 @@ export default function Groups() {
       <Container>
         <Header profile={profile} />
         <Contents>
-          <GroupLeft />
-          <List>
-            <PostList items={allPosts} />
-          </List>
-          <GroupRight />
+          <ChatLeft />
         </Contents>
       </Container>
     </Wrapper>
   );
 }
-const List = styled.div`
-  width: 800px;
-`;
 const Wrapper = styled.div`
   padding: 20px;
   height: auto;
@@ -52,11 +35,10 @@ const Container = styled.div`
   background: #f9fafb;
   border-radius: 15px;
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
-  height: auto;
+  height: 100vh;
 `;
 
 const Contents = styled.div`
+  padding-top: 14px;
   display: flex;
-  justify-content: space-between;
-  padding-top: 14px; ;
 `;

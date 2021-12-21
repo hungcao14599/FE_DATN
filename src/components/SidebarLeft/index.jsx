@@ -74,6 +74,9 @@ export default function SidebarLeft({ profile }) {
               <Menu.Item key="6" icon={<GroupOutlined />}>
                 <Link to={`/tlu/groups`}>Groups</Link>
               </Menu.Item>
+              <Menu.Item key="7" icon={<GroupOutlined />}>
+                <Link to={`/tlu/messages`}>Message</Link>
+              </Menu.Item>
             </Menu>
           </Sider>
         </Left2>

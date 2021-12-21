@@ -230,4 +230,7 @@ const Left1 = styled.div`
   box-shadow: 0 13px 49px 0 rgb(40 40 40 / 10%);
   padding: 15px;
 `;
-const Col1 = styled.div``;
+const Col1 = styled.div`
+  position: sticky;
+  top: 0;
+`;

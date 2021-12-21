@@ -1,5 +1,6 @@
 import { createActions } from "redux-actions";
 import Api from "../stores/api";
+import { fetchImgByUserName } from "./user";
 
 // VERIFY ACCOUNT
 
@@ -47,6 +48,42 @@ export const addPost =
       });
   };
 
+// UPDATE POST
+const { updatePostRequest, updatePostSuccess, updatePostFail } = createActions({
+  UPDATE_POST_REQUEST: () => {},
+  UPDATE_POST_SUCCESS: (data) => ({ data }),
+  UPDATE_POST_FAIL: (error) => ({ error }),
+});
+
+export const updatePost =
+  (id, content, images, isFile, formData) => (dispatch) => {
+    dispatch(updatePostRequest());
+    return Api.Post.updatePost(id, content, images)
+      .then(({ data }) => {
+        dispatch(updatePostSuccess(data));
+        dispatch(fetchAllPosts(20, 1));
+
+        if (isFile) {
+          dispatch(uploadImageRequest());
+          return Api.Post.uploadImage(data.data.id, formData)
+            .then((res) => {
+              dispatch(uploadImageSuccess(res));
+              dispatch(fetchAllPosts(20, 1));
+            })
+            .catch((error) => {
+              dispatch(uploadImageFail(error));
+              return Promise.reject(error);
+            });
+        } else {
+          dispatch(updatePostSuccess(data));
+        }
+      })
+      .catch((error) => {
+        dispatch(updatePostFail(error));
+        return Promise.reject(error);
+      });
+  };
+
 // FETCH ALL POSTS OF USER
 
 const { fetchAllPostsRequest, fetchAllPostsSuccess, fetchAllPostsFail } =
@@ -69,6 +106,31 @@ export const fetchAllPosts = (size, page) => (dispatch) => {
     });
 };
 
+// FETCH ALL POSTS IN GROUP
+
+const {
+  fetchAllPostsInGroupRequest,
+  fetchAllPostsInGroupSuccess,
+  fetchAllPostsInGroupFail,
+} = createActions({
+  FETCH_ALL_POSTS_IN_GROUP_REQUEST: () => {},
+  FETCH_ALL_POSTS_IN_GROUP_SUCCESS: (data) => ({ data }),
+  FETCH_ALL_POSTS_IN_GROUP_FAIL: (error) => ({ error }),
+});
+
+export const fetchAllPostsInGroup = (size, page) => (dispatch) => {
+  dispatch(fetchAllPostsInGroupRequest());
+  return Api.Post.fetchAllPostsInGroup(size, page)
+    .then(({ data }) => {
+      dispatch(fetchAllPostsInGroupSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(fetchAllPostsInGroupFail(error));
+      return Promise.reject(error);
+    });
+};
+
 // FETCH ALL POSTS BY USERNAME
 
 const {
@@ -86,6 +148,7 @@ export const fetchAllPostsByUserName = (username, size, page) => (dispatch) => {
   return Api.Post.fetchAllPostsByUserName(username, size, page)
     .then(({ data }) => {
       dispatch(fetchAllPostsByUserNameSuccess(data));
+      dispatch(fetchImgByUserName(username));
       return data;
     })
     .catch((error) => {
@@ -132,6 +195,8 @@ export const removePost = (id) => (dispatch) => {
   return Api.Post.removePost(id)
     .then(({ data }) => {
       dispatch(removePostSuccess(data));
+      dispatch(fetchAllPosts(20, 1));
+
       return data;
     })
     .catch((error) => {

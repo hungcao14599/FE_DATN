@@ -20,11 +20,11 @@ export default function SidebarRight() {
   );
 
   useEffect(() => {
-    dispatch(fetchAllFriendOfUserById(20, 1));
+    dispatch(fetchAllFriendOfUserById(20, 1, ""));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchAllUserApprovalById(20, 1));
+    dispatch(fetchAllUserApprovalById(20, 1, ""));
   }, [dispatch]);
 
   const handleMenuClick = (e) => {
