@@ -7,6 +7,8 @@ import { likeReducer } from "./like";
 import { commentReducer } from "./comment";
 import { friendReducer } from "./friend";
 import { groupReducer } from "./group";
+import { messageReducer } from "./message";
+import { chatReducer } from "./chat";
 const reducer = () =>
   combineReducers({
     auth: authReducer,
@@ -16,6 +18,8 @@ const reducer = () =>
     comment: commentReducer,
     friend: friendReducer,
     group: groupReducer,
+    message: messageReducer,
+    chat: chatReducer,
   });
 
 export default reducer;
