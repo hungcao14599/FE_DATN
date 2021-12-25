@@ -5,6 +5,8 @@ import Like from "./like";
 import Comment from "./comment";
 import Friend from "./friend";
 import Group from "./group";
+import Message from "./message";
+import Chat from "./chat";
 const API = {
   Auth,
   User,
@@ -13,6 +15,8 @@ const API = {
   Comment,
   Friend,
   Group,
+  Message,
+  Chat,
 };
 
 export default API;

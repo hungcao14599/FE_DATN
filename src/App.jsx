@@ -27,7 +27,8 @@ function App() {
         <Route path="/tlu/groups" component={Groups} exact></Route>
         <Route path="/tlu/group/:id" component={Group}></Route>
         <Route path="/tlu/friends" component={Friends}></Route>
-        <Route path="/tlu/messages" component={Chats}></Route>
+        <Route path="/tlu/messages" component={Chats} exact></Route>
+        <Route path="/tlu/messages/:id" component={Chats}></Route>
       </Switch>
     </Router>
   );

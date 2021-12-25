@@ -5,7 +5,8 @@ import * as like from "./like";
 import * as comment from "./comment";
 import * as friend from "./friend";
 import * as group from "./group";
-
+import * as message from "./message";
+import * as chat from "./chat";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   ...auth,
@@ -15,4 +16,6 @@ export default {
   ...comment,
   ...friend,
   ...group,
+  ...message,
+  ...chat,
 };
