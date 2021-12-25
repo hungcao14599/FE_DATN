@@ -7,10 +7,10 @@ import imgSearch from "../../assets/svg/search_icon.svg";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchAllFriendOfUserById } from "../../actions/friend";
+import { fetchChatsByUserId } from "../../actions/chat";
 
 export default function ChatLeft() {
-  const URL_IMAGE_POSTS = "http://localhost:3000/api/posts/image";
+  const URL_IMAGE_USERS = "http://localhost:3000/api/users/image";
   const dispatch = useDispatch();
 
   const [keyword, setSearch] = useState("");
@@ -25,12 +25,12 @@ export default function ChatLeft() {
     setIsBlur(false);
   };
 
-  const friends = useSelector(
-    (state) => state.friend.fetchAllFriendOfUserById.result.data
+  const chats = useSelector(
+    (state) => state.chat.fetchChatsByUserId.result.data
   );
 
   useEffect(() => {
-    dispatch(fetchAllFriendOfUserById(20, 1, keyword));
+    dispatch(fetchChatsByUserId(20, 1, keyword));
   }, [dispatch, keyword]);
 
   return (
@@ -57,23 +57,29 @@ export default function ChatLeft() {
           <UsersJoined>
             <Title>Users</Title>
             <Users>
-              {friends?.data.map((item, i) => {
+              {chats?.data.map((item, i) => {
                 return (
                   <ProfileGroup>
                     <GroupImg>
                       <img
-                        src={`${URL_IMAGE_POSTS}/${item.user_friend.avatar}`}
+                        src={`${URL_IMAGE_USERS}/${
+                          item.type !== 1
+                            ? item.image
+                            : item.member_chats[0].user.avatar
+                        }`}
                         alt=""
                       />
                     </GroupImg>
 
                     <GroupName>
                       <Name>
-                        <Link to={`/tlu/group/${item.user_friend.id}`}>
-                          {item.user_friend.username}
+                        <Link to={`/tlu/messages/${item.id}`}>
+                          {item.type !== 1
+                            ? item.name
+                            : item.member_chats[0].user.username}
                         </Link>
                       </Name>
-                      <Des>{item.user_friend.description}</Des>
+                      <Des>{`${item.member_chats[0].user.firstname} ${item.member_chats[0].user.lastname}`}</Des>
                     </GroupName>
                   </ProfileGroup>
                 );
@@ -90,7 +96,7 @@ const GroupImg = styled.div`
   img {
     width: 50px;
     height: 50px;
-    border-radius: 7px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;
