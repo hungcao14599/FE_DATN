@@ -73,4 +73,10 @@ export default class Group {
       `${PREFIX}/members/${groupID}?size=${size}&page=${page}&keyword=${keyword}`
     );
   }
+
+  static fetchAllGroups() {
+    return http.get(`${PREFIX}`, {
+      headers: authHeader(),
+    });
+  }
 }

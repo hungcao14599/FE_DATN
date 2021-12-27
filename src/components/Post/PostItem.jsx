@@ -9,6 +9,9 @@ import {
   EditOutlined,
   ExclamationCircleOutlined,
   EyeOutlined,
+  FileExcelOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
   SendOutlined,
 } from "@ant-design/icons";
 import { Controller, useForm } from "react-hook-form";
@@ -136,13 +139,19 @@ export default function PostItem({ data, id }) {
     data.images.length === 0
       ? []
       : data.images.map((image) => {
-          const photo = {
-            src: `http://localhost:3000/api/posts/image/${image.name}`,
-            width: 2,
-            height: 2,
-          };
-          return photo;
+          if (image.name.split(".").pop() === "jpg") {
+            return {
+              src: `http://localhost:3000/api/posts/image/${image.name}`,
+              width: 2,
+              height: 2,
+            };
+          } else
+            return {
+              link: `http://localhost:3000/image/post/${image.name}`,
+              filename: image.name,
+            };
         });
+  console.log("🚀 ~ file: PostItem.jsx ~ line 136 ~ PostItem ~ images", images);
 
   return (
     <Wrapper>
@@ -159,6 +168,7 @@ export default function PostItem({ data, id }) {
                   {data ? data.user.username : ""}
                 </Link>
               </Name>
+
               {data?.groupID ? (
                 <>
                   {data?.group_page ? <CaretRightOutlined /> : ""}
@@ -193,7 +203,38 @@ export default function PostItem({ data, id }) {
         <Caption>{data ? data.content : ""}</Caption>
       </Content>
       <PostImg>
-        <Gallery photos={images} onClick={openLightbox} />
+        {images[0]?.link ? (
+          // eslint-disable-next-line array-callback-return
+          images.map((item, i) => {
+            if (item.filename.split(".").pop() === "pdf") {
+              return (
+                <FileShare>
+                  <FilePdfOutlined style={{ color: "#ca0533" }} />
+                  <a href={item.link} target={"_blank"} rel="noreferrer">
+                    {item.filename}
+                  </a>
+                </FileShare>
+              );
+            } else if (item.filename.split(".").pop() === "docx") {
+              return (
+                <FileShare>
+                  <FileWordOutlined style={{ color: "#103D8F" }} />
+                  <a href={item.link}>{item.filename}</a>
+                </FileShare>
+              );
+            } else if (item.filename.split(".").pop() === "xlsx") {
+              return (
+                <FileShare>
+                  <FileExcelOutlined style={{ color: "#207245" }} />
+                  <a href={item.link}>{item.filename}</a>
+                </FileShare>
+              );
+            }
+          })
+        ) : (
+          <Gallery photos={images} onClick={openLightbox} />
+        )}
+
         <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>
@@ -294,6 +335,25 @@ export default function PostItem({ data, id }) {
   );
 }
 
+const FileShare = styled.div`
+  background: #f0f2f5;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #ebedf3;
+  margin-bottom: 10px;
+  span {
+    padding: 0 10px;
+  }
+  a {
+    color: #000;
+  }
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+`;
 const Wrapper = styled.div`
   width: auto;
   height: auto;

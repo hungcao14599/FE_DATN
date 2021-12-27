@@ -33,7 +33,7 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
     return (
       <MessageContent
         key={index}
-        content={message.messages}
+        content={message.message}
         avatar={message?.user.avatar}
         username={message?.user.username}
         name={profile?.username}
@@ -47,7 +47,7 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
           <TitleGroup>
             <ProfileGroup style={{ padding: "unset" }}>
               <GroupImg>
-                {/* <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" /> */}
+                <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
               </GroupImg>
 
               <GroupName>
@@ -105,7 +105,7 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
 }
 
 const ContentMessage = styled.div`
-  height: 680px;
+  height: 600px;
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 0 15px;

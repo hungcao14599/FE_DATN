@@ -14,6 +14,7 @@ import Groups from "./components/Group";
 import Group from "./components/Group/Group";
 import Friends from "./components/Friend";
 import Chats from "./components/Chat";
+import Admin from "./components/Admin";
 function App() {
   return (
     <Router>
@@ -29,6 +30,7 @@ function App() {
         <Route path="/tlu/friends" component={Friends}></Route>
         <Route path="/tlu/messages" component={Chats} exact></Route>
         <Route path="/tlu/messages/:id" component={Chats}></Route>
+        <Route path="/tlu/admin/:obj" component={Admin}></Route>
       </Switch>
     </Router>
   );
