@@ -46,6 +46,10 @@ const initialState = {
     error: null,
     requesting: false,
   },
+  fetchAllPostsRoleAdmin: {
+    result: [],
+    error: null,
+  },
 };
 
 export const postReducer = handleActions(
@@ -297,6 +301,31 @@ export const postReducer = handleActions(
       fetchAllPostByGroupId: {
         ...state.fetchAllPostByGroupId,
         requesting: false,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    // FETCH ALL POST ADMIN ROLE
+    FETCH_ALL_POSTS_ROLE_ADMIN_REQUEST: (state) => ({
+      ...state,
+      fetchAllPostsRoleAdmin: {
+        ...state.fetchAllPostsRoleAdmin,
+        error: null,
+      },
+    }),
+    FETCH_ALL_POSTS_ROLE_ADMIN_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchAllPostsRoleAdmin: {
+        ...state.fetchAllPostsRoleAdmin,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_ALL_POSTS_ROLE_ADMIN_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchAllPostsRoleAdmin: {
+        ...state.fetchAllPostsRoleAdmin,
         result: null,
         error: payload.error,
       },

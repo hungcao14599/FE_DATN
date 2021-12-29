@@ -52,6 +52,10 @@ const initialState = {
     error: null,
     requesting: false,
   },
+  fetchAllGroups: {
+    result: [],
+    error: null,
+  },
 };
 
 export const groupReducer = handleActions(
@@ -303,6 +307,31 @@ export const groupReducer = handleActions(
       fetchMemberInGroup: {
         ...state.fetchMemberInGroup,
         requesting: false,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    // FETCH ALL GROUPS
+    FETCH_ALL_GROUPS_REQUEST: (state) => ({
+      ...state,
+      fetchAllGroups: {
+        ...state.fetchAllGroups,
+        error: null,
+      },
+    }),
+    FETCH_ALL_GROUPS_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchAllGroups: {
+        ...state.fetchAllGroups,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_ALL_GROUPS_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchAllGroups: {
+        ...state.fetchAllGroups,
         result: null,
         error: payload.error,
       },

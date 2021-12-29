@@ -52,11 +52,11 @@ export default function Header({ profile }) {
             Create
           </Button>
         </ButtonAdd>
-        <ButtonLogout>
+        <ButtonAdd>
           <Button onClick={handleLogout} icon={<LogoutOutlined />}>
             Logout
           </Button>
-        </ButtonLogout>
+        </ButtonAdd>
         <Image>
           <img
             src={`http://localhost:3000/api/users/image/${profile?.avatar}`}
@@ -94,23 +94,7 @@ const Image = styled.div`
     /* border: 1px solid #bec3c9; */
   }
 `;
-const ButtonLogout = styled.div`
-  z-index: 10;
-  margin-left: 10px;
-  button {
-    background: #f7341b;
-    height: 100%;
-    border-radius: 10px;
-    span {
-      color: #fff;
-    }
-    :hover,
-    :active,
-    :focus {
-      background: #376e37;
-    }
-  }
-`;
+
 const ButtonAdd = styled.div`
   z-index: 10;
   margin-left: 10px;

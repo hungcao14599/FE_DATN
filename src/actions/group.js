@@ -225,3 +225,24 @@ export const fetchMemberInGroup =
         return Promise.reject(error);
       });
   };
+
+// FETCH ALL GROUPS
+const { fetchAllGroupsRequest, fetchAllGroupsSuccess, fetchAllGroupsFail } =
+  createActions({
+    FETCH_ALL_GROUPS_REQUEST: () => {},
+    FETCH_ALL_GROUPS_SUCCESS: (data) => ({ data }),
+    FETCH_ALL_GROUPS_FAIL: (error) => ({ error }),
+  });
+
+export const fetchAllGroups = () => (dispatch) => {
+  dispatch(fetchAllGroupsRequest());
+  return Api.Group.fetchAllGroups()
+    .then(({ data }) => {
+      dispatch(fetchAllGroupsSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(fetchAllGroupsFail(error));
+      return Promise.reject(error);
+    });
+};

@@ -9,6 +9,12 @@ export default class Post {
     });
   }
 
+  static fetchAllPostsRoleAdmin() {
+    return http.get(`${PREFIX}/admin-role`, {
+      headers: authHeader(),
+    });
+  }
+
   static fetchAllPostsInGroup(size, page) {
     return http.get(`${PREFIX}/group-post?size=${size}&page=${page}`, {
       headers: authHeader(),

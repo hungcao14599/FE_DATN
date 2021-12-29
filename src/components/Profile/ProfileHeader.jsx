@@ -152,9 +152,11 @@ export default function ProfileHeader({ profile }) {
   const listFriend = useSelector(
     (state) => state.friend.fetchAllFriendOfUserById.result.data
   );
-  const isFriend = listFriend?.data.filter(
-    (e) => e.user_friend.username === params.username
-  );
+
+  const isFriend =
+    listFriend &&
+    listFriend.data.filter((e) => e.user_friend.username === params.username);
+
   const profileInfo = useSelector(
     (state) => state.user.fetchUserByID.result.data
   );

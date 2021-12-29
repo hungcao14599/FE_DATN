@@ -41,6 +41,18 @@ const initialState = {
     error: null,
     requesting: false,
   },
+  fetchAllUsers: {
+    result: [],
+    error: null,
+  },
+  setBlockUser: {
+    result: [],
+    error: null,
+  },
+  setUnBlockUser: {
+    result: [],
+    error: null,
+  },
 };
 
 export const userReducer = handleActions(
@@ -264,6 +276,81 @@ export const userReducer = handleActions(
       fetchImage: {
         ...state.fetchImage,
         requesting: false,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    //FETCH ALL USERS
+    FETCH_ALL_USERS_REQUEST: (state) => ({
+      ...state,
+      fetchAllUsers: {
+        ...state.fetchAllUsers,
+        error: null,
+      },
+    }),
+    FETCH_ALL_USERS_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchAllUsers: {
+        ...state.fetchAllUsers,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_ALL_USERS_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchAllUsers: {
+        ...state.fetchAllUsers,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    //SET_BLOCK_USER
+    SET_BLOCK_USER_REQUEST: (state) => ({
+      ...state,
+      setBlockUser: {
+        ...state.setBlockUser,
+        error: null,
+      },
+    }),
+    SET_BLOCK_USER_SUCCESS: (state, { payload }) => ({
+      ...state,
+      setBlockUser: {
+        ...state.setBlockUser,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    SET_BLOCK_USER_FAIL: (state, { payload }) => ({
+      ...state,
+      setBlockUser: {
+        ...state.setBlockUser,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    //SET_UNBLOCK_USER
+    SET_UN_BLOCK_USER_REQUEST: (state) => ({
+      ...state,
+      setUnBlockUser: {
+        ...state.setUnBlockUser,
+        error: null,
+      },
+    }),
+    SET_UN_BLOCK_USER_SUCCESS: (state, { payload }) => ({
+      ...state,
+      setUnBlockUser: {
+        ...state.setUnBlockUser,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    SET_UN_BLOCK_USER_FAIL: (state, { payload }) => ({
+      ...state,
+      setUnBlockUser: {
+        ...state.setUnBlockUser,
         result: null,
         error: payload.error,
       },

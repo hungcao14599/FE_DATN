@@ -231,3 +231,28 @@ export const fetchAllPostByGroupId =
         return Promise.reject(error);
       });
   };
+
+// FETCH ALL POST ADMIN ROLE
+
+const {
+  fetchAllPostsRoleAdminRequest,
+  fetchAllPostsRoleAdminSuccess,
+  fetchAllPostsRoleAdminFail,
+} = createActions({
+  FETCH_ALL_POSTS_ROLE_ADMIN_REQUEST: () => {},
+  FETCH_ALL_POSTS_ROLE_ADMIN_SUCCESS: (data) => ({ data }),
+  FETCH_ALL_POSTS_ROLE_ADMIN_FAIL: (error) => ({ error }),
+});
+
+export const fetchAllPostsRoleAdmin = () => (dispatch) => {
+  dispatch(fetchAllPostsRoleAdminRequest());
+  return Api.Post.fetchAllPostsRoleAdmin()
+    .then(({ data }) => {
+      dispatch(fetchAllPostsRoleAdminSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(fetchAllPostsRoleAdminFail(error));
+      return Promise.reject(error);
+    });
+};

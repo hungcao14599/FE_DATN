@@ -11,6 +11,13 @@ export default class User {
       headers: authHeader(),
     });
   }
+
+  static fetchAllUsers() {
+    return http.get(`${PREFIX}/`, {
+      headers: authHeader(),
+    });
+  }
+
   static uploadAvatar(image) {
     return http.put(`${PREFIX}/avatar`, image, {
       headers: authHeader(),
@@ -45,6 +52,26 @@ export default class User {
     return http.put(
       `${PREFIX}/update`,
       { firstname, lastname, phone, birthday, gender, description, address },
+      {
+        headers: authHeader(),
+      }
+    );
+  }
+
+  static setBlockUser(id) {
+    return http.post(
+      `${PREFIX}/block/${id}`,
+      {},
+      {
+        headers: authHeader(),
+      }
+    );
+  }
+
+  static setUnBlockUser(id) {
+    return http.post(
+      `${PREFIX}/unblock/${id}`,
+      {},
       {
         headers: authHeader(),
       }
