@@ -1,8 +1,10 @@
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table } from "antd";
+import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Modal, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { fetchAllPostsRoleAdmin, removePost } from "../../actions/post";
 
 export default function PostUsersTable({ data, totalElements }) {
   const [searchText, setSearchText] = useState("");
@@ -90,6 +92,52 @@ export default function PostUsersTable({ data, totalElements }) {
     clearFilters();
     setSearchText("");
   };
+  const [isRemove, setIsRemove] = useState(false);
+  const dispatch = useDispatch();
+  const { confirm } = Modal;
+  const handleOk = (id) => {
+    dispatch(removePost(id)).then(() => {
+      dispatch(fetchAllPostsRoleAdmin());
+    });
+  };
+
+  const handleCancel = () => {
+    setIsRemove(false);
+  };
+
+  const showRemoveConfirm = (id) => {
+    confirm({
+      title: "Are you sure remove this post?",
+      icon: <ExclamationCircleOutlined />,
+      content: `Remove post: ${id}`,
+      okText: "Yes",
+      okType: "danger",
+      // cancelText: "No",
+      onOk: () => handleOk(id),
+      onCancel: handleCancel,
+      visible: isRemove,
+    });
+  };
+
+  const handleRemovePost = (id) => {
+    showRemoveConfirm(id);
+  };
+
+  const expandedRowRender = (data) => {
+    const columns = [
+      { title: "Index", dataIndex: "key", key: "key" },
+      { title: "Post ID", dataIndex: "postID", key: "postID" },
+      { title: "File Media", dataIndex: "files", key: "files" },
+    ];
+    const subData = [
+      {
+        key: data.key,
+        postID: data.postID,
+        files: data.file,
+      },
+    ];
+    return <Table columns={columns} dataSource={subData} pagination={false} />;
+  };
 
   const columns = [
     {
@@ -113,11 +161,6 @@ export default function PostUsersTable({ data, totalElements }) {
       title: "Content",
       dataIndex: "content",
       key: "content",
-    },
-    {
-      title: "File",
-      dataIndex: "file",
-      key: "file",
     },
     {
       title: "Comment",
@@ -149,7 +192,9 @@ export default function PostUsersTable({ data, totalElements }) {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button>Remove</Button>
+          <ButtonControl onClick={() => handleRemovePost(record.postID)}>
+            Remove
+          </ButtonControl>
         </Space>
       ),
     },
@@ -157,9 +202,10 @@ export default function PostUsersTable({ data, totalElements }) {
   return (
     <WrapperCol1>
       <Table
+        className="components-table-demo-nested"
+        expandable={{ expandedRowRender }}
         columns={columns}
         dataSource={data}
-        // onChange={this.handleChange}
         pagination={{
           defaultCurrent: 1,
           total: totalElements,
@@ -175,3 +221,21 @@ export default function PostUsersTable({ data, totalElements }) {
 }
 
 const WrapperCol1 = styled.div``;
+const ButtonControl = styled(Button)`
+  color: #ca0533;
+  font-weight: 500;
+  display: flex;
+  display: flex;
+  align-items: center;
+  border: none;
+
+  span {
+    margin: 0 auto;
+    font-size: 13px;
+  }
+  :hover,
+  :active,
+  :focus {
+    color: #ca0533;
+  }
+`;

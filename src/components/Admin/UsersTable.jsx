@@ -156,11 +156,11 @@ export default function UsersTable({ data, totalElements }) {
   };
 
   const columns = [
-    {
-      title: "Key",
-      dataIndex: "key",
-      key: "key",
-    },
+    // {
+    //   title: "Key",
+    //   dataIndex: "key",
+    //   key: "key",
+    // },
     {
       title: "UserID",
       dataIndex: "userID",
@@ -238,10 +238,6 @@ export default function UsersTable({ data, totalElements }) {
   ];
 
   // const expandedRowRender = (user) => {
-  //   console.log(
-  //     "🚀 ~ file: UsersTable.jsx ~ line 245 ~ expandedRowRender ~ user",
-  //     user.userID
-  //   );
 
   //   const columns = [
   //     { title: "Index", dataIndex: "date", key: "date" },
@@ -297,7 +293,7 @@ export default function UsersTable({ data, totalElements }) {
         pagination={{
           defaultCurrent: 1,
           total: totalElements,
-          pageSize: 10,
+          pageSize: 7,
           responsive: true,
         }}
       />

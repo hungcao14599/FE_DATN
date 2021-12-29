@@ -29,17 +29,6 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
   };
   useEffect(scrollToBottom, [messages?.data]);
 
-  const list = messages?.data.map((message, index) => {
-    return (
-      <MessageContent
-        key={index}
-        content={message.message}
-        avatar={message?.user.avatar}
-        username={message?.user.username}
-        name={profile?.username}
-      />
-    );
-  });
   return (
     <WrapperCol1>
       <Col1>
@@ -61,7 +50,17 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
             </ProfileGroup>
           </TitleGroup>
           <ContentMessage>
-            {list}
+            {messages?.data.map((message, index) => {
+              return (
+                <MessageContent
+                  key={index}
+                  content={message.message}
+                  avatar={message?.user.avatar}
+                  username={message?.user.username}
+                  name={profile?.username}
+                />
+              );
+            })}
             <div ref={messagesEndRef} />
           </ContentMessage>
 

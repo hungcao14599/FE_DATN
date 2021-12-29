@@ -151,7 +151,6 @@ export default function PostItem({ data, id }) {
               filename: image.name,
             };
         });
-  console.log("🚀 ~ file: PostItem.jsx ~ line 136 ~ PostItem ~ images", images);
 
   return (
     <Wrapper>

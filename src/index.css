@@ -152,3 +152,9 @@ code {
   width: 100%;
   height: 100%;
 }
+
+.ant-table-row-expand-icon:active,
+.ant-table-row-expand-icon:focus,
+.ant-table-row-expand-icon:hover {
+  color: #ca0533;
+}

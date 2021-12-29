@@ -7,10 +7,16 @@ import { Tabs } from "antd";
 import { fetchAllPostsRoleAdmin } from "../../actions/post";
 import PostUsersTable from "./PostUsersTable";
 import { formatDateOfBirth } from "../../utils/formatDateOfBirth";
+import {
+  FileExcelOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
+} from "@ant-design/icons";
 
 export default function PostsManager() {
   const URL_IMAGE_POSTS = "http://localhost:3000/api/posts/image";
   const URL_IMAGE_USERS = "http://localhost:3000/api/users/image";
+  const URL_FILES = "http://localhost:3000/image/post";
 
   const dispatch = useDispatch();
 
@@ -29,11 +35,41 @@ export default function PostsManager() {
         <ImgUser src={`${URL_IMAGE_USERS}/${item.user.avatar}`} alt="" />
       ),
       creator: item.user.username,
+      postID: item.id,
       content: item.content,
       file: (
         <File>
           {item.images.map((image, i) => {
-            return <Img src={`${URL_IMAGE_POSTS}/${image.name}`} alt="" />;
+            if (image.name.split(".").pop() === "pdf") {
+              return (
+                <FileShare>
+                  <FilePdfOutlined style={{ color: "#ca0533" }} />
+                  <a
+                    href={`${URL_FILES}/${image.name}`}
+                    target={"_blank"}
+                    rel="noreferrer"
+                  >
+                    {image.name}
+                  </a>
+                </FileShare>
+              );
+            } else if (image.name.split(".").pop() === "docx") {
+              return (
+                <FileShare>
+                  <FileWordOutlined style={{ color: "#103D8F" }} />
+                  <a href={`${URL_FILES}/${image.name}`}>{image.name}</a>
+                </FileShare>
+              );
+            } else if (image.name.split(".").pop() === "xlsx") {
+              return (
+                <FileShare>
+                  <FileExcelOutlined style={{ color: "#207245" }} />
+                  <a href={`${URL_FILES}/${image.name}`}>{image.name}</a>
+                </FileShare>
+              );
+            } else {
+              return <Img src={`${URL_IMAGE_POSTS}/${image.name}`} alt="" />;
+            }
           })}
         </File>
       ),
@@ -68,6 +104,28 @@ export default function PostsManager() {
   );
 }
 
+const FileShare = styled.div`
+  background: #f0f2f5;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #ebedf3;
+  margin-bottom: 10px;
+  width: fit-content;
+  span {
+    padding: 0 10px;
+  }
+  a {
+    color: #000;
+    padding: 0px 10px 0px 0px;
+  }
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
 const WrapperCol1 = styled.div`
   flex: 1;
   margin-left: 20px;
@@ -99,7 +157,7 @@ const ImgUser = styled.img`
 `;
 
 const File = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: auto auto;
-  justify-content: flex-start;
+  justify-content: flex-start; */
 `;

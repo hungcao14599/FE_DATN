@@ -199,7 +199,7 @@ export default function GroupsTable({ data, totalElements }) {
       key: "action",
       render: (text, record) => (
         <Space>
-          <ButtonControl
+          {/* <ButtonControl
             onClick={() => handleBlock(record.userID)}
             disabled={record?.status === 3 ? true : false}
           >
@@ -210,67 +210,62 @@ export default function GroupsTable({ data, totalElements }) {
             disabled={record?.status === 1 ? true : false}
           >
             UnBlock
-          </ButtonControl>
+          </ButtonControl> */}
         </Space>
       ),
     },
   ];
 
-  const expandedRowRender = (user) => {
-    console.log(
-      "🚀 ~ file: UsersTable.jsx ~ line 245 ~ expandedRowRender ~ user",
-      user.userID
-    );
+  // const expandedRowRender = (user) => {
+  //   const columns = [
+  //     { title: "Index", dataIndex: "date", key: "date" },
+  //     { title: "Group Name", dataIndex: "date", key: "date" },
+  //     { title: "Group Description", dataIndex: "name", key: "name" },
+  //     {
+  //       title: "Admin",
+  //       key: "state",
+  //       render: () => (
+  //         <span>
+  //           <Badge status="success" />
+  //           Finished
+  //         </span>
+  //       ),
+  //     },
 
-    const columns = [
-      { title: "Index", dataIndex: "date", key: "date" },
-      { title: "Group Name", dataIndex: "date", key: "date" },
-      { title: "Group Description", dataIndex: "name", key: "name" },
-      {
-        title: "Admin",
-        key: "state",
-        render: () => (
-          <span>
-            <Badge status="success" />
-            Finished
-          </span>
-        ),
-      },
+  //     {
+  //       title: "Action",
+  //       dataIndex: "operation",
+  //       key: "operation",
+  //       render: () => (
+  //         <Space size="middle">
+  //           <a>Pause</a>
+  //           <a>Stop</a>
+  //         </Space>
+  //       ),
+  //     },
+  //   ];
 
-      {
-        title: "Action",
-        dataIndex: "operation",
-        key: "operation",
-        render: () => (
-          <Space size="middle">
-            <a>Pause</a>
-            <a>Stop</a>
-          </Space>
-        ),
-      },
-    ];
+  //   // useEffect(() => {
+  //   //   dispatch(fetchGroupById(user.userID));
+  //   // }, [user.userID]);
 
-    // useEffect(() => {
-    //   dispatch(fetchGroupById(user.userID));
-    // }, [user.userID]);
-
-    const data = [];
-    for (let i = 0; i < 3; ++i) {
-      data.push({
-        key: i,
-        date: "2014-12-24 23:12:00",
-        name: "This is production name",
-        upgradeNum: "Upgraded: 56",
-      });
-    }
-    return <Table columns={columns} dataSource={data} pagination={false} />;
-  };
+  //   const data = [];
+  //   for (let i = 0; i < 3; ++i) {
+  //     data.push({
+  //       key: i,
+  //       date: "2014-12-24 23:12:00",
+  //       name: "This is production name",
+  //       upgradeNum: "Upgraded: 56",
+  //     });
+  //   }
+  //   return <Table columns={columns} dataSource={data} pagination={false} />;
+  // };
 
   return (
     <WrapperCol1>
       <Table
-        className="components-table-demo-nested"
-        expandable={{ expandedRowRender }}
+        // className="components-table-demo-nested"
+        // expandable={{ expandedRowRender }}
         columns={columns}
         dataSource={data}
         pagination={{

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button, Input } from "antd";
-import { CloudUploadOutlined, PaperClipOutlined } from "@ant-design/icons";
+import {
+  CloudUploadOutlined,
+  FileExcelOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
+  PaperClipOutlined,
+} from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost, fetchAllPostsByUserName } from "../../actions/post";
 import Masonry from "react-masonry-css";
@@ -75,7 +81,6 @@ const InputUpload = styled.input`
 `;
 
 const PreviewImg = styled.div`
-  display: flex;
   padding-bottom: 3px;
 `;
 
@@ -180,6 +185,8 @@ export default function PostForm() {
     isFile = false;
   };
 
+  const URL_FILE = "http://localhost:3000/image/post";
+
   return (
     <WrapPostForm>
       <PostFormContent>
@@ -220,13 +227,56 @@ export default function PostForm() {
                   className="my-masonry-grid"
                   columnClassName="my-masonry-grid_column"
                 >
-                  <PreviewImg>
+                  <PreviewImg
+                    style={{
+                      display:
+                        file[0].type.slice(0, 5) === "image" ? "flex" : "unset",
+                    }}
+                  >
                     {Array.from(Array(file.length), (e, i) => {
-                      return (
-                        <ImagePreview key={i}>
-                          <img src={URL.createObjectURL(file[i])} alt=""></img>
-                        </ImagePreview>
-                      );
+                      if (file[i].type.slice(0, 5) === "image") {
+                        return (
+                          <ImagePreview key={i}>
+                            <img
+                              src={URL.createObjectURL(file[i])}
+                              alt=""
+                            ></img>
+                          </ImagePreview>
+                        );
+                      } else if (
+                        file[i].type.split(".", 4).pop() === "document"
+                      ) {
+                        return (
+                          <FileShare>
+                            <FileWordOutlined style={{ color: "#103D8F" }} />
+                            <a href={`${URL_FILE}/${file[i].name}`}>
+                              {file[i].name}
+                            </a>
+                          </FileShare>
+                        );
+                      } else if (file[i].type.split(".", 4).pop() === "sheet") {
+                        return (
+                          <FileShare>
+                            <FileExcelOutlined style={{ color: "#207245" }} />
+                            <a href={`${URL_FILE}/${file[i].name}`}>
+                              {file[i].name}
+                            </a>
+                          </FileShare>
+                        );
+                      } else if (file[i].name.split(".").pop() === "pdf") {
+                        return (
+                          <FileShare>
+                            <FilePdfOutlined style={{ color: "#ca0533" }} />
+                            <a
+                              href={`${URL_FILE}/${file[i].name}`}
+                              target={"_blank"}
+                              rel="noreferrer"
+                            >
+                              {file[i].name}
+                            </a>
+                          </FileShare>
+                        );
+                      }
                     })}
                   </PreviewImg>
                 </Masonry>
@@ -243,3 +293,24 @@ export default function PostForm() {
     </WrapPostForm>
   );
 }
+
+const FileShare = styled.div`
+  background: #f0f2f5;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #ebedf3;
+  margin-bottom: 10px;
+  width: 100%;
+  span {
+    padding: 0 10px;
+  }
+  a {
+    color: #000;
+  }
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+`;

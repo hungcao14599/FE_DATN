@@ -23,20 +23,20 @@ export default function UsersManager() {
   const data = users?.data.slice(1).map((item, i) => {
     if (item.roles[0].role_name === "USER") {
       return {
-        key: i + 1,
+        // key: i + 1,
         userID: item?.id,
-        avatar: <Img src={`${URL_IMAGE_USERS}/${item.avatar}`} alt="" />,
-        username: (
-          <Name>
-            <Link to={`/tlu/profile/${item?.username}`}>{item?.username}</Link>
-          </Name>
+        avatar: (
+          <Link to={`/tlu/profile/${item?.username}`}>
+            <Img src={`${URL_IMAGE_USERS}/${item.avatar}`} alt="" />
+          </Link>
         ),
-        fullname: `${item.firstname} ${item.lastname}`,
+        username: item?.username,
+        fullname: item.firstname ? `${item.firstname} ${item.lastname}` : "---",
         email: item?.email,
-        gender: +item.gender === 1 ? "Male" : "Female",
-        birthday: formatDateOfBirth(item?.birthday),
-        address: item?.address,
-        phone: item.phone,
+        gender: item.gender ? (+item.gender === 1 ? "Male" : "Female") : "---",
+        birthday: item.birthday ? formatDateOfBirth(item?.birthday) : "---",
+        address: item.address ? item.address : "---",
+        phone: item.phone ? item.phone : "---",
         status: item.status,
       };
     }
@@ -81,10 +81,4 @@ const Img = styled.img`
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
-`;
-
-const Name = styled.span`
-  a {
-    color: #ca0533;
-  }
 `;

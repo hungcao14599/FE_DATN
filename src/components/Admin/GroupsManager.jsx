@@ -4,13 +4,11 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Tabs } from "antd";
-import { fetchAllUsers } from "../../actions/user";
 import { fetchAllGroups } from "../../actions/group";
 import GroupsTable from "./GroupsTable";
 import { formatDateOfBirth } from "../../utils/formatDateOfBirth";
 
 export default function GroupsManager() {
-  const URL_IMAGE_USERS = "http://localhost:3000/api/users/image";
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +28,6 @@ export default function GroupsManager() {
       createdAt: formatDateOfBirth(item.createdAt.slice(0, 10)),
     };
   });
-  console.log("🚀 ~ file: UsersManager.jsx ~ line 64 ~ data ~ data", data);
 
   const { TabPane } = Tabs;
 
