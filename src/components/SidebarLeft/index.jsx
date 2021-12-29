@@ -7,6 +7,7 @@ import {
   ProfileOutlined,
   UserOutlined,
   GroupOutlined,
+  SlackOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -77,6 +78,15 @@ export default function SidebarLeft({ profile }) {
               <Menu.Item key="7" icon={<GroupOutlined />}>
                 <Link to={`/tlu/messages`}>Message</Link>
               </Menu.Item>
+              {profile?.roles.map((role, i) => {
+                return role.roleName === "ADMIN" ? (
+                  <Menu.Item key="8" icon={<SlackOutlined />}>
+                    <Link to={`/tlu/admin/users`}>Admin</Link>
+                  </Menu.Item>
+                ) : (
+                  ""
+                );
+              })}
             </Menu>
           </Sider>
         </Left2>

@@ -29,17 +29,6 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
   };
   useEffect(scrollToBottom, [messages?.data]);
 
-  const list = messages?.data.map((message, index) => {
-    return (
-      <MessageContent
-        key={index}
-        content={message.messages}
-        avatar={message?.user.avatar}
-        username={message?.user.username}
-        name={profile?.username}
-      />
-    );
-  });
   return (
     <WrapperCol1>
       <Col1>
@@ -47,7 +36,7 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
           <TitleGroup>
             <ProfileGroup style={{ padding: "unset" }}>
               <GroupImg>
-                {/* <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" /> */}
+                <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
               </GroupImg>
 
               <GroupName>
@@ -61,7 +50,17 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
             </ProfileGroup>
           </TitleGroup>
           <ContentMessage>
-            {list}
+            {messages?.data.map((message, index) => {
+              return (
+                <MessageContent
+                  key={index}
+                  content={message.message}
+                  avatar={message?.user.avatar}
+                  username={message?.user.username}
+                  name={profile?.username}
+                />
+              );
+            })}
             <div ref={messagesEndRef} />
           </ContentMessage>
 
@@ -105,7 +104,7 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
 }
 
 const ContentMessage = styled.div`
-  height: 680px;
+  height: 600px;
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 0 15px;

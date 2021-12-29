@@ -196,3 +196,69 @@ export const fetchImage = (image) => (dispatch) => {
       return Promise.reject(error);
     });
 };
+
+// FETCH ALL USERS
+
+const { fetchAllUsersRequest, fetchAllUsersSuccess, fetchAllUsersFail } =
+  createActions({
+    FETCH_ALL_USERS_REQUEST: () => {},
+    FETCH_ALL_USERS_SUCCESS: (data) => ({ data }),
+    FETCH_ALL_USERS_FAIL: (error) => ({ error }),
+  });
+
+export const fetchAllUsers = () => (dispatch) => {
+  dispatch(fetchAllUsersRequest());
+  return Api.User.fetchAllUsers()
+    .then(({ data }) => {
+      dispatch(fetchAllUsersSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(fetchAllUsersFail(error));
+      return Promise.reject(error);
+    });
+};
+
+// SET BLOCK USERS
+
+const { setBlockUserRequest, setBlockUserSuccess, setBlockUserFail } =
+  createActions({
+    SET_BLOCK_USER_REQUEST: () => {},
+    SET_BLOCK_USER_SUCCESS: (data) => ({ data }),
+    SET_BLOCK_USER_FAIL: (error) => ({ error }),
+  });
+
+export const setBlockUser = (id) => (dispatch) => {
+  dispatch(setBlockUserRequest());
+  return Api.User.setBlockUser(id)
+    .then(({ data }) => {
+      dispatch(setBlockUserSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(setBlockUserFail(error));
+      return Promise.reject(error);
+    });
+};
+
+// SET UNBLOCK USERS
+
+const { setUnBlockUserRequest, setUnBlockUserSuccess, setUnBlockUserFail } =
+  createActions({
+    SET_UN_BLOCK_USER_REQUEST: () => {},
+    SET_UN_BLOCK_USER_SUCCESS: (data) => ({ data }),
+    SET_UN_BLOCK_USER_FAIL: (error) => ({ error }),
+  });
+
+export const setUnBlockUser = (id) => (dispatch) => {
+  dispatch(setUnBlockUserRequest());
+  return Api.User.setUnBlockUser(id)
+    .then(({ data }) => {
+      dispatch(setUnBlockUserSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(setUnBlockUserFail(error));
+      return Promise.reject(error);
+    });
+};

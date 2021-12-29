@@ -21,14 +21,27 @@ export const messageReducer = handleActions(
         error: null,
       },
     }),
-    CREATE_MESSAGE_SUCCESS: (state, { payload }) => ({
-      ...state,
-      createMessage: {
-        ...state.createMessage,
-        error: null,
-        result: payload.data,
-      },
-    }),
+    CREATE_MESSAGE_SUCCESS: (state, { payload }) => {
+      return {
+        ...state,
+        createMessage: {
+          ...state.createMessage,
+          error: null,
+          result: payload.data,
+        },
+        fetchMessageByChatId: {
+          ...state.fetchMessageByChatId,
+          result: {
+            data: {
+              data: [
+                ...(state.fetchMessageByChatId.result.data.data || []),
+                payload.data,
+              ],
+            },
+          },
+        },
+      };
+    },
     CREATE_MESSAGE_FAIL: (state, { payload }) => ({
       ...state,
       createMessage: {
