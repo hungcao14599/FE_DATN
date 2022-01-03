@@ -56,6 +56,10 @@ const initialState = {
     result: [],
     error: null,
   },
+  fetchFileByGroupId: {
+    result: [],
+    error: null,
+  },
 };
 
 export const groupReducer = handleActions(
@@ -332,6 +336,31 @@ export const groupReducer = handleActions(
       ...state,
       fetchAllGroups: {
         ...state.fetchAllGroups,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    // FETCH FILE IN GROUPS
+    FETCH_FILE_BY_GROUP_ID_REQUEST: (state) => ({
+      ...state,
+      fetchFileByGroupId: {
+        ...state.fetchFileByGroupId,
+        error: null,
+      },
+    }),
+    FETCH_FILE_BY_GROUP_ID_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchFileByGroupId: {
+        ...state.fetchFileByGroupId,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_FILE_BY_GROUP_ID_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchFileByGroupId: {
+        ...state.fetchFileByGroupId,
         result: null,
         error: payload.error,
       },

@@ -8,6 +8,7 @@ import { Tabs } from "antd";
 import UsersTable from "./UsersTable";
 import { fetchAllUsers } from "../../actions/user";
 import { formatDateOfBirth } from "../../utils/formatDateOfBirth";
+import UsersStatistical from "./UsersStatistical";
 
 export default function UsersManager() {
   const URL_IMAGE_USERS = "http://localhost:3000/api/users/image";
@@ -18,6 +19,10 @@ export default function UsersManager() {
   }, [dispatch]);
 
   const users = useSelector((state) => state.user.fetchAllUsers.result.data);
+  console.log(
+    "🚀 ~ file: UsersManager.jsx ~ line 22 ~ UsersManager ~ users",
+    users
+  );
 
   // eslint-disable-next-line array-callback-return
   const data = users?.data.slice(1).map((item, i) => {
@@ -38,6 +43,7 @@ export default function UsersManager() {
         address: item.address ? item.address : "---",
         phone: item.phone ? item.phone : "---",
         status: item.status,
+        createdAt: item.createdAt,
       };
     }
   });
@@ -53,6 +59,9 @@ export default function UsersManager() {
           <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Users" key="1">
               <UsersTable data={data} totalElements={users?.totalElements} />
+            </TabPane>
+            <TabPane tab="Statistical" key="2">
+              <UsersStatistical totalElements={users?.totalElements} />
             </TabPane>
           </Tabs>
         </Left1>

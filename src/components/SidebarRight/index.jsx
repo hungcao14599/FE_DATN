@@ -45,6 +45,7 @@ export default function SidebarRight() {
       <Col3>
         <WrapTitle>
           <WrapDes>REQUEST</WrapDes>
+          <FriendCount>{approval ? approval.data.length : ""}</FriendCount>
         </WrapTitle>
         {(approval ? approval.data : []).map((item, i) => {
           return <FriendRequest data={item} key={i} />;
