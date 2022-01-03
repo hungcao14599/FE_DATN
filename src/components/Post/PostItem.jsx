@@ -422,6 +422,9 @@ const Caption = styled.span`
 const PostImg = styled.div`
   margin: 10px 0px 20px 0px;
   border-radius: 5px;
+  img {
+    object-fit: cover;
+  }
 `;
 
 const Interact = styled.div`

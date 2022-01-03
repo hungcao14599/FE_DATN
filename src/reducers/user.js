@@ -53,6 +53,10 @@ const initialState = {
     result: [],
     error: null,
   },
+  fetchNumOfUserByMonth: {
+    result: [],
+    error: null,
+  },
 };
 
 export const userReducer = handleActions(
@@ -351,6 +355,31 @@ export const userReducer = handleActions(
       ...state,
       setUnBlockUser: {
         ...state.setUnBlockUser,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    //FETCH_NUM_OF_USER_BY_MONTH
+    FETCH_NUM_OF_USER_BY_MONTH_REQUEST: (state) => ({
+      ...state,
+      fetchNumOfUserByMonth: {
+        ...state.fetchNumOfUserByMonth,
+        error: null,
+      },
+    }),
+    FETCH_NUM_OF_USER_BY_MONTH_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchNumOfUserByMonth: {
+        ...state.fetchNumOfUserByMonth,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_NUM_OF_USER_BY_MONTH_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchNumOfUserByMonth: {
+        ...state.fetchNumOfUserByMonth,
         result: null,
         error: payload.error,
       },

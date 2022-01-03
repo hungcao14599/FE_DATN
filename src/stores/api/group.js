@@ -79,4 +79,8 @@ export default class Group {
       headers: authHeader(),
     });
   }
+
+  static fetchFileByGroupId(id) {
+    return http.get(`${PREFIX}/files/${id}`);
+  }
 }

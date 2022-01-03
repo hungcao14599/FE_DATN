@@ -246,3 +246,27 @@ export const fetchAllGroups = () => (dispatch) => {
       return Promise.reject(error);
     });
 };
+
+// FETCH FILE IN GROUPS
+const {
+  fetchFileByGroupIdRequest,
+  fetchFileByGroupIdSuccess,
+  fetchFileByGroupIdFail,
+} = createActions({
+  FETCH_FILE_BY_GROUP_ID_REQUEST: () => {},
+  FETCH_FILE_BY_GROUP_ID_SUCCESS: (data) => ({ data }),
+  FETCH_FILE_BY_GROUP_ID_FAIL: (error) => ({ error }),
+});
+
+export const fetchFileByGroupId = (id) => (dispatch) => {
+  dispatch(fetchFileByGroupIdRequest());
+  return Api.Group.fetchFileByGroupId(id)
+    .then(({ data }) => {
+      dispatch(fetchFileByGroupIdSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(fetchFileByGroupIdFail(error));
+      return Promise.reject(error);
+    });
+};
