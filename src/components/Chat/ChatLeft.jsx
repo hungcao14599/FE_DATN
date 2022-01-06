@@ -6,13 +6,13 @@ import SearchInput from "../SearchInput";
 import imgSearch from "../../assets/svg/search_icon.svg";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchChatsByUserId } from "../../actions/chat";
 
 export default function ChatLeft() {
   const URL_IMAGE_USERS = "http://localhost:3000/api/users/image";
   const dispatch = useDispatch();
-
+  const params = useParams();
   const [keyword, setSearch] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
@@ -59,29 +59,34 @@ export default function ChatLeft() {
             <Users>
               {chats?.data.map((item, i) => {
                 return (
-                  <ProfileGroup>
-                    <GroupImg>
-                      <img
-                        src={`${URL_IMAGE_USERS}/${
-                          item.type !== 1
-                            ? item.image
-                            : item.member_chats[0].user.avatar
-                        }`}
-                        alt=""
-                      />
-                    </GroupImg>
+                  <Link to={`/tlu/messages/${item.id}`}>
+                    <ProfileGroup
+                      style={{
+                        background: item.id === +params.id ? "#f5e3e7" : "",
+                        borderRadius: item.id === +params.id ? "8px" : "",
+                      }}
+                    >
+                      <GroupImg>
+                        <img
+                          src={`${URL_IMAGE_USERS}/${
+                            item.type !== 1
+                              ? item.image
+                              : item.member_chats[0].user.avatar
+                          }`}
+                          alt=""
+                        />
+                      </GroupImg>
 
-                    <GroupName>
-                      <Name>
-                        <Link to={`/tlu/messages/${item.id}`}>
+                      <GroupName>
+                        <Name>
                           {item.type !== 1
                             ? item.name
                             : item.member_chats[0].user.username}
-                        </Link>
-                      </Name>
-                      <Des>{`${item.member_chats[0].user.firstname} ${item.member_chats[0].user.lastname}`}</Des>
-                    </GroupName>
-                  </ProfileGroup>
+                        </Name>
+                        <Des>{`${item.member_chats[0].user.firstname} ${item.member_chats[0].user.lastname}`}</Des>
+                      </GroupName>
+                    </ProfileGroup>
+                  </Link>
                 );
               })}
             </Users>
@@ -107,7 +112,12 @@ const GroupName = styled.div`
 
 const ProfileGroup = styled.div`
   display: flex;
-  padding: 20px 0px;
+  padding: 10px;
+  margin-bottom: 7px;
+  :hover {
+    background: #f2f2f2;
+    border-radius: 8px;
+  }
 `;
 
 const Des = styled.div`
@@ -116,13 +126,15 @@ const Des = styled.div`
 
 const Name = styled.div`
   font-weight: 700;
-  a {
-    color: #ca0533;
-  }
+  color: #ca0533;
 `;
 
 const Users = styled.div`
-  height: auto;
+  height: 645px;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const UsersJoined = styled.div``;
 

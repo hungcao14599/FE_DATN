@@ -36,6 +36,7 @@ export default function PostItem({ data, id }) {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: { comment: "" },
@@ -112,6 +113,7 @@ export default function PostItem({ data, id }) {
     dispatch(fetchAllPosts(20, 1));
     dispatch(fetchCommentByPost(data.id, 10, 1));
     setIsComment(true);
+    setValue("comment", "");
     setStep(step + 1);
   });
 
@@ -268,7 +270,7 @@ export default function PostItem({ data, id }) {
             <ButtonLike onClick={handleComment}>
               <CommentOutlined />
             </ButtonLike>
-            <Like>{data.comment.length}</Like>
+            <Like>{data.comments}</Like>
           </LikeMood>
         </InteractItem>
         <View>
@@ -301,6 +303,9 @@ export default function PostItem({ data, id }) {
                   </Logo>
                 }
                 placeholder="What do you think about it?"
+                onKeyPress={(event) =>
+                  event.key === "Enter" ? handleSendComment(data.id) : null
+                }
                 style={{
                   backgroundColor: "#f4f8f7",
                   border: "none",

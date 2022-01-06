@@ -17,7 +17,6 @@ const { Sider } = Layout;
 
 export default function SidebarLeft({ profile }) {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
-  const URL_IMAGE_POST = "http://localhost:3000/api/posts/image";
 
   const dispatch = useDispatch();
   const groups = useSelector(
@@ -142,7 +141,14 @@ const GroupName = styled.div`
 
 const ProfileGroup = styled.div`
   display: flex;
-  padding: 20px 0px;
+  /* padding: 20px 0px; */
+
+  padding: 10px;
+  margin-bottom: 7px;
+  :hover {
+    background: #f2f2f2;
+    border-radius: 8px;
+  }
 `;
 
 const GroupImg = styled.div`
@@ -165,6 +171,7 @@ const Title = styled.span`
 
 const Groups = styled.div`
   height: 500px;
+  margin-top: 10px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;

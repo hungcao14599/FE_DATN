@@ -23,3 +23,28 @@ export const fetchChatsByUserId = (size, page, keyword) => (dispatch) => {
       return Promise.reject(error);
     });
 };
+
+// fetchMembersInChat
+
+const {
+  fetchMembersInChatRequest,
+  fetchMembersInChatSuccess,
+  fetchMembersInChatFail,
+} = createActions({
+  FETCH_MEMBERS_IN_CHAT_REQUEST: () => {},
+  FETCH_MEMBERS_IN_CHAT_SUCCESS: (data) => ({ data }),
+  FETCH_MEMBERS_IN_CHAT_FAIL: (error) => ({ error }),
+});
+
+export const fetchMembersInChat = (postID) => (dispatch) => {
+  dispatch(fetchMembersInChatRequest());
+  return Api.Chat.fetchMembersInChat(postID)
+    .then(({ data }) => {
+      dispatch(fetchMembersInChatSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(fetchMembersInChatFail(error));
+      return Promise.reject(error);
+    });
+};

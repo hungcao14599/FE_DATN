@@ -5,6 +5,10 @@ const initialState = {
     result: [],
     error: null,
   },
+  fetchMembersInChat: {
+    result: [],
+    error: null,
+  },
 };
 
 export const chatReducer = handleActions(
@@ -28,6 +32,31 @@ export const chatReducer = handleActions(
       ...state,
       fetchChatsByUserId: {
         ...state.fetchChatsByUserId,
+        result: null,
+        error: payload.error,
+      },
+    }),
+
+    // FETCH_MEMBERS_IN_CHAT
+    FETCH_MEMBERS_IN_CHAT_REQUEST: (state) => ({
+      ...state,
+      fetchMembersInChat: {
+        ...state.fetchMembersInChat,
+        error: null,
+      },
+    }),
+    FETCH_MEMBERS_IN_CHAT_SUCCESS: (state, { payload }) => ({
+      ...state,
+      fetchMembersInChat: {
+        ...state.fetchMembersInChat,
+        error: null,
+        result: payload.data,
+      },
+    }),
+    FETCH_MEMBERS_IN_CHAT_FAIL: (state, { payload }) => ({
+      ...state,
+      fetchMembersInChat: {
+        ...state.fetchMembersInChat,
         result: null,
         error: payload.error,
       },

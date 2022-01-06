@@ -12,8 +12,9 @@ import {
 import { useDispatch } from "react-redux";
 import Masonry from "react-masonry-css";
 import { fetchUserById } from "../../actions/user";
-import { updatePost } from "../../actions/post";
+import { fetchAllPostByGroupId, updatePost } from "../../actions/post";
 import Gallery from "react-photo-gallery";
+import { useParams } from "react-router-dom";
 const Columns = {
   default: 5,
   1200: 3,
@@ -141,10 +142,12 @@ const Preview = styled.div`
 `;
 export default function ModalUpdatePost({ postID, content, images, profile }) {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
+  const URL_FILE = "http://localhost:3000/image/post";
+
   const [file, setFile] = useState();
   const [contentUpdate, setContentUpdate] = useState("");
   const [imagesData, setImagesData] = useState(images);
-
+  const params = useParams();
   const imagesList =
     images.length === 0
       ? []
@@ -195,7 +198,17 @@ export default function ModalUpdatePost({ postID, content, images, profile }) {
       isFile = true;
     }
 
-    dispatch(updatePost(postID, contentUpdate, arr, isFile, formData));
+    dispatch(updatePost(postID, contentUpdate, arr, isFile, formData)).then(
+      () => {
+        dispatch(
+          fetchAllPostByGroupId({
+            groupID: params.id,
+            size: 20,
+            page: 1,
+          })
+        );
+      }
+    );
     setContentUpdate("");
     setFile(null);
     isFile = false;
@@ -273,7 +286,10 @@ export default function ModalUpdatePost({ postID, content, images, profile }) {
             </Remove>
           )}
         </PostImg>
-
+        {console.log(
+          "🚀 ~ file: ModalUpdatePost.jsx ~ line 285 ~ ModalUpdatePost ~ file",
+          file
+        )}
         {file && (
           <>
             <Preview>
@@ -283,13 +299,56 @@ export default function ModalUpdatePost({ postID, content, images, profile }) {
                   className="my-masonry-grid"
                   columnClassName="my-masonry-grid_column"
                 >
-                  <PreviewImg>
+                  <PreviewImg
+                    style={{
+                      display:
+                        file[0].type.slice(0, 5) === "image" ? "flex" : "unset",
+                    }}
+                  >
                     {Array.from(Array(file.length), (e, i) => {
-                      return (
-                        <ImagePreview key={i}>
-                          <img src={URL.createObjectURL(file[i])} alt=""></img>
-                        </ImagePreview>
-                      );
+                      if (file[i].type.slice(0, 5) === "image") {
+                        return (
+                          <ImagePreview key={i}>
+                            <img
+                              src={URL.createObjectURL(file[i])}
+                              alt=""
+                            ></img>
+                          </ImagePreview>
+                        );
+                      } else if (
+                        file[i].type.split(".", 4).pop() === "document"
+                      ) {
+                        return (
+                          <FileShare>
+                            <FileWordOutlined style={{ color: "#103D8F" }} />
+                            <a href={`${URL_FILE}/${file[i].name}`}>
+                              {file[i].name}
+                            </a>
+                          </FileShare>
+                        );
+                      } else if (file[i].type.split(".", 4).pop() === "sheet") {
+                        return (
+                          <FileShare>
+                            <FileExcelOutlined style={{ color: "#207245" }} />
+                            <a href={`${URL_FILE}/${file[i].name}`}>
+                              {file[i].name}
+                            </a>
+                          </FileShare>
+                        );
+                      } else if (file[i].name.split(".").pop() === "pdf") {
+                        return (
+                          <FileShare>
+                            <FilePdfOutlined style={{ color: "#ca0533" }} />
+                            <a
+                              href={`${URL_FILE}/${file[i].name}`}
+                              target={"_blank"}
+                              rel="noreferrer"
+                            >
+                              {file[i].name}
+                            </a>
+                          </FileShare>
+                        );
+                      }
                     })}
                   </PreviewImg>
                 </Masonry>
@@ -297,9 +356,11 @@ export default function ModalUpdatePost({ postID, content, images, profile }) {
             </Preview>
           </>
         )}
-        <Button type="default" size="large" onClick={handleUpdatePost}>
-          <CloudUploadOutlined /> Post
-        </Button>
+        <Preview>
+          <Button type="default" size="large" onClick={handleUpdatePost}>
+            <CloudUploadOutlined /> Post
+          </Button>
+        </Preview>
       </PostFormContent>
     </WrapPostForm>
   );

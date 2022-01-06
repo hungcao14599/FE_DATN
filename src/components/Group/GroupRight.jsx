@@ -131,9 +131,15 @@ const GroupName = styled.div`
 
 const ProfileGroup = styled.div`
   display: flex;
-  padding: 5px 0px;
   justify-content: space-between;
   align-items: flex-end;
+
+  padding: 10px;
+  margin-bottom: 7px;
+  :hover {
+    background: #f2f2f2;
+    border-radius: 8px;
+  }
 `;
 
 const Des = styled.div`

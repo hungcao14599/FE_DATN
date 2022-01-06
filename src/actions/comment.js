@@ -52,3 +52,53 @@ export const fetchCommentByPost = (groupID, size, page) => (dispatch) => {
       return Promise.reject(error);
     });
 };
+
+// REMOVE COMMENTS TO POST
+
+const {
+  removeCommentOfPostRequest,
+  removeCommentOfPostSuccess,
+  removeCommentOfPostFail,
+} = createActions({
+  REMOVE_COMMENT_OF_POST_REQUEST: () => {},
+  REMOVE_COMMENT_OF_POST_SUCCESS: (data) => ({ data }),
+  REMOVE_COMMENT_OF_POST_FAIL: (error) => ({ error }),
+});
+
+export const removeCommentOfPost = (id) => (dispatch) => {
+  dispatch(removeCommentOfPostRequest());
+  return Api.Comment.removeCommentOfPost(id)
+    .then(({ data }) => {
+      dispatch(removeCommentOfPostSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(removeCommentOfPostFail(error));
+      return Promise.reject(error);
+    });
+};
+
+// REMOVE COMMENTS TO POST
+
+const {
+  updateCommentOfPostRequest,
+  updateCommentOfPostSuccess,
+  updateCommentOfPostFail,
+} = createActions({
+  UPDATE_COMMENT_OF_POST_REQUEST: () => {},
+  UPDATE_COMMENT_OF_POST_SUCCESS: (data) => ({ data }),
+  UPDATE_COMMENT_OF_POST_FAIL: (error) => ({ error }),
+});
+
+export const updateCommentOfPost = (id, content) => (dispatch) => {
+  dispatch(updateCommentOfPostRequest());
+  return Api.Comment.updateCommentOfPost(id, content)
+    .then(({ data }) => {
+      dispatch(updateCommentOfPostSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(updateCommentOfPostFail(error));
+      return Promise.reject(error);
+    });
+};

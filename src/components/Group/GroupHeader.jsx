@@ -1,5 +1,8 @@
 import {
   CameraOutlined,
+  FileExcelOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
   GroupOutlined,
   PlusOutlined,
   UsergroupAddOutlined,
@@ -25,6 +28,8 @@ import { useParams } from "react-router-dom";
 import userIDHeader from "../../services/userIDHeader";
 import { fetchAllPostByGroupId } from "../../actions/post";
 import GroupFileMedia from "./GroupFIleMedia";
+import ManagePosts from "./ManagePosts";
+import { formatDateOfBirth } from "../../utils/formatDateOfBirth";
 const Wrapper = styled.div`
   padding: 20px 180px;
 `;
@@ -118,11 +123,17 @@ export default function GroupHeader({ groupData }) {
   const postsByGroupID = useSelector(
     (state) => state.post.fetchAllPostByGroupId.result
   );
+
+  const managePostsByGroupID = useSelector(
+    (state) => state.post.fetchAllPostByGroupId.result.data
+  );
+
   const files = useSelector((state) => state.group.fetchFileByGroupId.result);
   console.log(
     "🚀 ~ file: GroupHeader.jsx ~ line 121 ~ GroupHeader ~ files",
     files
   );
+  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
 
   useEffect(() => {
     dispatch(fetchAllFriendOfUserById(20, 1));
@@ -162,6 +173,64 @@ export default function GroupHeader({ groupData }) {
   const handleJoinGroup = (id) => {
     dispatch(userJoinGroup(id));
   };
+
+  const URL_IMAGE_POSTS = "http://localhost:3000/api/posts/image";
+  const URL_IMAGE_USERS = "http://localhost:3000/api/users/image";
+  const URL_FILES = "http://localhost:3000/image/post";
+
+  const data = managePostsByGroupID?.data.map((item, i) => {
+    return {
+      key: i + 1,
+      avatarCreator: (
+        <ImgUser src={`${URL_IMAGE_USERS}/${item.user.avatar}`} alt="" />
+      ),
+      creator: item.user.username,
+      postID: item.id,
+      content: item.content,
+      file: (
+        <File>
+          {item.images.map((image, i) => {
+            if (image.name.split(".").pop() === "pdf") {
+              return (
+                <FileShare>
+                  <FilePdfOutlined style={{ color: "#ca0533" }} />
+                  <a
+                    href={`${URL_FILES}/${image.name}`}
+                    target={"_blank"}
+                    rel="noreferrer"
+                  >
+                    {image.name}
+                  </a>
+                </FileShare>
+              );
+            } else if (image.name.split(".").pop() === "docx") {
+              return (
+                <FileShare>
+                  <FileWordOutlined style={{ color: "#103D8F" }} />
+                  <a href={`${URL_FILES}/${image.name}`}>{image.name}</a>
+                </FileShare>
+              );
+            } else if (image.name.split(".").pop() === "xlsx") {
+              return (
+                <FileShare>
+                  <FileExcelOutlined style={{ color: "#207245" }} />
+                  <a href={`${URL_FILES}/${image.name}`}>{image.name}</a>
+                </FileShare>
+              );
+            } else {
+              return <Img src={`${URL_IMAGE_POSTS}/${image.name}`} alt="" />;
+            }
+          })}
+        </File>
+      ),
+      comment: item.comments,
+      like: item.likes,
+      createdAt: formatDateOfBirth(item.createdAt.slice(0, 10)),
+      updatedAt: formatDateOfBirth(
+        item.updatedAt ? item.updatedAt.slice(0, 10) : ""
+      ),
+    };
+  });
 
   return (
     <Wrapper>
@@ -244,6 +313,22 @@ export default function GroupHeader({ groupData }) {
                 </ContentInfo>
               </Introduce>
             </TabPane>
+            {membersInGroup?.data.map((item, i) => {
+              if (item.user.username === profile?.username && item.role === 1) {
+                return (
+                  <TabPane tab="Quản trị" key="6">
+                    <Introduce>
+                      <ContentInfo>
+                        <ManagePosts
+                          data={data}
+                          totalElements={managePostsByGroupID?.totalElements}
+                        />
+                      </ContentInfo>
+                    </Introduce>
+                  </TabPane>
+                );
+              }
+            })}
           </Tabs>
         </Container>
       </ProfileHeaderInfo>
@@ -268,6 +353,49 @@ export default function GroupHeader({ groupData }) {
     </Wrapper>
   );
 }
+
+const Img = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin: 2px;
+  border-radius: 5px;
+`;
+
+const ImgUser = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+const File = styled.div`
+  /* display: grid;
+  grid-template-columns: auto auto;
+  justify-content: flex-start; */
+`;
+
+const FileShare = styled.div`
+  background: #f0f2f5;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #ebedf3;
+  margin-bottom: 10px;
+  width: fit-content;
+  span {
+    padding: 0 10px;
+  }
+  a {
+    color: #000;
+    padding: 0px 10px 0px 0px;
+  }
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+`;
 
 const ButtonConfirm = styled(Button)`
   background: #ca0533;

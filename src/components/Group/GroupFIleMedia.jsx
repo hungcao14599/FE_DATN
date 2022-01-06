@@ -2,13 +2,9 @@ import {
   FileExcelOutlined,
   FilePdfOutlined,
   FileWordOutlined,
-  HistoryOutlined,
-  UsergroupAddOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { Col, Row, Table, Tabs } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { formatDateOfBirth } from "../../utils/formatDateOfBirth";
 
@@ -65,11 +61,20 @@ export default function GroupFileMedia({ files }) {
     },
   ];
 
-  const data = files.map((item, i) => {
+  const dataFile = files.filter(
+    (e) =>
+      e.name.split(".").pop() === "pdf" ||
+      e.name.split(".").pop() === "docx" ||
+      e.name.split(".").pop() === "xlsx"
+  );
+
+  const data = dataFile.map((item, i) => {
     return {
       key: i,
       file:
-        item.name.split(".").pop() === "pdf" ? (
+        item.name.split(".").pop() === ("jpg" || "png" || "jpeg" || "gif") ? (
+          ""
+        ) : item.name.split(".").pop() === "pdf" ? (
           <FileShare>
             <FilePdfOutlined style={{ color: "#ca0533" }} />
             <a
@@ -128,7 +133,10 @@ export default function GroupFileMedia({ files }) {
           <TabPane tab="Images" key="1">
             <Row>
               {files.map((item, i) => {
-                if (item.name.split(".").pop() === "jpg") {
+                if (
+                  item.name.split(".").pop() ===
+                  ("jpg" || "png" || "jpeg" || "gif")
+                ) {
                   return (
                     <Col>
                       <Img src={`${URL_POSTS}/${item.name}`} alt="" />
@@ -139,7 +147,7 @@ export default function GroupFileMedia({ files }) {
             </Row>
           </TabPane>
           <TabPane tab="File Share" key="2">
-            <Table dataSource={data} columns={columns} />;
+            <Table dataSource={data} columns={columns} />
           </TabPane>
         </Tabs>
       </Body>

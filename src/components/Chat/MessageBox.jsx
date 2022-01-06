@@ -1,23 +1,19 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { SendOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
 import { Button, Form, Input } from "antd";
-import { fetchMessageByChatId } from "../../actions/message";
-import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import MessageContent from "./MessageContent";
 
 export default function MessageBox({ message, setMessage, sendMessage }) {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
-  const params = useParams();
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchMessageByChatId(params.id, 15, 1));
-  }, [dispatch, params.id]);
+  const members = useSelector(
+    (state) => state.chat.fetchMembersInChat.result.data
+  );
 
   const messages = useSelector(
     (state) => state.message.fetchMessageByChatId.result.data
@@ -34,20 +30,26 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
       <Col1>
         <Left1>
           <TitleGroup>
-            <ProfileGroup style={{ padding: "unset" }}>
-              <GroupImg>
-                <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
-              </GroupImg>
+            {members?.data.map((item) => {
+              if (item?.id !== profile?.id) {
+                return (
+                  <ProfileGroup style={{ padding: "unset" }}>
+                    <GroupImg>
+                      <img src={`${URL_IMAGE_USER}/${item.avatar}`} alt="" />
+                    </GroupImg>
 
-              <GroupName>
-                <Name>
-                  {/* <Link to={`/tlu/group/${item.user_friend.id}`}>
-                    {item.user_friend.username}
-                  </Link> */}
-                </Name>
-                {/* <Des>{item.user_friend.description}</Des> */}
-              </GroupName>
-            </ProfileGroup>
+                    <GroupName>
+                      <Name>
+                        <Link to={`/tlu/profile/${item.username}`}>
+                          {item.username}
+                        </Link>
+                      </Name>
+                      <Des>{`${item.firstname} ${item.lastname}`}</Des>
+                    </GroupName>
+                  </ProfileGroup>
+                );
+              }
+            })}
           </TitleGroup>
           <ContentMessage>
             {messages?.data.map((message, index) => {
@@ -102,6 +104,10 @@ export default function MessageBox({ message, setMessage, sendMessage }) {
     </WrapperCol1>
   );
 }
+
+const Des = styled.div`
+  color: #767676;
+`;
 
 const ContentMessage = styled.div`
   height: 600px;
@@ -173,7 +179,7 @@ const GroupImg = styled.div`
   img {
     width: 50px;
     height: 50px;
-    border-radius: 7px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;

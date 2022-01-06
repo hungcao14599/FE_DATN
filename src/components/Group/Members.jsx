@@ -7,7 +7,6 @@ import { fetchMemberInGroup } from "../../actions/group";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 
 const Wrapper = styled.div`
   background: white;
@@ -29,11 +28,11 @@ const Title = styled.span`
   font-size: 16px;
   font-weight: 600;
 `;
-const Des = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  margin-top: 10px;
-`;
+// const Des = styled.p`
+//   font-size: 14px;
+//   font-weight: 500;
+//   margin-top: 10px;
+// `;
 const Body = styled.div`
   padding: 15px 0px;
   input {
@@ -82,17 +81,17 @@ export default function Members() {
     friends?.data.some((friend) => (friend.user_friend.id = mem.id))
   );
 
-  const buttonFriend = data.map((item, i) => {
-    return item ? (
-      <ButtonConfirm type="default" size="large" icon={<UserOutlined />}>
-        Bạn bè
-      </ButtonConfirm>
-    ) : (
-      <ButtonConfirm type="default" size="large" icon={<UserOutlined />}>
-        Kết bạn
-      </ButtonConfirm>
-    );
-  });
+  // const buttonFriend = data.map((item, i) => {
+  //   return item ? (
+  //     <ButtonConfirm type="default" size="large" icon={<UserOutlined />}>
+  //       Bạn bè
+  //     </ButtonConfirm>
+  //   ) : (
+  //     <ButtonConfirm type="default" size="large" icon={<UserOutlined />}>
+  //       Kết bạn
+  //     </ButtonConfirm>
+  //   );
+  // });
   console.log("data", data);
   return (
     <Wrapper>
@@ -121,7 +120,7 @@ export default function Members() {
                     <Nickname>{item.user.username}</Nickname>
                   </ProfileName>
                 </ProfileInfo>
-                {buttonFriend}
+                {/* {buttonFriend} */}
               </MembersGroup>
             );
           })}

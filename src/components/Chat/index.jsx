@@ -8,7 +8,8 @@ import ChatLeft from "./ChatLeft";
 import MessageBox from "./MessageBox";
 import io from "socket.io-client";
 import { useParams } from "react-router-dom";
-import { createMessage } from "../../actions/message";
+import { createMessage, fetchMessageByChatId } from "../../actions/message";
+import { fetchMembersInChat } from "../../actions/chat";
 
 const ENDPOINT = "http://localhost:3000/";
 let socket;
@@ -52,6 +53,14 @@ export default function Chats() {
       );
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchMembersInChat(params.id));
+  }, [dispatch, params.id]);
+
+  useEffect(() => {
+    dispatch(fetchMessageByChatId(params.id, 15, 1));
+  }, [dispatch, params.id]);
 
   return (
     <Wrapper>

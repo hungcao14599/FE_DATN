@@ -12,4 +12,9 @@ export default class Chat {
       }
     );
   }
+  static fetchMembersInChat(postID) {
+    return http.get(`${PREFIX}/member/${postID}`, {
+      headers: authHeader(),
+    });
+  }
 }
