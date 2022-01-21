@@ -4,7 +4,7 @@ const initialState = {
   addPost: {
     result: [],
     error: null,
-    requesting: false,
+    loading: false,
   },
   updatePost: {
     result: [],
@@ -59,7 +59,7 @@ export const postReducer = handleActions(
       ...state,
       addPost: {
         ...state.addPost,
-        requesting: true,
+        loading: true,
         error: null,
       },
     }),
@@ -67,7 +67,7 @@ export const postReducer = handleActions(
       ...state,
       addPost: {
         ...state.addPost,
-        requesting: false,
+        loading: false,
         error: null,
         result: payload.data,
       },
@@ -76,7 +76,7 @@ export const postReducer = handleActions(
       ...state,
       addPost: {
         ...state.addPost,
-        requesting: false,
+        loading: false,
         result: null,
         error: payload.error,
       },

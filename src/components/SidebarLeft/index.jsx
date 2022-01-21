@@ -8,6 +8,8 @@ import {
   UserOutlined,
   GroupOutlined,
   SlackOutlined,
+  UsergroupAddOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -33,7 +35,14 @@ export default function SidebarLeft({ profile }) {
         <Left1>
           <ProfileInfo>
             <ProfileImg>
-              <img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
+              <img
+                src={
+                  profile?.avatar !== "blank.jpg"
+                    ? `${URL_IMAGE_USER}/${profile?.avatar}`
+                    : "https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png"
+                }
+                alt=""
+              />
             </ProfileImg>
 
             <ProfileName>
@@ -60,27 +69,27 @@ export default function SidebarLeft({ profile }) {
               }}
             >
               <Menu.Item key="1" icon={<HomeOutlined />}>
-                <Link to={`/tlu/home`}>Home </Link>
+                <Link to={`/tlu/home`}>Trang chủ </Link>
               </Menu.Item>
-              <Menu.Item key="2" icon={<ContactsOutlined />}>
-                <Link to={`/tlu/friends`}>People </Link>
+              <Menu.Item key="2" icon={<UsergroupAddOutlined />}>
+                <Link to={`/tlu/friends`}>Mọi người </Link>
               </Menu.Item>
               <Menu.Item key="4" icon={<ProfileOutlined />}>
-                <Link to={`/tlu/home`}>News Feed </Link>
+                <Link to={`/tlu/home`}>Bảng tin </Link>
               </Menu.Item>
               <Menu.Item key="5" icon={<UserOutlined />}>
-                <Link to={`/tlu/profile/${profile?.username}`}>Profile </Link>
+                <Link to={`/tlu/profile/${profile?.username}`}>Cá nhân </Link>
               </Menu.Item>
               <Menu.Item key="6" icon={<GroupOutlined />}>
-                <Link to={`/tlu/groups`}>Groups</Link>
+                <Link to={`/tlu/groups`}>Hội nhóm</Link>
               </Menu.Item>
-              <Menu.Item key="7" icon={<GroupOutlined />}>
-                <Link to={`/tlu/messages`}>Message</Link>
+              <Menu.Item key="7" icon={<MessageOutlined />}>
+                <Link to={`/tlu/messages`}>Tin nhắn</Link>
               </Menu.Item>
               {profile?.roles.map((role, i) => {
                 return role.roleName === "ADMIN" ? (
                   <Menu.Item key="8" icon={<SlackOutlined />}>
-                    <Link to={`/tlu/admin/users`}>Admin</Link>
+                    <Link to={`/tlu/admin/users`}>Quản trị</Link>
                   </Menu.Item>
                 ) : (
                   ""
@@ -95,7 +104,7 @@ export default function SidebarLeft({ profile }) {
         </WrapInvitation>
         <Left3>
           <GroupJoined>
-            <Title>Group Joined</Title>
+            <Title>Nhóm tham gia</Title>
             <Groups>
               {groups?.data.map((item, i) => {
                 return (

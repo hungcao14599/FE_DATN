@@ -21,7 +21,7 @@ export default function SearchInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={isBlur ? style.inputStakingBlur : style.inputStaking}
-          placeholder="Search by name"
+          placeholder="Tìm kiếm trên TLU Social Network"
           onFocus={onFocus}
           onBlur={onBlur}
           style={{ width: isFullWidth }}

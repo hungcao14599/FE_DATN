@@ -35,10 +35,10 @@ export default function FriendRequest({ data }) {
           style={{ background: "#ca0533", border: "none" }}
           onClick={handleApprovalFriend}
         >
-          Accept
+          Chấp nhận
         </Button>
         <Button type="outlined" onClick={handleUnApprovalFriend}>
-          Decline
+          Từ chối
         </Button>
       </WrapBtn>
     </WrapFriendRequest>

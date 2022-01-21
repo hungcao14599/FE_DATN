@@ -236,7 +236,11 @@ export default function GroupHeader({ groupData }) {
     <Wrapper>
       <CoverImage>
         <img
-          src={`http://localhost:3000/api/users/image/${groupData?.coverImage}`}
+          src={
+            groupData?.coverImage
+              ? `http://localhost:3000/api/users/image/${groupData?.coverImage}`
+              : "https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero.jpg"
+          }
           alt=""
         />
 

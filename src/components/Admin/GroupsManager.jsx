@@ -7,6 +7,7 @@ import { Tabs } from "antd";
 import { fetchAllGroups } from "../../actions/group";
 import GroupsTable from "./GroupsTable";
 import { formatDateOfBirth } from "../../utils/formatDateOfBirth";
+import ExportCSV from "./ExcelExport";
 
 export default function GroupsManager() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export default function GroupsManager() {
         <Left1>
           <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Groups" key="1">
+              <ExportCSV csvData={data} fileName={"ExportCSV"} />
               <GroupsTable data={data} />
             </TabPane>
           </Tabs>

@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Input, Form } from "antd";
+import { Button, Input, Form, Spin } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyAccount } from "../../actions/user";
 
@@ -110,6 +110,7 @@ export const VerifyAccount = () => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.user.verifyAccount.error);
   const success = useSelector((state) => state.user.verifyAccount.result);
+  const loading = useSelector((state) => state.user.verifyAccount.loading);
 
   const handleVerifyAccount = handleSubmit((data) => {
     dispatch(verifyAccount(data.verifyCode, data.email));
@@ -197,6 +198,8 @@ export const VerifyAccount = () => {
           type="default"
           size="large"
           onClick={handleVerifyAccount}
+          shape="round"
+          icon={ loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24, marginRight: 20, color: '#fff' }} spin />} /> : "" }
         >
           Confirm
         </ButtonConfirm>

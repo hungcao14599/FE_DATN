@@ -4,12 +4,12 @@ const initialState = {
     loginUser: {
         result: [],
         error: null,
-        requesting: false,
+        loading: false,
     },
     registerUser: {
         result: [],
         error: null,
-        requesting: false,
+        loading: false,
     },
 };
 
@@ -19,15 +19,15 @@ export const authReducer = handleActions({
             ...state,
             loginUser: {
                 ...state.loginUser,
-                requesting: true,
                 error: null,
+                loading: true,
             },
         }),
         LOGIN_USER_SUCCESS: (state, { payload }) => ({
             ...state,
             loginUser: {
                 ...state.loginUser,
-                requesting: false,
+                loading: false,
                 error: null,
                 result: payload.data,
             },
@@ -36,7 +36,7 @@ export const authReducer = handleActions({
             ...state,
             loginUser: {
                 ...state.loginUser,
-                requesting: false,
+                loading: false,
                 result: null,
                 error: payload.error,
             },
@@ -46,7 +46,7 @@ export const authReducer = handleActions({
             ...state,
             registerUser: {
                 ...state.registerUser,
-                requesting: true,
+                loading: true,
                 error: null,
             },
         }),
@@ -54,7 +54,7 @@ export const authReducer = handleActions({
             ...state,
             registerUser: {
                 ...state.registerUser,
-                requesting: false,
+                loading: false,
                 error: null,
                 result: payload.data,
             },
@@ -63,7 +63,7 @@ export const authReducer = handleActions({
             ...state,
             registerUser: {
                 ...state.registerUser,
-                requesting: false,
+                loading: false,
                 result: null,
                 error: payload.error,
             },

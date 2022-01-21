@@ -73,7 +73,10 @@ export default function GroupRight() {
                   <ProfileGroup>
                     <InfoGroup>
                       <GroupImg>
-                        <img src={`${URL_IMAGE_POSTS}/${item.avatar}`} alt="" />
+                        <img
+                          src={`https://img.freepik.com/free-photo/top-view-background-beautiful-white-grey-brown-cream-blue-background_140725-72219.jpg?size=626&ext=jpg`}
+                          alt=""
+                        />
                       </GroupImg>
 
                       <GroupName>

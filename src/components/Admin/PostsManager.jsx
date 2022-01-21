@@ -12,6 +12,7 @@ import {
   FilePdfOutlined,
   FileWordOutlined,
 } from "@ant-design/icons";
+import ExportCSV from "./ExcelExport";
 
 export default function PostsManager() {
   const URL_IMAGE_POSTS = "http://localhost:3000/api/posts/image";
@@ -92,6 +93,7 @@ export default function PostsManager() {
         <Left1>
           <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Posts Users" key="1">
+              <ExportCSV csvData={data} fileName={"ExportCSV"} />
               <PostUsersTable
                 data={data}
                 totalElements={posts?.totalElements}

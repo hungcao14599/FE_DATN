@@ -47,6 +47,7 @@ export default function PostItem({ data, id }) {
   const [step, setStep] = useState(0);
   const dispatch = useDispatch();
   const params = useParams();
+  console.log("🚀 ~ file: PostItem.jsx ~ line 50 ~ PostItem ~ params", params);
 
   const [isComment, setIsComment] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
@@ -109,9 +110,19 @@ export default function PostItem({ data, id }) {
   );
 
   const handleSendComment = handleSubmit((items, e) => {
-    dispatch(addCommentToPost(items.comment, e));
-    dispatch(fetchAllPosts(20, 1));
-    dispatch(fetchCommentByPost(data.id, 10, 1));
+    if (params.id) {
+      dispatch(addCommentToPost(items.comment, e)).then(() => {
+        dispatch(
+          fetchAllPostByGroupId({ groupID: params.id, size: 20, page: 1 })
+        );
+        dispatch(fetchCommentByPost(data.id, 10, 1));
+      });
+    } else {
+      dispatch(addCommentToPost(items.comment, e)).then(() => {
+        dispatch(fetchAllPosts(20, 1));
+        dispatch(fetchCommentByPost(data.id, 10, 1));
+      });
+    }
     setIsComment(true);
     setValue("comment", "");
     setStep(step + 1);
@@ -302,7 +313,7 @@ export default function PostItem({ data, id }) {
                     <EditOutlined style={{ color: "grey" }} />
                   </Logo>
                 }
-                placeholder="What do you think about it?"
+                placeholder="Bình luận công khai..."
                 onKeyPress={(event) =>
                   event.key === "Enter" ? handleSendComment(data.id) : null
                 }

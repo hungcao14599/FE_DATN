@@ -87,12 +87,12 @@ export default function FriendLeft() {
       <Col1>
         <Left1>
           <TitleGroup>
-            <Title>Friends</Title>
+            <Title>Người dùng</Title>
             <SettingOutlined />
           </TitleGroup>
 
           <Tabs defaultActiveKey="1" onChange={callback}>
-            <TabPane tab="Friends" key="1">
+            <TabPane tab="Bạn bè" key="1">
               <SearchGroup>
                 <SearchInput
                   imgSearch={imgSearch}

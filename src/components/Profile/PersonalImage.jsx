@@ -44,6 +44,10 @@ export default function PersonalImage() {
   const images = useSelector(
     (state) => state.user.fetchImgByUserName.result.data
   );
+  console.log(
+    "🚀 ~ file: PersonalImage.jsx ~ line 47 ~ PersonalImage ~ images",
+    images
+  );
 
   const URL_USER = "http://localhost:3000/api/users/image";
   const URL_POST = "http://localhost:3000/api/posts/image";
@@ -55,18 +59,26 @@ export default function PersonalImage() {
       </Header>
       <Row>
         {(images ? images : []).map((image, index) => {
-          return (
-            <Col>
-              <Images
-                src={
-                  image.type === 1
-                    ? `${URL_USER}/${image.name}`
-                    : `${URL_POST}/${image.name}`
-                }
-                alt={""}
-              />
-            </Col>
-          );
+          if (
+            image.name.split(".").pop() === "docx" ||
+            image.name.split(".").pop() === "xlsx" ||
+            image.name.split(".").pop() === "pdf"
+          ) {
+            return "";
+          } else {
+            return (
+              <Col key={index}>
+                <Images
+                  src={
+                    image.type === 1
+                      ? `${URL_USER}/${image.name}`
+                      : `${URL_POST}/${image.name}`
+                  }
+                  alt={""}
+                />
+              </Col>
+            );
+          }
         })}
       </Row>
     </Wrapper>

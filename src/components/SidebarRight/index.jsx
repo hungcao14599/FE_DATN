@@ -56,7 +56,7 @@ export default function SidebarRight() {
     <WrapperCol3>
       <Col3>
         <WrapTitle>
-          <WrapDes>REQUEST</WrapDes>
+          <WrapDes>YÊU CẦU</WrapDes>
           <FriendCount>{approval ? approval.data.length : ""}</FriendCount>
         </WrapTitle>
         {(approval ? approval.data : []).map((item, i) => {
@@ -64,7 +64,7 @@ export default function SidebarRight() {
         })}
 
         <WrapTitle>
-          <WrapDes>CONTACT</WrapDes>
+          <WrapDes>LIÊN HỆ</WrapDes>
           <FriendCount>{items ? items.data.length : ""}</FriendCount>
         </WrapTitle>
         <Right3>

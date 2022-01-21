@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Button, Input } from "antd";
+import { Button, Input, Spin } from "antd";
 import {
   CloudUploadOutlined,
   FileExcelOutlined,
   FilePdfOutlined,
   FileWordOutlined,
+  LoadingOutlined,
   PaperClipOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -142,7 +143,7 @@ export default function PostForm() {
   const params = useParams();
   const profile = useSelector((state) => state.user.fetchUserByID.result.data);
   const groupInfo = useSelector((state) => state.group.fetchGroupById.result);
-
+  const loading = useSelector((state) => state.post.addPost.loading);
   const userName = profile?.username;
 
   const dispatch = useDispatch();
@@ -192,11 +193,20 @@ export default function PostForm() {
       <PostFormContent>
         <PostInput>
           <Avatar style={{ padding: "0px" }}>
-            <Img src={`${URL_IMAGE_USER}/${profile?.avatar}`} alt="" />
+            <Img
+              src={
+                profile?.avatar !== "blank.jpg"
+                  ? `${URL_IMAGE_USER}/${profile?.avatar}`
+                  : "https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png"
+              }
+              alt=""
+            />
           </Avatar>
 
           <TextAreaPost
-            placeholder={`What is the news ${profile ? profile.username : ""}`}
+            placeholder={`Bạn đang nghĩ gì vậy ${
+              profile ? profile.username : ""
+            } ?`}
             rows={2}
             // autoSize
             value={content}
@@ -206,7 +216,7 @@ export default function PostForm() {
 
           <ButtonUpload>
             <Button type="default" size="large">
-              <PaperClipOutlined /> Post It
+              <PaperClipOutlined /> Chọn file
             </Button>
             <InputUpload
               type="file"
@@ -285,8 +295,26 @@ export default function PostForm() {
           </>
         )}
         <Preview>
-          <Button type="default" size="large" onClick={handlePost}>
-            <CloudUploadOutlined /> Post
+          <Button
+            type="default"
+            size="large"
+            onClick={handlePost}
+            icon={
+              loading ? (
+                <Spin
+                  indicator={
+                    <LoadingOutlined
+                      style={{ fontSize: 24, marginRight: 20, color: "#fff" }}
+                      spin
+                    />
+                  }
+                />
+              ) : (
+                <CloudUploadOutlined />
+              )
+            }
+          >
+            Đăng
           </Button>
         </Preview>
       </PostFormContent>

@@ -97,28 +97,31 @@ const UploadAvatar = styled.div`
   margin: 0 auto;
   margin-top: -45px;
   svg {
-    width: 20px;
-    height: 20px;
-    color: #fff;
+    width: 25px;
+    height: 25px;
+    /* color: #fff; */
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 50%;
   }
 `;
 
-const ButtonMakeFriend = styled(Button)`
-  background: #ca0533;
-  color: white;
-  font-weight: 500;
-  display: flex;
-  border-radius: 8px;
-  margin: 15px auto;
-  display: flex;
-  align-items: center;
-  :hover,
-  :active,
-  :focus {
-    background: #ca0533;
-    color: white;
-  }
-`;
+// const ButtonMakeFriend = styled(Button)`
+//   background: #ca0533;
+//   color: white;
+//   font-weight: 500;
+//   display: flex;
+//   border-radius: 8px;
+//   margin: 15px auto;
+//   display: flex;
+//   align-items: center;
+//   :hover,
+//   :active,
+//   :focus {
+//     background: #ca0533;
+//     color: white;
+//   }
+// `;
 
 const ButtonUploadCoverImage = styled(Button)`
   margin: 15px;
@@ -234,12 +237,18 @@ export default function ProfileHeader({ profile }) {
 
   const images = [
     {
-      src: `http://localhost:3000/api/users/image/${profile?.coverImage}`,
+      src:
+        profile?.coverImage !== null
+          ? `http://localhost:3000/api/users/image/${profile?.coverImage}`
+          : "https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png",
     },
   ];
   const imageAvatar = [
     {
-      src: `http://localhost:3000/api/users/image/${profile?.avatar}`,
+      src:
+        profile?.avatar !== "blank.jpg"
+          ? `http://localhost:3000/api/users/image/${profile?.avatar}`
+          : "https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png",
     },
   ];
 
@@ -269,7 +278,7 @@ export default function ProfileHeader({ profile }) {
             icon={<CameraOutlined />}
             onClick={handleUploadCoverImage}
           >
-            Update Cover Image
+            Cập nhật ảnh bìa
           </ButtonUploadCoverImage>
         ) : (
           ""
@@ -304,30 +313,35 @@ export default function ProfileHeader({ profile }) {
         <Info>
           <FullName>{`${profile?.firstname} ${profile?.lastname}`}</FullName>
           <Username>{` (${profile?.username})`}</Username>
-          {profile?.id === userID ? (
-            <UpdateInfo onClick={handleModalUpdateInfo}>
-              <EditOutlined />
-              Update Infomation
-            </UpdateInfo>
-          ) : JSON.stringify(isFriend) === JSON.stringify([]) ? (
-            <ButtonMakeFriend
-              type="default"
-              size="large"
-              icon={<UserAddOutlined />}
-              onClick={handleMakeFriend}
-            >
-              {isFriendRequest ? "Sent A Friend Request" : "Make Friend"}
-              {/* Make Friend */}
-            </ButtonMakeFriend>
-          ) : (
-            <ButtonMakeFriend
-              type="default"
-              size="large"
-              icon={<UserSwitchOutlined />}
-            >
-              Friend
-            </ButtonMakeFriend>
-          )}
+          {
+            profile?.id === userID ? (
+              <UpdateInfo onClick={handleModalUpdateInfo}>
+                <EditOutlined />
+                Cập nhật thông tin
+              </UpdateInfo>
+            ) : (
+              ""
+            )
+            // JSON.stringify(isFriend) === JSON.stringify([]) ? (
+            //   <ButtonMakeFriend
+            //     type="default"
+            //     size="large"
+            //     icon={<UserAddOutlined />}
+            //     onClick={handleMakeFriend}
+            //   >
+            //     {isFriendRequest ? "Sent A Friend Request" : "Make Friend"}
+            //     {/* Make Friend */}
+            //   </ButtonMakeFriend>
+            // ) : (
+            //   <ButtonMakeFriend
+            //     type="default"
+            //     size="large"
+            //     icon={<UserSwitchOutlined />}
+            //   >
+            //     Friend
+            //   </ButtonMakeFriend>
+            // )
+          }
         </Info>
       </ProfileHeaderInfo>
 

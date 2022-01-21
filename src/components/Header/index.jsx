@@ -49,17 +49,21 @@ export default function Header({ profile }) {
         </div>
         <ButtonAdd>
           <Button icon={<PlusCircleOutlined />} onClick={handleShowAddGroup}>
-            Create
+            Tạo nhóm
           </Button>
         </ButtonAdd>
         <ButtonAdd>
           <Button onClick={handleLogout} icon={<LogoutOutlined />}>
-            Logout
+            Đăng xuất
           </Button>
         </ButtonAdd>
         <Image>
           <img
-            src={`http://localhost:3000/api/users/image/${profile?.avatar}`}
+            src={
+              profile?.avatar !== "blank.jpg"
+                ? `http://localhost:3000/api/users/image/${profile?.avatar}`
+                : "https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png"
+            }
             alt=""
           />
         </Image>

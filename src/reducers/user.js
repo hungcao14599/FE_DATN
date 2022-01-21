@@ -4,7 +4,7 @@ const initialState = {
   verifyAccount: {
     result: [],
     error: null,
-    requesting: false,
+    loading: false,
   },
   fetchUserByID: {
     result: [],
@@ -66,7 +66,7 @@ export const userReducer = handleActions(
       ...state,
       verifyAccount: {
         ...state.verifyAccount,
-        requesting: true,
+        loading: true,
         error: null,
       },
     }),
@@ -74,7 +74,7 @@ export const userReducer = handleActions(
       ...state,
       verifyAccount: {
         ...state.verifyAccount,
-        requesting: false,
+        loading: false,
         error: null,
         result: payload.data,
       },
@@ -83,7 +83,7 @@ export const userReducer = handleActions(
       ...state,
       verifyAccount: {
         ...state.verifyAccount,
-        requesting: false,
+        loading: false,
         result: null,
         error: payload.error,
       },

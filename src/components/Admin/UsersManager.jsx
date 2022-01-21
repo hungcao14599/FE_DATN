@@ -4,11 +4,12 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Tabs } from "antd";
+import { Button, Tabs } from "antd";
 import UsersTable from "./UsersTable";
 import { fetchAllUsers } from "../../actions/user";
 import { formatDateOfBirth } from "../../utils/formatDateOfBirth";
 import UsersStatistical from "./UsersStatistical";
+import ExportCSV from "./ExcelExport";
 
 export default function UsersManager() {
   const URL_IMAGE_USERS = "http://localhost:3000/api/users/image";
@@ -58,6 +59,7 @@ export default function UsersManager() {
         <Left1>
           <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Users" key="1">
+              <ExportCSV csvData={data} fileName={'ExportCSV'}/>
               <UsersTable data={data} totalElements={users?.totalElements} />
             </TabPane>
             <TabPane tab="Statistical" key="2">

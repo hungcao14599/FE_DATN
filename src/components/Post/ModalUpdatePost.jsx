@@ -233,7 +233,7 @@ export default function ModalUpdatePost({ postID, content, images, profile }) {
 
           <ButtonUpload>
             <Button type="default" size="large">
-              <PaperClipOutlined /> Post It
+              <PaperClipOutlined /> Đăng
             </Button>
             <InputUpload
               type="file"

@@ -1,5 +1,5 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Spin } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,7 @@ const Wrapper = styled(animated.div)`
 `;
 
 const WrapInput = styled.div`
-  margin-top: 20px;
+  /* margin-top: 20px; */
 `;
 
 const Title = styled.p`
@@ -34,7 +34,7 @@ const Title = styled.p`
 
 const Des = styled.p`
   color: grey;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
 const LoginNotification = styled.p`
@@ -99,6 +99,7 @@ export const SignUpForm = ({ style = {} }) => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.registerUser.error);
   const success = useSelector((state) => state.auth.registerUser.result);
+  const loading = useSelector((state) => state.auth.registerUser.loading);
 
   const handleSignUp = handleSubmit((data) => {
     dispatch(registerUser(data.username, data.password, data.email));
@@ -201,6 +202,7 @@ export const SignUpForm = ({ style = {} }) => {
         size="large"
         shape="round"
         onClick={handleSignUp}
+        icon={ loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24, marginRight: 20, color: '#fff' }} spin />} /> : "" }
       >
         Sign Up
       </ButtonSignUp>

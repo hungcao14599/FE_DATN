@@ -1,5 +1,5 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal } from "antd";
+import { LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Modal, Spin } from "antd";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,7 @@ const Wrapper = styled(animated.div)`
 `;
 
 const WrapInput = styled.div`
-  margin-top: 20px;
+  /* margin-top: 20px; */
 `;
 
 const SigninInput = styled(Input)`
@@ -48,7 +48,7 @@ const Title = styled.p`
 
 const Des = styled.p`
   color: grey;
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
 `;
 
@@ -109,6 +109,8 @@ export const SignInForm = ({ style = {} }) => {
       history.push("../tlu/home");
     });
   });
+
+  const loading = useSelector((state) => state.auth.loginUser.loading);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleModal = () => {
@@ -194,6 +196,7 @@ export const SignInForm = ({ style = {} }) => {
           size="large"
           shape="round"
           onClick={handleSignIn}
+          icon={ loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24, marginRight: 20, color: '#fff' }} spin />} /> : ""}
         >
           Sign In
         </ButtonSignIn>
