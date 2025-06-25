@@ -293,7 +293,7 @@ export default function UsersTable({ data, totalElements }) {
         pagination={{
           defaultCurrent: 1,
           total: totalElements,
-          pageSize: 7,
+          pageSize: 6,
           responsive: true,
         }}
       />

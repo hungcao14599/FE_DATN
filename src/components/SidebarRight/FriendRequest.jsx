@@ -5,6 +5,10 @@ import styled from "styled-components";
 import { approvalFriend } from "../../actions/friend";
 
 export default function FriendRequest({ data }) {
+  console.log(
+    "🚀 ~ file: FriendRequest.jsx ~ line 8 ~ FriendRequest ~ data",
+    data.length
+  );
   const dispatch = useDispatch();
   const URL = "http://localhost:3000/api/users/image";
 
@@ -22,13 +26,13 @@ export default function FriendRequest({ data }) {
         </ProfileImg>
         <ProfileName>
           <Name>{data.user_friend.username}</Name>
-          <Des>{data.user_friend.description}</Des>
+          <Des>{`${data.user_friend.firstname} ${data.user_friend.lastname}`}</Des>
         </ProfileName>
       </WrapProfileInfo>
       <WrapBtn>
         <Button
           type="primary"
-          style={{ background: "#ca0533" }}
+          style={{ background: "#ca0533", border: "none" }}
           onClick={handleApprovalFriend}
         >
           Accept

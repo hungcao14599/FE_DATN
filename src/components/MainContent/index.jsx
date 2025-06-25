@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Avatar from "../../assets/img/avatar.jpeg";
-import Ads from "../../assets/img/ads.jpg";
+import Avatar from "../../assets/img/viethung.jpg";
+import Story1 from "../../assets/img/story1.jpg";
+import Story2 from "../../assets/img/story2.jpg";
+import Story3 from "../../assets/img/story3.jpg";
+import Story4 from "../../assets/img/story4.jpg";
+import Story5 from "../../assets/img/story5.jpg";
+import Story6 from "../../assets/img/story6.jpg";
+
 import Story from "../Story";
 import PostForm from "../Post/PostForm";
 import PostList from "../Post/PostList";
@@ -12,105 +18,126 @@ export default function MainContent() {
     {
       background: (
         <img
-          src={Ads}
+          src={Story1}
           alt=""
           width="140px"
           height="210px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          style={{ objectFit: "cover", borderRadius: "10px", opacity: 0.8 }}
         />
       ),
-      name: "Hưng Cao",
+      // name: "Việt Hưng",
       avatar: (
         <img
           src={Avatar}
           alt=""
-          width="30px"
-          height="30px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          width="35px"
+          height="35px"
+          style={{ objectFit: "cover", borderRadius: "50%" }}
         />
       ),
     },
     {
       background: (
         <img
-          src={Ads}
+          src={Story2}
           alt=""
           width="140px"
           height="210px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          style={{ objectFit: "cover", borderRadius: "10px", opacity: 0.8 }}
         />
       ),
-      name: "Hưng Cao",
+      // name: "Việt Hưng",
       avatar: (
         <img
           src={Avatar}
           alt=""
-          width="30px"
-          height="30px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          width="35px"
+          height="35px"
+          style={{ objectFit: "cover", borderRadius: "50%" }}
         />
       ),
     },
     {
       background: (
         <img
-          src={Ads}
+          src={Story3}
           alt=""
           width="140px"
           height="210px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          style={{ objectFit: "cover", borderRadius: "10px", opacity: 0.8 }}
         />
       ),
-      name: "Hưng Cao",
+      // name: "Việt Hưng",
       avatar: (
         <img
           src={Avatar}
           alt=""
-          width="30px"
-          height="30px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          width="35px"
+          height="35px"
+          style={{ objectFit: "cover", borderRadius: "50%" }}
         />
       ),
     },
     {
       background: (
         <img
-          src={Ads}
+          src={Story4}
           alt=""
           width="140px"
           height="210px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          style={{ objectFit: "cover", borderRadius: "10px", opacity: 0.8 }}
         />
       ),
-      name: "Hưng Cao",
+      // name: "Việt Hưng",
       avatar: (
         <img
           src={Avatar}
           alt=""
-          width="30px"
-          height="30px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          width="35px"
+          height="35px"
+          style={{ objectFit: "cover", borderRadius: "50%" }}
         />
       ),
     },
     {
       background: (
         <img
-          src={Ads}
+          src={Story6}
           alt=""
           width="140px"
           height="210px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          style={{ objectFit: "cover", borderRadius: "10px", opacity: 0.8 }}
         />
       ),
-      name: "Hưng Cao",
+      // name: "Việt Hưng",
       avatar: (
         <img
           src={Avatar}
           alt=""
-          width="30px"
-          height="30px"
-          style={{ objectFit: "cover", borderRadius: "10px" }}
+          width="35px"
+          height="35px"
+          style={{ objectFit: "cover", borderRadius: "50%" }}
+        />
+      ),
+    },
+    {
+      background: (
+        <img
+          src={Story5}
+          alt=""
+          width="140px"
+          height="210px"
+          style={{ objectFit: "cover", borderRadius: "10px", opacity: 0.8 }}
+        />
+      ),
+      // name: "Việt Hưng",
+      avatar: (
+        <img
+          src={Avatar}
+          alt=""
+          width="35px"
+          height="35px"
+          style={{ objectFit: "cover", borderRadius: "50%" }}
         />
       ),
     },

@@ -62,6 +62,7 @@ const AvatarImage = styled.div`
     height: 200px;
     border-radius: 50%;
     border: 3px solid #fff;
+    object-fit: cover;
   }
 `;
 const Info = styled.div`

@@ -23,12 +23,15 @@ const WrapStory = styled.div`
   display: flex;
   width: fit-content;
   overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const AvatarImg = styled.div`
   position: absolute;
-  top: 30px;
-  left: 22px;
+  top: 15px;
+  left: 11px;
 `;
 const AdsText = styled.div`
   position: absolute;

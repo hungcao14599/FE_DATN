@@ -262,3 +262,28 @@ export const setUnBlockUser = (id) => (dispatch) => {
       return Promise.reject(error);
     });
 };
+
+// fetchNumOfUserByMonth
+
+const {
+  fetchNumOfUserByMonthRequest,
+  fetchNumOfUserByMonthSuccess,
+  fetchNumOfUserByMonthFail,
+} = createActions({
+  FETCH_NUM_OF_USER_BY_MONTH_REQUEST: () => {},
+  FETCH_NUM_OF_USER_BY_MONTH_SUCCESS: (data) => ({ data }),
+  FETCH_NUM_OF_USER_BY_MONTH_FAIL: (error) => ({ error }),
+});
+
+export const fetchNumOfUserByMonth = () => (dispatch) => {
+  dispatch(fetchNumOfUserByMonthRequest());
+  return Api.User.fetchNumOfUserByMonth()
+    .then(({ data }) => {
+      dispatch(fetchNumOfUserByMonthSuccess(data));
+      return data;
+    })
+    .catch((error) => {
+      dispatch(fetchNumOfUserByMonthFail(error));
+      return Promise.reject(error);
+    });
+};

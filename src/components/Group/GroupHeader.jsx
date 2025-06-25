@@ -16,10 +16,15 @@ import UploadAvatarImage from "../Profile/uploadAvatar";
 import UploadCoverImage from "../Profile/uploadCoverImage";
 import GroupIntroduce from "./GroupIntroduce";
 import Members from "./Members";
-import { fetchMemberInGroup, userJoinGroup } from "../../actions/group";
+import {
+  fetchFileByGroupId,
+  fetchMemberInGroup,
+  userJoinGroup,
+} from "../../actions/group";
 import { useParams } from "react-router-dom";
 import userIDHeader from "../../services/userIDHeader";
 import { fetchAllPostByGroupId } from "../../actions/post";
+import GroupFileMedia from "./GroupFIleMedia";
 const Wrapper = styled.div`
   padding: 20px 180px;
 `;
@@ -113,10 +118,19 @@ export default function GroupHeader({ groupData }) {
   const postsByGroupID = useSelector(
     (state) => state.post.fetchAllPostByGroupId.result
   );
+  const files = useSelector((state) => state.group.fetchFileByGroupId.result);
+  console.log(
+    "🚀 ~ file: GroupHeader.jsx ~ line 121 ~ GroupHeader ~ files",
+    files
+  );
 
   useEffect(() => {
     dispatch(fetchAllFriendOfUserById(20, 1));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchFileByGroupId(params.id));
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     dispatch(
@@ -224,7 +238,11 @@ export default function GroupHeader({ groupData }) {
               </MemberTab>
             </TabPane>
             <TabPane tab="File phương tiện" key="5">
-              Content of Tab Pane 3
+              <Introduce>
+                <ContentInfo>
+                  <GroupFileMedia files={files?.data} />
+                </ContentInfo>
+              </Introduce>
             </TabPane>
           </Tabs>
         </Container>

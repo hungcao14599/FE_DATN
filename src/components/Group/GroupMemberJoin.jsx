@@ -42,7 +42,10 @@ export default function GroupMemberJoin({ item }) {
     <>
       <ProfileGroup onClick={() => handleMemberJoin(item.id)}>
         <GroupImg>
-          <img src={`${URL_IMAGE_POSTS}/${item.avatar}`} alt="" />
+          <img
+            src={`https://img.freepik.com/free-photo/top-view-background-beautiful-white-grey-brown-cream-blue-background_140725-72219.jpg?size=626&ext=jpg`}
+            alt=""
+          />
         </GroupImg>
 
         <GroupName>
@@ -110,7 +113,7 @@ const ButtonConfirm = styled(Button)`
   color: #000;
   margin-bottom: 2px;
   font-weight: 500;
-  border-radius: 2px;
+  border-radius: 5px;
   width: 100%;
 
   span {
@@ -145,7 +148,7 @@ const GroupImg = styled.div`
   img {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
+    border-radius: 7px;
     object-fit: cover;
   }
 `;

@@ -77,4 +77,8 @@ export default class User {
       }
     );
   }
+
+  static fetchNumOfUserByMonth() {
+    return http.get(`${PREFIX}/num-of-users`);
+  }
 }
