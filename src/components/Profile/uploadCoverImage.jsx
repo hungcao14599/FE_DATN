@@ -50,7 +50,7 @@ export default function UploadCoverImage({ data }) {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
   const params = useParams();
 
-  // const data = useSelector((state) => state.user.fetchUserByID.result.data);
+  // const data = useSelector((state) => state.user.fetchUserByID.result?.data);
   const [file, setFile] = useState();
   const dispatch = useDispatch();
   const handleChange = () => {

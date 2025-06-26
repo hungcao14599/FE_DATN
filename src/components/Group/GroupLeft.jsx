@@ -30,7 +30,7 @@ export default function GroupLeft() {
   };
   const dispatch = useDispatch();
   const groups = useSelector(
-    (state) => state.group.fetchGroupsOfUser.result.data
+    (state) => state.group.fetchGroupsOfUser.result?.data
   );
 
   const [keyword, setSearch] = useState("");

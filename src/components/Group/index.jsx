@@ -22,7 +22,7 @@ export default function Groups() {
     dispatch(fetchAllPostsInGroup(20, 1));
   }, [dispatch]);
 
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const profile = useSelector((state) => state.user.fetchUserByID.result?.data);
   return (
     <Wrapper>
       <Container>

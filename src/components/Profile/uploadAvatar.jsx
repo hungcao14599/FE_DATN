@@ -48,7 +48,7 @@ const Image = styled.div`
 `;
 export default function UploadAvatarImage() {
   const URL_IMAGE_USER = "http://localhost:3000/api/users/image";
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const profile = useSelector((state) => state.user.fetchUserByID.result?.data);
   const [file, setFile] = useState();
   const dispatch = useDispatch();
   const handleChange = () => {

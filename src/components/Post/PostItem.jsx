@@ -119,7 +119,7 @@ export default function PostItem({ data, id }) {
     setIsComment(!isComment);
   };
 
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const profile = useSelector((state) => state.user.fetchUserByID.result?.data);
   const URL = "http://localhost:3000/api/users/image";
 
   const [currentImage, setCurrentImage] = useState(0);

@@ -159,7 +159,7 @@ export default function ProfileHeader({ profile }) {
     listFriend.data.filter((e) => e.user_friend.username === params.username);
 
   const profileInfo = useSelector(
-    (state) => state.user.fetchUserByID.result.data
+    (state) => state.user.fetchUserByID.result?.data
   );
 
   const handleModalUpdateInfo = () => {

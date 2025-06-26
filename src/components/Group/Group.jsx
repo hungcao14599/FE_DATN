@@ -30,7 +30,7 @@ export default function Group() {
 
   const groupByID = useSelector((state) => state.group.fetchGroupById.result);
 
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const profile = useSelector((state) => state.user.fetchUserByID.result?.data);
 
   return (
     <Wrapper>

@@ -197,7 +197,7 @@ export const SignInForm = ({ style = {} }) => {
         >
           Sign In
         </ButtonSignIn>
-        <Error>{error ? error.data.message : ""}</Error>
+        <Error>{error ? error.data?.message : ""}</Error>
         <Activate>
           Tài khoản chưa kích hoạt ?
           <ButtonActivate onClick={handleModal}> Kích hoạt</ButtonActivate>

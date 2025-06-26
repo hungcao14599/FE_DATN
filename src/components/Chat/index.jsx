@@ -18,7 +18,7 @@ export default function Chats() {
   useEffect(() => {
     dispatch(fetchUserById());
   }, [dispatch]);
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const profile = useSelector((state) => state.user.fetchUserByID.result?.data);
 
   const [message, setMessage] = useState("");
 

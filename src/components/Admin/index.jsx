@@ -15,7 +15,7 @@ export default function Admin() {
   useEffect(() => {
     dispatch(fetchUserById());
   }, [dispatch]);
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const profile = useSelector((state) => state.user.fetchUserByID.result?.data);
 
   const params = useParams();
   return (

@@ -140,7 +140,7 @@ export default function PostForm() {
   const [file, setFile] = useState();
   const [content, setContent] = useState("");
   const params = useParams();
-  const profile = useSelector((state) => state.user.fetchUserByID.result.data);
+  const profile = useSelector((state) => state.user.fetchUserByID.result?.data);
   const groupInfo = useSelector((state) => state.group.fetchGroupById.result);
 
   const userName = profile?.username;

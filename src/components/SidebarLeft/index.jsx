@@ -21,7 +21,7 @@ export default function SidebarLeft({ profile }) {
 
   const dispatch = useDispatch();
   const groups = useSelector(
-    (state) => state.group.fetchGroupsOfUser.result.data
+    (state) => state.group.fetchGroupsOfUser.result?.data
   );
 
   useEffect(() => {
